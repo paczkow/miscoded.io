@@ -1,34 +1,78 @@
+const remark = require('remark');
+const stripMarkdown = require('strip-markdown');
+
+const config = require('./config');
+
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    title: config.title,
+    description: config.description,
+    author: config.author,
+    social: {
+      twitter: config.twitter,
+      github: config.github,
+      linkedin: config.linkedin,
+      rss: config.rss,
+    },
   },
   plugins: [
-    `gatsby-plugin-react-helmet`,
+    'gatsby-plugin-react-helmet',
+    'gatsby-transformer-sharp',
+    'gatsby-plugin-sharp',
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: 'gatsby-source-filesystem',
       options: {
-        name: `images`,
-        path: `${__dirname}/src/images`,
+        name: 'blog',
+        path: `${__dirname}/content/blog`,
       },
     },
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
     {
-      resolve: `gatsby-plugin-manifest`,
+      resolve: 'gatsby-transformer-remark',
       options: {
-        name: `gatsby-starter-default`,
-        short_name: `starter`,
-        start_url: `/`,
-        background_color: `#663399`,
-        theme_color: `#663399`,
-        display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+        plugins: [
+          {
+            resolve: 'gatsby-remark-images',
+            options: {
+              maxWidth: 590,
+            },
+          },
+          'gatsby-remark-reading-time',
+          `gatsby-remark-prismjs`,
+        ],
       },
     },
-    // this (optional) plugin enables Progressive Web App + Offline functionality
-    // To learn more, visit: https://gatsby.dev/offline
-    // `gatsby-plugin-offline`,
+    'gatsby-plugin-emotion',
+    {
+      resolve: 'gatsby-plugin-web-font-loader',
+      options: {
+        google: {
+          families: ['Roboto:400,700,900'],
+        },
+      },
+    },
+    `gatsby-plugin-typescript`,
+    {
+      resolve: '@gatsby-contrib/gatsby-plugin-elasticlunr-search',
+      options: {
+        fields: ['title', 'excerpt', 'slug', 'categories', 'tags', 'date'],
+        resolvers: {
+          MarkdownRemark: {
+            title: node => node.frontmatter.title,
+            excerpt: node => {
+              const text = remark()
+                .use(stripMarkdown)
+                .processSync(node.rawMarkdownBody);
+
+              const excerptLength = 140;
+              return String(text).substring(0, excerptLength);
+            },
+            slug: node => node.fields.slug,
+            categories: node => node.frontmatter.categories,
+            tags: node => node.frontmatter.tags,
+            date: node => node.frontmatter.date,
+          },
+        },
+      },
+    },
   ],
-}
+};
