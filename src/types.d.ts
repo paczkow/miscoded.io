@@ -1,3 +1,5 @@
+type Dictionary<K extends string, T> = { [P in K]?: T };
+
 interface PageContext {
   totalPages: number;
   currentPage: number;
