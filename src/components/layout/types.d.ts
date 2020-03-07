@@ -8,3 +8,8 @@ type ResponsiveMap<T> = {
 type Display = "none" | "flex" | "block";
 type FlexAlign = "flex-start" | "center" | "flex-end";
 type FlexWrap = "nowrap" | "wrap";
+
+type AlignX = "left" | "center" | "right";
+type AlignY = "top" | "center" | "bottom";
+
+type Align = AlignX | AlignY;

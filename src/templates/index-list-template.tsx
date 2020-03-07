@@ -2,6 +2,7 @@ import React from "react";
 import { graphql } from "gatsby";
 
 import { Box } from "../components/layout/Box/Box";
+import { Inline } from "../components/layout/Inline";
 
 interface Props {
   pageContext: PageContext;
@@ -15,6 +16,22 @@ const Index = () => {
         Title Box
       </Box>
       <Box margin={["xsmall", "large"]}>Title Box</Box>
+      <Inline space="small">
+        <div
+          css={{
+            background: "#aeaeae",
+          }}
+        >
+          Item
+        </div>
+        <div
+          css={{
+            background: "#aeaeae",
+          }}
+        >
+          Item
+        </div>
+      </Inline>
     </>
   );
 };

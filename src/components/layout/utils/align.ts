@@ -1,7 +1,15 @@
-export type AlignX = "left" | "center" | "right";
-export type AlignY = "top" | "center" | "bottom";
+import { Space } from "../../../theme";
 
-export type Align = AlignX | AlignY;
+export const getNegativeMargin = (spaces: Record<Space, number>) => (
+  space: ResponsiveProp<Space>
+) => ({
+  args: space,
+  map: (args: ResponsiveProp<Space>) => {
+    return Array.isArray(args)
+      ? args.map(arg => spaces[arg] * -1)
+      : spaces[args] * -1;
+  },
+});
 
 export const toFlexXAlign = (align: ResponsiveProp<AlignX>) =>
   toFlexAlign(align);
@@ -21,10 +29,10 @@ const toFlexAlignValue = (alignValue: Align) => {
   switch (alignValue) {
     case "left":
     case "top":
-      return "flexStart";
+      return "flex-start";
     case "right":
     case "bottom":
-      return "flexEnd";
+      return "flex-end";
     case "center":
       return "center";
   }

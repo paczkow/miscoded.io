@@ -31,7 +31,6 @@ const GlobalStyles: React.FC<{ theme: Theme }> = ({ children, theme }) => (
           font-family: "Roboto", sans-serif;
           margin: 0;
           padding: 0;
-          overflow-x: hidden;
           outline: none;
         }
 
