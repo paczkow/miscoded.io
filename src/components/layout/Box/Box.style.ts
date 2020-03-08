@@ -22,8 +22,10 @@ export interface BoxProps {
   justifyContent?: ResponsiveProp<FlexAlign>;
   alignItems?: ResponsiveProp<FlexAlign>;
   flexWrap?: FlexWrap;
+  flexDirection?: string;
   background?: string;
   color?: string;
+  className?: string;
 }
 
 type BoxResponsiveProps = Omit<BoxProps, "background" | "color" | "flexWrap">;

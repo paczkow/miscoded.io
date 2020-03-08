@@ -1,5 +1,4 @@
 import React from "react";
-import { css } from "@emotion/core";
 import { theme } from "../../../theme";
 import {
   BoxProps,
@@ -11,13 +10,16 @@ import {
 import { getToNumber } from "../utils/responsiveProp";
 
 const toNumber = getToNumber(theme.space);
-const breakpoints = Object.keys(theme.breakpoints);
+const breakpoints = ["base", ...Object.keys(theme.breakpoints)];
 
 export const Box: React.FC<BoxProps> = ({
   children,
   display,
   background,
   color,
+  flexDirection,
+  flexWrap,
+  className,
   ...responsiveProps
 }) => {
   const {
@@ -25,7 +27,6 @@ export const Box: React.FC<BoxProps> = ({
     height,
     justifyContent,
     alignItems,
-    flexWrap,
     margin,
     marginBottom,
     marginLeft,
@@ -93,8 +94,13 @@ export const Box: React.FC<BoxProps> = ({
     objectStyles,
     background === undefined ? null : { background },
     color === undefined ? null : { color },
-    flexWrap === undefined ? null : { flexWrap }
+    flexWrap === undefined ? null : { flexWrap },
+    flexDirection === undefined ? null : { flexDirection }
   );
 
-  return <div css={css(objectStyles)}>{children}</div>;
+  return (
+    <div className={className} css={objectStyles}>
+      {children}
+    </div>
+  );
 };

@@ -3,6 +3,7 @@ import { graphql } from "gatsby";
 
 import { Box } from "../components/layout/Box/Box";
 import { Inline } from "../components/layout/Inline";
+import { Stack } from "../components/layout/Stack";
 
 interface Props {
   pageContext: PageContext;
@@ -32,6 +33,11 @@ const Index = () => {
           Item
         </div>
       </Inline>
+      <Stack space="large" align="right">
+        <div>Item</div>
+        <div>Item</div>
+        <div>Item</div>
+      </Stack>
     </>
   );
 };

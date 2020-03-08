@@ -35,5 +35,7 @@ const toFlexAlignValue = (alignValue: Align) => {
       return "flex-end";
     case "center":
       return "center";
+    default:
+      return "flex-start";
   }
 };
