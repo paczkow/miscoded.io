@@ -1,9 +1,8 @@
 import React from "react";
 import { graphql } from "gatsby";
 
-import { Box } from "../components/layout/Box/Box";
-import { Inline } from "../components/layout/Inline";
-import { Stack } from "../components/layout/Stack";
+import { Layout } from "../components/layout";
+import { Top } from "../components/layout/Top";
 
 interface Props {
   pageContext: PageContext;
@@ -12,33 +11,9 @@ interface Props {
 
 const Index = () => {
   return (
-    <>
-      <Box background="#000000" margin={["xsmall", "large"]}>
-        Title Box
-      </Box>
-      <Box margin={["xsmall", "large"]}>Title Box</Box>
-      <Inline space="small">
-        <div
-          css={{
-            background: "#aeaeae",
-          }}
-        >
-          Item
-        </div>
-        <div
-          css={{
-            background: "#aeaeae",
-          }}
-        >
-          Item
-        </div>
-      </Inline>
-      <Stack space="large" align="right">
-        <div>Item</div>
-        <div>Item</div>
-        <div>Item</div>
-      </Stack>
-    </>
+    <Layout>
+      <Top>Main</Top>
+    </Layout>
   );
 };
 

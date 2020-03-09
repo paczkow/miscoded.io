@@ -43,30 +43,24 @@ const GlobalStyles: React.FC<{ theme: Theme }> = ({ children, theme }) => (
         h3,
         h4 {
           color: ${theme.textSecondaryColor};
+          margin: 0;
+          padding: 0;
         }
 
         h1 {
           font-size: calc(var(--baseline) * 1.25rem);
-          margin-top: calc(var(--baseline) * 1rem);
-          margin-bottom: calc(var(--baseline) * 1rem);
         }
 
         h2 {
           font-size: calc(var(--baseline) * 1rem);
-          margin-top: 1rem;
-          margin-bottom: 1rem;
         }
 
         h3 {
           font-size: calc(var(--baseline) * 1rem);
-          margin-top: 1rem;
-          margin-bottom: 1rem;
         }
 
         h4 {
           font-size: calc(var(--baseline) * 0.75rem);
-          margin-top: 0.5rem;
-          margin-bottom: 0.5rem;
         }
 
         p {
@@ -85,7 +79,7 @@ const GlobalStyles: React.FC<{ theme: Theme }> = ({ children, theme }) => (
           overflow: auto;
         }
 
-        ${getMinWidthMediaQuery("maxWidthOfMobileContainer")} {
+        ${getMinWidthMediaQuery("minMedium")} {
           :root {
             --baseline: 1.7778;
           }
