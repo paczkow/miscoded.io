@@ -32,6 +32,7 @@ export const Top: React.FC<{}> = ({ children }) => {
           width: "100%",
           height: "100%",
           left: 0,
+          top: 0,
           content: '""',
           background: "rgba(0,0,0,0.6)",
         },

@@ -7,12 +7,14 @@ import { toFlexXAlign } from "./utils/align";
 interface StackProps {
   space?: ResponsiveProp<Space>;
   align?: AlignX;
+  className?: string;
 }
 
 export const Stack: React.FC<StackProps> = ({
   children,
   align = "left",
   space = "none",
+  className,
 }) => {
   const containerStyles =
     align === "left"
@@ -28,6 +30,7 @@ export const Stack: React.FC<StackProps> = ({
   return (
     <Box
       {...containerStyles}
+      className={className}
       css={{
         "> div:last-child": {
           paddingBottom: 0,

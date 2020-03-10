@@ -3,6 +3,9 @@ import { graphql } from "gatsby";
 
 import { Layout } from "../components/layout";
 import { Top } from "../components/layout/Top";
+import { Box } from "../components/layout/Box/Box";
+import { getMinWidthMediaQuery } from "../styles/media-queries";
+import { Stack } from "../components/layout/Stack";
 
 interface Props {
   pageContext: PageContext;
@@ -12,7 +15,60 @@ interface Props {
 const Index = () => {
   return (
     <Layout>
-      <Top>Main</Top>
+      <Top>
+        <Stack
+          space="large"
+          align="center"
+          css={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: 550,
+          }}
+        >
+          <div
+            css={{
+              position: "relative",
+              zIndex: 1000,
+              textAlign: "center",
+              color: "#ffffff",
+              padding: "0 16px",
+            }}
+          >
+            WITAM CIĘ W MIEJSCU W KTÓRYM WERYFIKUJĘ WIEDZĘ SWOJA DZIELĄC SIĘ NIĄ Z TOBĄ
+          </div>
+          <div css={{ position: "relative", zIndex: 1000, color: "#ffffff" }}>
+            MICHAŁ PACZKÓW
+          </div>
+        </Stack>
+      </Top>
+      <Box
+        paddingY={["none", "xlarge"]}
+        paddingX={["none", "large"]}
+        css={{ margin: "0 auto", maxWidth: 1600 }}
+      >
+        <div
+          css={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
+            gridGap: 64,
+            justifyContent: "center",
+            "> div": {
+              background: "green",
+            },
+            [`${getMinWidthMediaQuery("minMedium")}`]: {
+              gridTemplateColumns: "repeat(auto-fill, 320px)",
+            },
+          }}
+        >
+          <div>Item</div>
+          <div>Item</div>
+          <div>Item</div>
+          <div>Item</div>
+          <div>Item</div>
+          <div>Item</div>
+        </div>
+      </Box>
     </Layout>
   );
 };

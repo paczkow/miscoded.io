@@ -24,7 +24,7 @@ export const Header = () => {
     <header ref={ref}>
       <Box
         paddingX={["small", "large"]}
-        paddingY={isScrolled ? "xsmall" : "medium"}
+        paddingY={isScrolled ? "xsmall" : "small"}
         display="flex"
         justifyContent="center"
         alignItems="center"
