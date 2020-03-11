@@ -7,6 +7,7 @@ export const theme = {
 
   space: {
     none: 0,
+    xxsmall: 4,
     xsmall: 8,
     small: 16,
     medium: 24,

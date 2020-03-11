@@ -6,13 +6,17 @@ import { Top } from "../components/layout/Top";
 import { Box } from "../components/layout/Box/Box";
 import { getMinWidthMediaQuery } from "../styles/media-queries";
 import { Stack } from "../components/layout/Stack";
+import { MobileCard } from "../components/Card";
+import { mapMarkdownRemarkToPost } from "../utils/mapMarkdownRemarkToPost";
 
 interface Props {
   pageContext: PageContext;
   data: AllMarkdownRemark;
 }
 
-const Index = () => {
+const Index = ({ data }: Props) => {
+  const { allMarkdownRemark } = data;
+
   return (
     <Layout>
       <Top>
@@ -35,7 +39,8 @@ const Index = () => {
               padding: "0 16px",
             }}
           >
-            WITAM CIĘ W MIEJSCU W KTÓRYM WERYFIKUJĘ WIEDZĘ SWOJA DZIELĄC SIĘ NIĄ Z TOBĄ
+            WITAM CIĘ W MIEJSCU W KTÓRYM WERYFIKUJĘ WIEDZĘ SWOJA DZIELĄC SIĘ NIĄ
+            Z TOBĄ
           </div>
           <div css={{ position: "relative", zIndex: 1000, color: "#ffffff" }}>
             MICHAŁ PACZKÓW
@@ -50,23 +55,20 @@ const Index = () => {
         <div
           css={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fill, 1fr)",
             gridGap: 64,
             justifyContent: "center",
-            "> div": {
-              background: "green",
-            },
             [`${getMinWidthMediaQuery("minMedium")}`]: {
               gridTemplateColumns: "repeat(auto-fill, 320px)",
             },
           }}
         >
-          <div>Item</div>
-          <div>Item</div>
-          <div>Item</div>
-          <div>Item</div>
-          <div>Item</div>
-          <div>Item</div>
+          {allMarkdownRemark.edges.map(({ node }) => (
+            <MobileCard
+              key={node.fields.slug}
+              {...mapMarkdownRemarkToPost(node)}
+            />
+          ))}
         </div>
       </Box>
     </Layout>
@@ -94,6 +96,7 @@ export const query = graphql`
               childImageSharp {
                 fluid {
                   src
+                  tracedSVG
                 }
               }
             }

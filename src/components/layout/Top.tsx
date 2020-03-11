@@ -27,6 +27,9 @@ export const Top: React.FC<{}> = ({ children }) => {
         background: `url("${image.fluid.src}") rgba(0, 0, 0, 1)`,
         backgroundSize: "cover",
         position: "relative",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
         "&:after": {
           position: "absolute",
           width: "100%",
