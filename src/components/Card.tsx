@@ -49,38 +49,55 @@ export const MobileCard: React.FC<Post> = ({
             bottom: 0,
           }}
         >
-          <h2
-            css={{
-              fontSize: 24,
-              color: "#ffffff",
-            }}
-          >
-            {title}
-          </h2>
-          <Inline space="small">
-            <span
+          <Stack space="xsmall">
+            <h2
               css={{
-                fontSize: 12,
+                fontSize: 24,
                 color: "#ffffff",
               }}
             >
-              {date}
-            </span>
-            <span
-              css={{
-                fontSize: 12,
-                color: "#ffffff",
-              }}
-            >
-              {readingTime} min. czytania
-            </span>
-          </Inline>
+              {title}
+            </h2>
+            <Inline space="small">
+              <span
+                css={{
+                  fontSize: 12,
+                  color: "#ffffff",
+                }}
+              >
+                {date}
+              </span>
+              <span
+                css={{
+                  fontSize: 12,
+                  color: "#ffffff",
+                }}
+              >
+                {readingTime} min. czytania
+              </span>
+            </Inline>
+          </Stack>
         </Box>
       </div>
-      <Box paddingX="small">
-        <Stack space="small">
+      <Box paddingY="small" paddingBottom="medium" paddingX="small">
+        <Stack space="xsmall">
+          <Inline space="xsmall">
+            {categories.map(category => (
+              <span key={category} css={{ fontSize: 14 }}>
+                {category}
+              </span>
+            ))}
+          </Inline>
           <p>{excerpt}</p>
-          <Link to={slug}>Czytaj więcej</Link>
+          <Link to={slug}>
+            <h4
+              css={{
+                fontSize: "18px",
+              }}
+            >
+              Czytaj więcej
+            </h4>
+          </Link>
         </Stack>
       </Box>
     </Box>

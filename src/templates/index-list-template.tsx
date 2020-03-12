@@ -47,7 +47,7 @@ const Index = ({ data }: Props) => {
           </div>
         </Stack>
       </Top>
-      <Box paddingY={["none", "xlarge"]} paddingX={["small", "large"]}>
+      <Box paddingY={["large", "xlarge"]} paddingX={["small", "large"]}>
         <div
           css={{
             display: "grid",
@@ -55,9 +55,6 @@ const Index = ({ data }: Props) => {
             gridGap: 32,
             justifyContent: "center",
             justifyItems: "center",
-            [`${getMinWidthMediaQuery("minMedium")}`]: {
-              gridTemplateColumns: "repeat(auto-fit, 320px)",
-            },
           }}
         >
           {allMarkdownRemark.edges.map(({ node }) => (
