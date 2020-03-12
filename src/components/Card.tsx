@@ -16,62 +16,68 @@ export const MobileCard: React.FC<Post> = ({
   tracedSVG,
 }) => {
   return (
-    <Box paddingBottom="large">
+    <Box
+      css={{
+        height: "100%",
+        maxWidth: "320px",
+        boxShadow: "0px 4px 30px rgba(0, 0, 0, 0.2)",
+      }}
+    >
       <div
         css={{
-          height: "calc(100vw * 0.75)",
           background: `url("${image}"), url("${tracedSVG}")`,
+          height: "216px",
           backgroundSize: "cover",
           position: "relative",
-          backgroundAttachment: "fixed",
+          ":after": {
+            content: "''",
+            position: "absolute",
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+            background: "rgba(0, 0, 0, 0.5)",
+          },
         }}
       >
         <Box
           paddingX="small"
-          paddingY="medium"
+          paddingBottom="medium"
           css={{
             position: "absolute",
-            overflow: "hidden",
+            zIndex: 10,
             bottom: 0,
-            width: "100%",
-            ":after": {
-              content: '""',
-              position: "absolute",
-              top: 0,
-              left: 0,
-              bottom: 0,
-              right: 0,
-              background: "rgba(0, 0, 0, 0.5)",
-            },
           }}
         >
-          <hr
+          <h2
             css={{
-              position: "absolute",
-              top: 0,
-              margin: 0,
-              width: "100%",
-              left: 0,
-              border: "1px solid rgba(0, 0, 0, 0.075)",
+              fontSize: 24,
+              color: "#ffffff",
             }}
-          />
-          <Stack space="xsmall" css={{ position: "relative", zIndex: 1000 }}>
-            <Inline space="xsmall">
-              {categories.map(category => (
-                <Button key={category}>
-                  <span css={{ color: "#fff" }}>{category}</span>
-                </Button>
-              ))}
-            </Inline>
-            <h1 css={{ fontSize: 24, color: "#fff" }}>{title}</h1>
-            <Inline space="xsmall">
-              <span css={{ color: "#fff" }}>{date}</span>
-              <span css={{ color: "#fff" }}>{readingTime} min czytania</span>
-            </Inline>
-          </Stack>
+          >
+            {title}
+          </h2>
+          <Inline space="small">
+            <span
+              css={{
+                fontSize: 12,
+                color: "#ffffff",
+              }}
+            >
+              {date}
+            </span>
+            <span
+              css={{
+                fontSize: 12,
+                color: "#ffffff",
+              }}
+            >
+              {readingTime} min. czytania
+            </span>
+          </Inline>
         </Box>
       </div>
-      <Box paddingX="small" paddingTop="medium">
+      <Box paddingX="small">
         <Stack space="small">
           <p>{excerpt}</p>
           <Link to={slug}>Czytaj więcej</Link>

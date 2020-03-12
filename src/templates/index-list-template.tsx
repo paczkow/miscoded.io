@@ -47,19 +47,16 @@ const Index = ({ data }: Props) => {
           </div>
         </Stack>
       </Top>
-      <Box
-        paddingY={["none", "xlarge"]}
-        paddingX={["none", "large"]}
-        css={{ margin: "0 auto", maxWidth: 1600 }}
-      >
+      <Box paddingY={["none", "xlarge"]} paddingX={["small", "large"]}>
         <div
           css={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, 1fr)",
-            gridGap: 64,
+            gridTemplateColumns: "repeat(auto-fit, minmax(288px, 1fr))",
+            gridGap: 32,
             justifyContent: "center",
+            justifyItems: "center",
             [`${getMinWidthMediaQuery("minMedium")}`]: {
-              gridTemplateColumns: "repeat(auto-fill, 320px)",
+              gridTemplateColumns: "repeat(auto-fit, 320px)",
             },
           }}
         >
