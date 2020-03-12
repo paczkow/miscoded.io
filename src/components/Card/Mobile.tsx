@@ -1,9 +1,10 @@
 import React from "react";
-import { Box } from "./layout/Box/Box";
-import { Stack } from "./layout/Stack";
-import { Inline } from "./layout/Inline";
+import { Box } from "../layout/Box/Box";
+import { Stack } from "../layout/Stack";
+import { Inline } from "../layout/Inline";
 import { Link } from "gatsby";
-import { Button } from "./Button";
+import { Image } from "./components/Image";
+import { getMinWidthMediaQuery } from "../../styles";
 
 export const MobileCard: React.FC<Post> = ({
   title,
@@ -21,25 +22,12 @@ export const MobileCard: React.FC<Post> = ({
         height: "100%",
         maxWidth: "320px",
         boxShadow: "0px 4px 30px rgba(0, 0, 0, 0.2)",
+        [`${getMinWidthMediaQuery("minLarge")}`]: {
+          display: "none",
+        },
       }}
     >
-      <div
-        css={{
-          background: `url("${image}"), url("${tracedSVG}")`,
-          height: "216px",
-          backgroundSize: "cover",
-          position: "relative",
-          ":after": {
-            content: "''",
-            position: "absolute",
-            top: 0,
-            left: 0,
-            bottom: 0,
-            right: 0,
-            background: "rgba(0, 0, 0, 0.5)",
-          },
-        }}
-      >
+      <Image image={image} tracedSVG={tracedSVG}>
         <Box
           paddingX="small"
           paddingBottom="medium"
@@ -78,7 +66,7 @@ export const MobileCard: React.FC<Post> = ({
             </Inline>
           </Stack>
         </Box>
-      </div>
+      </Image>
       <Box paddingY="small" paddingBottom="medium" paddingX="small">
         <Stack space="xsmall">
           <Inline space="xsmall">

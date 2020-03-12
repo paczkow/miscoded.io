@@ -6,8 +6,9 @@ import { Top } from "../components/layout/Top";
 import { Box } from "../components/layout/Box/Box";
 import { getMinWidthMediaQuery } from "../styles/media-queries";
 import { Stack } from "../components/layout/Stack";
-import { MobileCard } from "../components/Card";
+import { MobileCard } from "../components/Card/Mobile";
 import { mapMarkdownRemarkToPost } from "../utils/mapMarkdownRemarkToPost";
+import { Card } from "../components/Card/Desktop";
 
 interface Props {
   pageContext: PageContext;
@@ -47,7 +48,11 @@ const Index = ({ data }: Props) => {
           </div>
         </Stack>
       </Top>
-      <Box paddingY={["large", "xlarge"]} paddingX={["small", "large"]}>
+      <Box
+        paddingY={["large", "xlarge"]}
+        paddingX={["small", "large"]}
+        css={{ display: "flex", justifyContent: "center" }}
+      >
         <div
           css={{
             display: "grid",
@@ -55,14 +60,24 @@ const Index = ({ data }: Props) => {
             gridGap: 32,
             justifyContent: "center",
             justifyItems: "center",
+            width: "100%",
+            [`${getMinWidthMediaQuery("minLarge")}`]: {
+              gridGap: 64,
+              gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+              maxWidth: 1600,
+            },
           }}
         >
-          {allMarkdownRemark.edges.map(({ node }) => (
-            <MobileCard
-              key={node.fields.slug}
-              {...mapMarkdownRemarkToPost(node)}
-            />
-          ))}
+          {allMarkdownRemark.edges.map(({ node }) => {
+            const postData = mapMarkdownRemarkToPost(node);
+
+            return (
+              <>
+                <MobileCard {...postData} />
+                <Card {...postData} />
+              </>
+            );
+          })}
         </div>
       </Box>
     </Layout>
