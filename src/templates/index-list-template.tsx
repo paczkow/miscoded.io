@@ -4,11 +4,11 @@ import { graphql } from "gatsby";
 import { Layout } from "../components/layout";
 import { Top } from "../components/layout/Top";
 import { Box } from "../components/layout/Box/Box";
-import { getMinWidthMediaQuery } from "../styles/media-queries";
 import { Stack } from "../components/layout/Stack";
 import { MobileCard } from "../components/Card/Mobile";
 import { mapMarkdownRemarkToPost } from "../utils/mapMarkdownRemarkToPost";
 import { Card } from "../components/Card/Desktop";
+import { Grid } from "../components/layout/Grid";
 
 interface Props {
   pageContext: PageContext;
@@ -53,21 +53,7 @@ const Index = ({ data }: Props) => {
         paddingX={["small", "large"]}
         css={{ display: "flex", justifyContent: "center" }}
       >
-        <div
-          css={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(288px, 1fr))",
-            gridGap: 32,
-            justifyContent: "center",
-            justifyItems: "center",
-            width: "100%",
-            [`${getMinWidthMediaQuery("minLarge")}`]: {
-              gridGap: 64,
-              gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-              maxWidth: 1600,
-            },
-          }}
-        >
+        <Grid>
           {allMarkdownRemark.edges.map(({ node }) => {
             const postData = mapMarkdownRemarkToPost(node);
 
@@ -78,7 +64,7 @@ const Index = ({ data }: Props) => {
               </>
             );
           })}
-        </div>
+        </Grid>
       </Box>
     </Layout>
   );
