@@ -31,7 +31,7 @@ export const Navigation: React.FC<Props> = ({
         text-decoration: none;
       }
 
-      ${getMaxWidthMediaQuery("maxWidthOfMobileContainer")} {
+      ${getMaxWidthMediaQuery("minLarge")} {
         margin-top: 2rem;
         margin-bottom: 1rem;
       }

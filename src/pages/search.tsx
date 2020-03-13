@@ -5,11 +5,10 @@ import { mapMarkdownRemarkToPost } from "../utils/mapMarkdownRemarkToPost";
 import { Box } from "../components/layout/Box/Box";
 import { Layout } from "../components/layout/Layout";
 import { Top } from "../components/layout/Top";
-import { Stack } from "../components/layout/Stack";
-import { Inline } from "../components/layout/Inline";
 import { Grid } from "../components/layout/Grid";
 import { MobileCard } from "../components/Card/Mobile";
 import { Card } from "../components/Card/Desktop";
+import { Form } from "../components/Search/Form";
 
 interface SearchProps {
   data: SearchQuery;
@@ -31,26 +30,13 @@ const Search: React.FC<SearchProps> = ({ data }) => {
             zIndex: 10,
           }}
         >
-          <Stack space="medium" align="center">
-            <input
-              css={{
-                width: 200,
-                background: "transparent",
-                border: 0,
-                borderBottom: "1px solid #ffffff",
-                padding: 8,
-                fontSize: 16,
-                color: "#ffffff",
-              }}
-              placeholder="Wyszukaj"
-            />
-            <Group groupName="Kategorie" items={categories.group} />
-            <Group groupName="Tagi" items={tags.group} />
-          </Stack>
           <Box paddingY="large">
-            <h4 css={{ color: "#ffffff", textAlign: "center" }}>
-              Znalezionych postów: 6
-            </h4>
+            <Form tags={tags.group} categories={categories.group} />
+            <Box paddingY="large">
+              <h4 css={{ color: "#ffffff", textAlign: "center" }}>
+                Znalezionych postów: 6
+              </h4>
+            </Box>
           </Box>
         </div>
       </Top>
@@ -76,24 +62,6 @@ const Search: React.FC<SearchProps> = ({ data }) => {
     </Layout>
   );
 };
-
-interface GroupProps {
-  groupName: string;
-  items: { fieldValue: string }[];
-}
-
-const Group: React.FC<GroupProps> = ({ groupName, items }) => (
-  <Stack space="small" align="center">
-    <h4 css={{ color: "#ffffff" }}>{groupName}</h4>
-    <Inline space="small">
-      {items.map(groupItem => (
-        <span css={{ color: "#ffffff" }} key={groupItem.fieldValue}>
-          {groupItem.fieldValue}
-        </span>
-      ))}
-    </Inline>
-  </Stack>
-);
 
 export default Search;
 
