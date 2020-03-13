@@ -1,4 +1,8 @@
-import React, { useState, FormEvent } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useState, FormEvent, useEffect } from "react";
+import { useQueryParam, StringParam } from "use-query-params";
+import { Index } from "elasticlunr";
+
 import { Button } from "../Button";
 import { Stack } from "../layout/Stack";
 import { Inline } from "../layout/Inline";
@@ -6,10 +10,77 @@ import { Inline } from "../layout/Inline";
 interface FormProps {
   categories: { fieldValue: string }[];
   tags: { fieldValue: string }[];
+  onChange: (ids: string[] | null) => void;
+  elasticLunrSearchIndex: any;
 }
 
-export const Form: React.FC<FormProps> = ({ categories, tags }) => {
-  const [searchValue, setSearchValue] = useState("");
+const toSearchConfig = (queryType: string | undefined) => {
+  switch (queryType) {
+    case undefined:
+      return {
+        expand: true,
+      };
+    case "category":
+      return {
+        fields: {
+          categories: { boost: 2 },
+        },
+      };
+    case "tag":
+      return {
+        fields: {
+          tags: { boost: 2 },
+        },
+      };
+    default:
+      return {
+        expand: true,
+      };
+  }
+};
+
+export const Form: React.FC<FormProps> = ({
+  categories,
+  tags,
+  onChange,
+  elasticLunrSearchIndex,
+}) => {
+  const [query, setQuery] = useQueryParam("q", StringParam);
+  const [queryType, setQueryType] = useQueryParam("t", StringParam);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, setSearchValue] = useState(query ?? "");
+
+  let searchIndex: Index<any> | null = null;
+  let searchConfig = {};
+
+  useEffect(() => {
+    searchConfig = toSearchConfig(queryType);
+    search();
+  }, [query, queryType]);
+
+  const getHandleSelectGroupItem = (groupType: string) => (
+    newValue: string
+  ) => {
+    setSearchValue(newValue);
+    setQuery(newValue);
+    setQueryType(groupType);
+  };
+
+  const getOrCreateSearchIndex = () =>
+    searchIndex ? searchIndex : Index.load(elasticLunrSearchIndex.index);
+
+  const search = () => {
+    searchIndex = getOrCreateSearchIndex() as Index<any>;
+
+    const ids = query
+      ? searchIndex
+          .search(query ?? "", searchConfig)
+          .map(({ ref }) => searchIndex?.documentStore.getDoc(ref))
+          .map(item => item.id)
+      : null;
+
+    onChange(ids);
+  };
 
   return (
     <Stack space="medium" align="center">
@@ -23,23 +94,25 @@ export const Form: React.FC<FormProps> = ({ categories, tags }) => {
           fontSize: 16,
           color: "#ffffff",
         }}
-        value={searchValue}
-        onChange={(e: FormEvent<HTMLInputElement>) =>
-          setSearchValue(e.currentTarget.value)
-        }
+        value={query ?? ""}
+        onChange={(e: FormEvent<HTMLInputElement>) => {
+          setSearchValue(e.currentTarget.value);
+          setQuery(e.currentTarget.value);
+          setQueryType(undefined);
+        }}
         placeholder="Wyszukaj"
       />
       <Group
         groupName="Kategorie"
         items={categories}
-        searchValue={searchValue}
-        onClick={(newValue: string) => setSearchValue(newValue)}
+        searchValue={query ?? ""}
+        onClick={getHandleSelectGroupItem("category")}
       />
       <Group
         groupName="Tagi"
         items={tags}
-        searchValue={searchValue}
-        onClick={(newValue: string) => setSearchValue(newValue)}
+        searchValue={query ?? ""}
+        onClick={getHandleSelectGroupItem("tag")}
       />
     </Stack>
   );

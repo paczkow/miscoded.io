@@ -30,6 +30,7 @@ export const Top: React.FC<{}> = ({ children }) => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        backgroundAttachment: "fixed",
         "&:after": {
           position: "absolute",
           width: "100%",
