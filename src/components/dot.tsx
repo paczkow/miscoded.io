@@ -1,7 +1,7 @@
 import React from "react";
 import { css } from "@emotion/core";
 
-export const Dot = (
+export const Dot = () => (
   <div
     css={css`
       width: 4px;
