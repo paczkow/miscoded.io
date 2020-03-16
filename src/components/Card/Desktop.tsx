@@ -51,22 +51,24 @@ export const Card: React.FC<Post> = ({
           <Box padding="small">
             <Inline space="small">
               {categories.map(category => (
-                <span key={category} css={{ color: "#ffffff" }}>
-                  {category}
-                </span>
+                <Link to={`/search?q=${category}&t=category`} key={category}>
+                  <span css={{ fontSize: 14, color: "#ffffff" }}>
+                    {category}
+                  </span>
+                </Link>
               ))}
             </Inline>
           </Box>
         </div>
       </Image>
       <Box padding="small" paddingBottom="large">
-        <Stack space="small">
+        <Stack space="xsmall">
           <Link to={slug}>
             <h4>{title}</h4>
           </Link>
           <Inline space="xsmall">
-            <span>{date}</span>
-            <span>{readingTime} min. czytania</span>
+            <span css={{ fontSize: 14 }}>{date}</span>
+            <span css={{ fontSize: 14 }}>{readingTime} min. czytania</span>
           </Inline>
           <p>{excerpt}</p>
           <Link to={slug}>

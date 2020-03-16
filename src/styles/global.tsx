@@ -32,6 +32,7 @@ const GlobalStyles: React.FC<{ theme: Theme }> = ({ children, theme }) => (
           margin: 0;
           padding: 0;
           outline: none;
+          font-weight: 300;
         }
 
         *:focus {
@@ -45,6 +46,7 @@ const GlobalStyles: React.FC<{ theme: Theme }> = ({ children, theme }) => (
           color: ${theme.textSecondaryColor};
           margin: 0;
           padding: 0;
+          font-weight: 400;
         }
 
         h1 {

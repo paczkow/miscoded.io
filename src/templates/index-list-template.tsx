@@ -22,7 +22,10 @@ const Index = ({ data }: Props) => {
     color: "#aeaeae",
     hoverColor: "#ffffff",
   };
-
+  const descriptionFontStyle = {
+    fontFamily: "Source Code Pro",
+    fontWeight: 300,
+  };
   return (
     <Layout>
       <Top>
@@ -43,12 +46,20 @@ const Index = ({ data }: Props) => {
               textAlign: "center",
               color: "#ffffff",
               padding: "0 16px",
+              ...descriptionFontStyle,
             }}
           >
-            WITAM CIĘ W MIEJSCU W KTÓRYM WERYFIKUJĘ WIEDZĘ SWOJA DZIELĄC SIĘ NIĄ
+            WITAM CIĘ W MIEJSCU W KTÓRYM WERYFIKUJĘ SWOJĄ WIEDZĘ DZIELĄC SIĘ NIĄ
             Z TOBĄ
           </div>
-          <div css={{ position: "relative", zIndex: 1000, color: "#ffffff" }}>
+          <div
+            css={{
+              position: "relative",
+              zIndex: 1000,
+              color: "#ffffff",
+              ...descriptionFontStyle,
+            }}
+          >
             MICHAŁ PACZKÓW
           </div>
           <div css={{ position: "relative", zIndex: 1000 }}>
