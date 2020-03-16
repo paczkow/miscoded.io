@@ -88,13 +88,13 @@ const Index = ({ data }: Props) => {
       >
         <Grid>
           {allMarkdownRemark.edges.map(({ node }) => {
-            const postData = mapMarkdownRemarkToPost(node);
+            const post = mapMarkdownRemarkToPost(node);
 
             return (
-              <>
-                <MobileCard {...postData} />
-                <Card {...postData} />
-              </>
+              <div key={post.slug}>
+                <MobileCard {...post} />
+                <Card {...post} />
+              </div>
             );
           })}
         </Grid>

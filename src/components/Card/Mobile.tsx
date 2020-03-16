@@ -74,9 +74,7 @@ export const MobileCard: React.FC<Post> = ({
           <Inline space="xsmall">
             {categories.map(category => (
               <Link to={`/search?q=${category}&t=category`} key={category}>
-                <span key={category} css={{ fontSize: 14 }}>
-                  {category}
-                </span>
+                <span css={{ fontSize: 14 }}>{category}</span>
               </Link>
             ))}
           </Inline>

@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, FormEvent, useEffect } from "react";
 import { useQueryParam, StringParam } from "use-query-params";
-import { Index } from "elasticlunr";
 
+import { search } from "../../utils/search";
 import { Button } from "../Button";
 import { Stack } from "../Layout/Stack";
 import { Inline } from "../Layout/Inline";
@@ -14,31 +14,6 @@ interface FormProps {
   elasticLunrSearchIndex: any;
 }
 
-const toSearchConfig = (queryType: string | undefined) => {
-  switch (queryType) {
-    case undefined:
-      return {
-        expand: true,
-      };
-    case "category":
-      return {
-        fields: {
-          categories: { boost: 2 },
-        },
-      };
-    case "tag":
-      return {
-        fields: {
-          tags: { boost: 2 },
-        },
-      };
-    default:
-      return {
-        expand: true,
-      };
-  }
-};
-
 export const Form: React.FC<FormProps> = ({
   categories,
   tags,
@@ -49,37 +24,20 @@ export const Form: React.FC<FormProps> = ({
   const [queryType, setQueryType] = useQueryParam("t", StringParam);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, setSearchValue] = useState(query ?? "");
-
-  let searchIndex: Index<any> | null = null;
-  let searchConfig = {};
+  const [isDirty, setIsDirty] = useState(false);
 
   useEffect(() => {
-    searchConfig = toSearchConfig(queryType);
-    search();
+    isDirty &&
+      onChange(search(query ?? "", queryType ?? "", elasticLunrSearchIndex));
   }, [query, queryType]);
 
   const getHandleSelectGroupItem = (groupType: string) => (
     newValue: string
   ) => {
-    setSearchValue(newValue);
+    setIsDirty(true);
     setQuery(newValue);
     setQueryType(groupType);
-  };
-
-  const getOrCreateSearchIndex = () =>
-    searchIndex ? searchIndex : Index.load(elasticLunrSearchIndex.index);
-
-  const search = () => {
-    searchIndex = getOrCreateSearchIndex() as Index<any>;
-
-    const ids = query
-      ? searchIndex
-          .search(query ?? "", searchConfig)
-          .map(({ ref }) => searchIndex?.documentStore.getDoc(ref))
-          .map(item => item.id)
-      : null;
-
-    onChange(ids);
+    setSearchValue(newValue);
   };
 
   return (
@@ -96,9 +54,10 @@ export const Form: React.FC<FormProps> = ({
         }}
         value={query ?? ""}
         onChange={(e: FormEvent<HTMLInputElement>) => {
-          setSearchValue(e.currentTarget.value);
+          setIsDirty(true);
           setQuery(e.currentTarget.value);
           setQueryType(undefined);
+          setSearchValue(e.currentTarget.value);
         }}
         placeholder="Wyszukaj"
       />

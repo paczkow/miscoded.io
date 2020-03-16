@@ -1,33 +1,25 @@
 import React, { useState } from "react";
 import { graphql } from "gatsby";
+import qs from "query-string";
 
-import { mapMarkdownRemarkToPost } from "../utils/mapMarkdownRemarkToPost";
+import { search } from "../utils/search";
 import { Box } from "../components/Layout/Box/Box";
 import { Layout } from "../components/Layout/Layout";
 import { Top } from "../components/Layout/Top";
-import { Grid } from "../components/Layout/Grid";
-import { MobileCard } from "../components/Card/Mobile";
-import { Card } from "../components/Card/Desktop";
 import { Form } from "../components/Search/Form";
 import { Index } from "elasticlunr";
+import { FilteredPosts } from "../components/Search/Result";
 
 interface SearchProps {
   data: SearchQuery;
 }
 
 const Search: React.FC<SearchProps> = ({ data }) => {
-  const { tags, categories, posts, searchIndex } = data;
-  const [filteredPosts, setFilteredPosts] = useState([] as Post[]);
-
-  const handleChangeForm = (ids: string[] | null) => {
-    setFilteredPosts(
-      ids
-        ? posts.edges
-            .filter(({ node }) => ids.includes(node.id))
-            .map(({ node }) => mapMarkdownRemarkToPost(node))
-        : posts.edges.map(({ node }) => mapMarkdownRemarkToPost(node))
-    );
-  };
+  const { q: query, t: queryType } = qs.parse(location.search);
+  const { tags, categories, searchIndex } = data;
+  const [filteredIds, setFilteredIds] = useState<string[] | null>(
+    search(query as string, queryType as string, searchIndex)
+  );
 
   return (
     <Layout>
@@ -47,31 +39,12 @@ const Search: React.FC<SearchProps> = ({ data }) => {
               tags={tags.group}
               categories={categories.group}
               elasticLunrSearchIndex={searchIndex}
-              onChange={handleChangeForm}
+              onChange={ids => setFilteredIds(ids)}
             />
-            <Box paddingY="large">
-              <h4 css={{ color: "#ffffff", textAlign: "center" }}>
-                Znalezionych postów: {filteredPosts.length}
-              </h4>
-            </Box>
           </Box>
         </div>
       </Top>
-
-      <Box
-        paddingY={["large", "xlarge"]}
-        paddingX={["small", "large"]}
-        css={{ display: "flex", justifyContent: "center" }}
-      >
-        <Grid>
-          {filteredPosts.map(post => (
-            <div key={post.id}>
-              <MobileCard {...post} />
-              <Card {...post} />
-            </div>
-          ))}
-        </Grid>
-      </Box>
+      <FilteredPosts filteredIds={filteredIds} />
     </Layout>
   );
 };
@@ -88,47 +61,12 @@ interface SearchQuery {
   categories: {
     group: { fieldValue: string }[];
   };
-  posts: {
-    edges: {
-      node: MarkdowRemarkNode;
-    }[];
-  };
 }
 
 export const query = graphql`
   {
     searchIndex: siteSearchIndex {
       index
-    }
-    posts: allMarkdownRemark(
-      sort: { fields: [frontmatter___date], order: DESC }
-    ) {
-      edges {
-        node {
-          id
-          excerpt(pruneLength: 160)
-          frontmatter {
-            title
-            categories
-            date(formatString: "DD, MMMM YYYY", locale: "pl")
-            tags
-            image {
-              childImageSharp {
-                fluid {
-                  src
-                  tracedSVG
-                }
-              }
-            }
-          }
-          fields {
-            slug
-            readingTime {
-              minutes
-            }
-          }
-        }
-      }
     }
     tags: allMarkdownRemark {
       group(field: frontmatter___tags) {
