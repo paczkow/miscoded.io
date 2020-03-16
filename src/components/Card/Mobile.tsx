@@ -1,7 +1,7 @@
 import React from "react";
-import { Box } from "../layout/Box/Box";
-import { Stack } from "../layout/Stack";
-import { Inline } from "../layout/Inline";
+import { Box } from "../Layout/Box/Box";
+import { Stack } from "../Layout/Stack";
+import { Inline } from "../Layout/Inline";
 import { Link } from "gatsby";
 import { Image } from "./components/Image";
 import { getMinWidthMediaQuery } from "../../styles";
@@ -38,14 +38,16 @@ export const MobileCard: React.FC<Post> = ({
           }}
         >
           <Stack space="xsmall">
-            <h2
-              css={{
-                fontSize: 24,
-                color: "#ffffff",
-              }}
-            >
-              {title}
-            </h2>
+            <Link to="slug">
+              <h2
+                css={{
+                  fontSize: 24,
+                  color: "#ffffff",
+                }}
+              >
+                {title}
+              </h2>
+            </Link>
             <Inline space="small">
               <span
                 css={{

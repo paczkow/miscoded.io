@@ -1,14 +1,15 @@
 import React from "react";
 import { graphql } from "gatsby";
 
-import { Layout } from "../components/layout";
-import { Top } from "../components/layout/Top";
-import { Box } from "../components/layout/Box/Box";
-import { Stack } from "../components/layout/Stack";
+import { Layout, Inline } from "../components/Layout";
+import { Top } from "../components/Layout/Top";
+import { Box } from "../components/Layout/Box/Box";
+import { Stack } from "../components/Layout/Stack";
 import { MobileCard } from "../components/Card/Mobile";
 import { mapMarkdownRemarkToPost } from "../utils/mapMarkdownRemarkToPost";
 import { Card } from "../components/Card/Desktop";
-import { Grid } from "../components/layout/Grid";
+import { Grid } from "../components/Layout/Grid";
+import { Github, Linkedin, Rss, Twitter } from "../components/Icons/Social";
 
 interface Props {
   pageContext: PageContext;
@@ -17,6 +18,10 @@ interface Props {
 
 const Index = ({ data }: Props) => {
   const { allMarkdownRemark } = data;
+  const iconColors = {
+    color: "#aeaeae",
+    hoverColor: "#ffffff",
+  };
 
   return (
     <Layout>
@@ -45,6 +50,23 @@ const Index = ({ data }: Props) => {
           </div>
           <div css={{ position: "relative", zIndex: 1000, color: "#ffffff" }}>
             MICHAŁ PACZKÓW
+          </div>
+          <div css={{ position: "relative", zIndex: 1000 }}>
+            <Inline space="large">
+              <a title="Twitter" href="/twitter">
+                <Twitter {...iconColors} />
+              </a>
+
+              <a title="Github" href="/github">
+                <Github {...iconColors} />
+              </a>
+              <a title="Linkedin" href="/linkedin">
+                <Linkedin {...iconColors} />
+              </a>
+              <a title="Rss" href="/rss">
+                <Rss {...iconColors} />
+              </a>
+            </Inline>
           </div>
         </Stack>
       </Top>

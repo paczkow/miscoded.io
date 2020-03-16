@@ -1,8 +1,8 @@
 import React from "react";
-import { Box } from "../layout/Box/Box";
+import { Box } from "../Layout/Box/Box";
 import { Image } from "./components/Image";
-import { Inline } from "../layout/Inline";
-import { Stack } from "../layout/Stack";
+import { Inline } from "../Layout/Inline";
+import { Stack } from "../Layout/Stack";
 import { Link } from "gatsby";
 import { getMinWidthMediaQuery } from "../../styles";
 
@@ -61,7 +61,9 @@ export const Card: React.FC<Post> = ({
       </Image>
       <Box padding="small" paddingBottom="large">
         <Stack space="small">
-          <h4>{title}</h4>
+          <Link to={slug}>
+            <h4>{title}</h4>
+          </Link>
           <Inline space="xsmall">
             <span>{date}</span>
             <span>{readingTime} min. czytania</span>

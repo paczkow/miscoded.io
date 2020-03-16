@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { graphql } from "gatsby";
 
 import { mapMarkdownRemarkToPost } from "../utils/mapMarkdownRemarkToPost";
-import { Box } from "../components/layout/Box/Box";
-import { Layout } from "../components/layout/Layout";
-import { Top } from "../components/layout/Top";
-import { Grid } from "../components/layout/Grid";
+import { Box } from "../components/Layout/Box/Box";
+import { Layout } from "../components/Layout/Layout";
+import { Top } from "../components/Layout/Top";
+import { Grid } from "../components/Layout/Grid";
 import { MobileCard } from "../components/Card/Mobile";
 import { Card } from "../components/Card/Desktop";
 import { Form } from "../components/Search/Form";

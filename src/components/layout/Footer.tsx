@@ -3,7 +3,7 @@ import React from "react";
 import { Box } from "./Box/Box";
 import { Stack } from "./Stack";
 
-export const Footer = () => (
+export const Footer: React.FC = () => (
   <Box
     alignItems="center"
     justifyContent="center"

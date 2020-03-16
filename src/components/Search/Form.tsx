@@ -4,8 +4,8 @@ import { useQueryParam, StringParam } from "use-query-params";
 import { Index } from "elasticlunr";
 
 import { Button } from "../Button";
-import { Stack } from "../layout/Stack";
-import { Inline } from "../layout/Inline";
+import { Stack } from "../Layout/Stack";
+import { Inline } from "../Layout/Inline";
 
 interface FormProps {
   categories: { fieldValue: string }[];

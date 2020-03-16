@@ -70,9 +70,6 @@ const GlobalStyles: React.FC<{ theme: Theme }> = ({ children, theme }) => (
         a {
           text-decoration: none;
           color: black;
-          :hover {
-            color: blue;
-          }
         }
 
         .gatsby-highlight {

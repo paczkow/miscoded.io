@@ -1,8 +1,10 @@
 import React from "react";
+import { Link } from "gatsby";
 import { useInView } from "react-intersection-observer";
 
 import { Box } from "./Box/Box";
-import { SearchIcon } from "../icons/search";
+import { SearchIcon } from "../Icons/Search";
+import { getMinWidthMediaQuery } from "../../styles";
 
 export const Header = () => {
   const [ref, inView, entry] = useInView();
@@ -29,7 +31,7 @@ export const Header = () => {
         justifyContent="center"
         alignItems="center"
         css={{
-          zIndex: 10,
+          zIndex: 9999,
           width: "100%",
           position: "fixed",
           top: 0,
@@ -37,8 +39,26 @@ export const Header = () => {
           ...styles,
         }}
       >
-        <h1 css={{ marginLeft: "auto" }}>MISCODED.IO</h1>
-        <SearchIcon css={{ marginLeft: "auto" }} />
+        <Link to="/">
+          <h1
+            css={{
+              position: "relative",
+              color: inView ? "#ffffff" : "#000000",
+            }}
+          >
+            MISCODED.IO
+          </h1>
+        </Link>
+        <Link
+          to="/search"
+          css={{
+            position: "absolute",
+            right: 16,
+            [`${getMinWidthMediaQuery("minMedium")}`]: { right: 32 },
+          }}
+        >
+          <SearchIcon color={inView ? "#ffffff" : "#000000"} />
+        </Link>
       </Box>
     </header>
   );
