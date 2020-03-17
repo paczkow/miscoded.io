@@ -1,7 +1,7 @@
-const remark = require('remark');
-const stripMarkdown = require('strip-markdown');
+const remark = require("remark");
+const stripMarkdown = require("strip-markdown");
 
-const config = require('./config');
+const config = require("./config");
 
 module.exports = {
   siteMetadata: {
@@ -16,45 +16,52 @@ module.exports = {
     },
   },
   plugins: [
-    'gatsby-plugin-react-helmet',
-    'gatsby-transformer-sharp',
-    'gatsby-plugin-sharp',
+    "gatsby-plugin-react-helmet",
+    "gatsby-transformer-sharp",
+    "gatsby-plugin-sharp",
     {
-      resolve: 'gatsby-source-filesystem',
+      resolve: "gatsby-source-filesystem",
       options: {
-        name: 'blog',
+        name: "static",
+        path: `${__dirname}/static`,
+      },
+    },
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        name: "blog",
         path: `${__dirname}/content/blog`,
       },
     },
     {
-      resolve: 'gatsby-transformer-remark',
+      resolve: "gatsby-transformer-remark",
       options: {
         plugins: [
           {
-            resolve: 'gatsby-remark-images',
+            resolve: "gatsby-remark-images",
             options: {
               maxWidth: 590,
             },
           },
-          'gatsby-remark-reading-time',
+          "gatsby-remark-reading-time",
           `gatsby-remark-prismjs`,
         ],
       },
     },
-    'gatsby-plugin-emotion',
+    "gatsby-plugin-emotion",
     {
-      resolve: 'gatsby-plugin-web-font-loader',
+      resolve: "gatsby-plugin-web-font-loader",
       options: {
         google: {
-          families: ['Roboto:400,700,900'],
+          families: ["Roboto:300,400", "Source Code Pro:300"],
         },
       },
     },
     `gatsby-plugin-typescript`,
     {
-      resolve: '@gatsby-contrib/gatsby-plugin-elasticlunr-search',
+      resolve: "@gatsby-contrib/gatsby-plugin-elasticlunr-search",
       options: {
-        fields: ['title', 'excerpt', 'slug', 'categories', 'tags', 'date'],
+        fields: ["title", "excerpt", "slug", "categories", "tags", "date"],
         resolvers: {
           MarkdownRemark: {
             title: node => node.frontmatter.title,

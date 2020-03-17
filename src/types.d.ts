@@ -1,3 +1,5 @@
+type Dictionary<K extends string, T> = { [P in K]?: T };
+
 interface PageContext {
   totalPages: number;
   currentPage: number;
@@ -23,6 +25,7 @@ interface Post {
   date: string;
   excerpt: string;
   image: string;
+  tracedSVG: string;
   readingTime: number;
   slug: string;
   tags: string[];
@@ -45,6 +48,7 @@ interface MarkdowRemarkNode {
       childImageSharp: {
         fluid: {
           src: string;
+          tracedSVG: string;
         };
       };
     };

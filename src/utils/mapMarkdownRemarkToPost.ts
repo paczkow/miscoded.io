@@ -7,7 +7,8 @@ export const mapMarkdownRemarkToPost = (
   tags: markdownRemark.frontmatter.tags,
   date: markdownRemark.frontmatter.date,
   image: markdownRemark.frontmatter.image.childImageSharp.fluid.src,
+  tracedSVG: markdownRemark.frontmatter.image.childImageSharp.fluid.tracedSVG,
   excerpt: markdownRemark.excerpt,
-  readingTime: markdownRemark.fields.readingTime.minutes,
+  readingTime: Math.ceil(markdownRemark.fields.readingTime.minutes),
   slug: markdownRemark.fields.slug,
 });

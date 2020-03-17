@@ -2,7 +2,7 @@ import React from "react";
 import { Global, css } from "@emotion/core";
 import { withTheme } from "emotion-theming";
 
-import { Theme } from "./theme";
+import { Theme } from "../theme";
 import { getMinWidthMediaQuery } from "./media-queries";
 
 const GlobalStyles: React.FC<{ theme: Theme }> = ({ children, theme }) => (
@@ -25,14 +25,13 @@ const GlobalStyles: React.FC<{ theme: Theme }> = ({ children, theme }) => (
         }
 
         body {
-          background: ${theme.bgColor};
-          color: ${theme.textPrimaryColor};
+          color: #555555;
           line-height: var(--baseline);
           font-family: "Roboto", sans-serif;
           margin: 0;
           padding: 0;
-          overflow-x: hidden;
           outline: none;
+          font-weight: 300;
         }
 
         *:focus {
@@ -43,31 +42,26 @@ const GlobalStyles: React.FC<{ theme: Theme }> = ({ children, theme }) => (
         h2,
         h3,
         h4 {
-          color: ${theme.textSecondaryColor};
+          color: #404040;
+          margin: 0;
+          padding: 0;
+          font-weight: 400;
         }
 
         h1 {
           font-size: calc(var(--baseline) * 1.25rem);
-          margin-top: calc(var(--baseline) * 1rem);
-          margin-bottom: calc(var(--baseline) * 1rem);
         }
 
         h2 {
           font-size: calc(var(--baseline) * 1rem);
-          margin-top: 1rem;
-          margin-bottom: 1rem;
         }
 
         h3 {
           font-size: calc(var(--baseline) * 1rem);
-          margin-top: 1rem;
-          margin-bottom: 1rem;
         }
 
         h4 {
           font-size: calc(var(--baseline) * 0.75rem);
-          margin-top: 0.5rem;
-          margin-bottom: 0.5rem;
         }
 
         p {
@@ -77,16 +71,13 @@ const GlobalStyles: React.FC<{ theme: Theme }> = ({ children, theme }) => (
         a {
           text-decoration: none;
           color: black;
-          :hover {
-            color: blue;
-          }
         }
 
         .gatsby-highlight {
           overflow: auto;
         }
 
-        ${getMinWidthMediaQuery("maxWidthOfMobileContainer")} {
+        ${getMinWidthMediaQuery("minMedium")} {
           :root {
             --baseline: 1.7778;
           }
