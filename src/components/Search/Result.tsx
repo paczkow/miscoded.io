@@ -5,6 +5,7 @@ import { MobileCard } from "../Card/Mobile";
 import { Card } from "../Card/Desktop";
 import { mapMarkdownRemarkToPost } from "../../utils/mapMarkdownRemarkToPost";
 import { graphql, useStaticQuery } from "gatsby";
+import { Stack } from "../Layout";
 
 interface FilteredPostsProps {
   filteredIds: string[] | null;
@@ -75,14 +76,17 @@ export const FilteredPosts: React.FC<FilteredPostsProps> = ({
       paddingX={["small", "large"]}
       css={{ display: "flex", justifyContent: "center" }}
     >
-      <Grid>
-        {filteredPosts.map(post => (
-          <div key={post.id}>
-            <MobileCard {...post} />
-            <Card {...post} />
-          </div>
-        ))}
-      </Grid>
+      <Stack align="center" space={["large", "xlarge"]}>
+        <h2>Znalezione posty: {filteredPosts.length}</h2>
+        <Grid>
+          {filteredPosts.map(post => (
+            <div key={post.id}>
+              <MobileCard {...post} />
+              <Card {...post} />
+            </div>
+          ))}
+        </Grid>
+      </Stack>
     </Box>
   );
 };

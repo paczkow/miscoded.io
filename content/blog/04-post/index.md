@@ -9,7 +9,8 @@ categories:
   - Events
   - Portugal
 tags:
-  - Porto
+  - react
+  - redux
 ---
 
 Rut ro, Rastro... well, the zeitgeist is just full of Kris Bryant news, as usual, only this time it’s actual news as Bryant held a no-holds-barred presser. Of course it was covered on the front page by our peerless leader but we’ll have a little bit of the KB here, too, largely because that’s all there is.

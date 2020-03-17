@@ -47,6 +47,7 @@ export const Form: React.FC<FormProps> = ({
           width: 200,
           background: "transparent",
           border: 0,
+          borderRadius: 0,
           borderBottom: "1px solid #ffffff",
           padding: 8,
           fontSize: 16,

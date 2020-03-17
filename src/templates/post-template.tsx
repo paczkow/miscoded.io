@@ -98,7 +98,9 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ data }) => {
                           color: "#000000",
                         },
                       }}
-                    >{`#${tag.toLocaleLowerCase()}`}</span>
+                    >
+                      {tag}
+                    </span>
                   </Link>
                 ))}
               </Inline>

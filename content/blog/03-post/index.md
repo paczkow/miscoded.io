@@ -9,7 +9,7 @@ categories:
   - Events
   - Portugal
 tags:
-  - Porto
+  - javascript
 ---
 
 RIO DE JANEIRO -- Brazil is ramping up toward the world's most famous Carnival celebrations and already the dogs have had their day.

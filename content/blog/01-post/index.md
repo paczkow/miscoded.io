@@ -9,7 +9,7 @@ categories:
   - Events
   - Portugal
 tags:
-  - Porto
+  -  porto
 ---
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ut porttitor augue, at accumsan mi. Integer pellentesque dui enim, sit amet euismod mauris gravida eget. Pellentesque nisl felis, rhoncus eget venenatis et, viverra eget tortor. Ut facilisis lectus non euismod aliquam. In porttitor mi at volutpat ullamcorper. Aliquam egestas dui ut nisl elementum suscipit. Sed ac convallis erat, sagittis luctus mauris. Maecenas eleifend turpis sit amet commodo efficitur. Maecenas quam diam, gravida non orci porta, imperdiet facilisis risus. Vivamus placerat sagittis purus, porta rutrum dolor porta sit amet. Vivamus consectetur mollis nunc a fringilla. Sed in pretium quam.

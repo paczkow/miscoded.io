@@ -18,8 +18,8 @@ export const Footer: React.FC = () => (
           top: 0,
           margin: 0,
           width: "100%",
-          border: "1px solid #f3f3f3",
-          boxShadow: "0px 10px 40px rgba(0, 0, 0, 0.6)",
+          border: "1px solid #f7f7f7",
+          boxShadow: "0px 30px 40px rgba(0, 0, 0, 0.3)",
         }}
       />
       <Stack space="xsmall" align="center">

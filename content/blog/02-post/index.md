@@ -8,8 +8,8 @@ categories:
   - News
   - Events
 tags:
-  - Portugal
-  - Porto
+  - portugal
+  - porto
 ---
 
 Thousands of them washed up on Lake Michigan's icy shore Friday.
