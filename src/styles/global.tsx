@@ -25,8 +25,7 @@ const GlobalStyles: React.FC<{ theme: Theme }> = ({ children, theme }) => (
         }
 
         body {
-          background: ${theme.bgColor};
-          color: ${theme.textPrimaryColor};
+          color: #555555;
           line-height: var(--baseline);
           font-family: "Roboto", sans-serif;
           margin: 0;
@@ -43,7 +42,7 @@ const GlobalStyles: React.FC<{ theme: Theme }> = ({ children, theme }) => (
         h2,
         h3,
         h4 {
-          color: ${theme.textSecondaryColor};
+          color: #404040;
           margin: 0;
           padding: 0;
           font-weight: 400;

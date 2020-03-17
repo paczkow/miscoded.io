@@ -1,9 +1,9 @@
 export const theme = {
   accentColor: "",
-  bgColor: "#fff",
+  bgColor: "#ffffff",
   separatorColor: "",
-  textPrimaryColor: "",
-  textSecondaryColor: "",
+  textPrimaryColor: "#555555",
+  textSecondaryColor: "#404040",
 
   space: {
     none: 0,

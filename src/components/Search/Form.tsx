@@ -101,9 +101,7 @@ const Group: React.FC<GroupProps> = ({
             onClick={() => onClick(groupItem.fieldValue)}
             isSelected={isSelected}
           >
-            <span css={{ color: `${isSelected ? "#000000" : "#ffffff"}` }}>
-              {groupItem.fieldValue}
-            </span>
+            <span>{groupItem.fieldValue}</span>
           </Button>
         );
       })}

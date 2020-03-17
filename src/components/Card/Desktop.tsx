@@ -52,7 +52,13 @@ export const Card: React.FC<Post> = ({
             <Inline space="small">
               {categories.map(category => (
                 <Link to={`/search?q=${category}&t=category`} key={category}>
-                  <span css={{ fontSize: 14, color: "#ffffff" }}>
+                  <span
+                    css={{
+                      fontSize: 14,
+                      color: "#e7e7e7",
+                      "&:hover": { color: "#ffffff" },
+                    }}
+                  >
                     {category}
                   </span>
                 </Link>
@@ -64,7 +70,16 @@ export const Card: React.FC<Post> = ({
       <Box padding="small" paddingBottom="large">
         <Stack space="xsmall">
           <Link to={slug}>
-            <h4>{title}</h4>
+            <h4
+              css={{
+                display: "inline",
+                "&:hover": {
+                  color: "#000000",
+                },
+              }}
+            >
+              {title}
+            </h4>
           </Link>
           <Inline space="xsmall">
             <span css={{ fontSize: 14 }}>{date}</span>
@@ -75,6 +90,10 @@ export const Card: React.FC<Post> = ({
             <h4
               css={{
                 fontSize: "18px",
+                display: "inline",
+                "&:hover": {
+                  color: "#000000",
+                },
               }}
             >
               Czytaj więcej
