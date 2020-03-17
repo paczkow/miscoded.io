@@ -6,7 +6,7 @@ export const Dot = () => (
     css={css`
       width: 4px;
       height: 4px;
-      background: #000;
+      background: #555555;
       border-radius: 50%;
     `}
   />

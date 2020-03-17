@@ -1,14 +1,10 @@
 import React from "react";
 import { graphql, Link } from "gatsby";
-import { css } from "@emotion/core";
-import { Layout } from "../components/layout";
-import { Top } from "../components/layout/Top";
-import { Stack } from "../components/layout/Stack";
-import { Inline } from "../components/layout/Inline";
-import { Box } from "../components/layout/Box/Box";
-import { Dot } from "../components/dot";
-import { Button } from "../components/Button";
-import { Linkedin, Twitter } from "../components/icons/social";
+
+import { Layout, Inline, Box, Stack, Top } from "../components/Layout";
+import { Dot } from "../components/Dot";
+import { Linkedin, Twitter } from "../components/Icons/Social";
+import { getMinWidthMediaQuery } from "../styles";
 
 interface PostTemplateProps {
   pageContext: PageContext;
@@ -19,63 +15,102 @@ interface PostTemplateProps {
 
 const PostTemplate: React.FC<PostTemplateProps> = ({ data }) => {
   const {
-    frontmatter: { categories, title, date, tags },
+    frontmatter: { categories, title, date, tags, image },
     fields: { readingTime },
     html,
   } = data.markdownRemark;
 
   return (
     <Layout>
-      <Top>
-        <Box css={{ position: "relative", zIndex: 10 }}>
-          <Stack space={["large", "xlarge"]} align="center">
+      <Top background={image.childImageSharp}>
+        <Box paddingX="small" css={{ position: "relative", zIndex: 10 }}>
+          <Stack space="large" align="center">
             <h1 css={{ color: "#ffffff", textAlign: "center" }}>{title}</h1>
-            <Inline space="xsmall">
-              <span css={{ color: "#ffffff" }}>{date}</span>
-              <span css={{ color: "#ffffff" }}>
-                {readingTime.minutes} min. czytania
+            <Inline space="small">
+              <span css={{ fontSize: 14, color: "#ffffff" }}>{date}</span>
+              <span css={{ fontSize: 14, color: "#ffffff" }}>
+                {Math.ceil(readingTime.minutes)} min. czytania
               </span>
             </Inline>
           </Stack>
         </Box>
+        <small
+          css={{
+            zIndex: 10,
+            position: "absolute",
+            bottom: 8,
+            color: "#efefef",
+            fontSize: 12,
+          }}
+        >
+          Zdjęcie: John Photo (unsphlash)
+        </small>
       </Top>
       <Box
-        paddingY={["large", "xlarge"]}
+        paddingY={["large", "large"]}
         paddingX={["small", "large"]}
         css={{ maxWidth: "39rem", margin: "0 auto" }}
         justifyContent="center"
       >
-        <Stack space={["medium", "medium", "xlarge"]}>
-          <Inline space="xsmall">
-            {categories.map(category => (
-              <span key={category}>{category}</span>
-            ))}
-          </Inline>
-          <div
-            dangerouslySetInnerHTML={{ __html: html ?? "Content not provided" }}
-          />
-          <Stack align="center" space="medium">
+        <Stack space={["medium", "medium", "large"]}>
+          <Stack space="small">
             <Inline space="small">
-              <Dot /> <Dot /> <Dot />
-            </Inline>
-            <Inline space="xsmall">
-              {tags.map(tag => (
-                <Button key={tag}>{tag}</Button>
+              {categories.map(category => (
+                <Link to={`/search?q=${category}&t=category`} key={category}>
+                  <span
+                    css={{
+                      fontSize: 16,
+                      color: "#555555",
+                      "&:hover": { color: "#000000" },
+                    }}
+                  >
+                    {category}
+                  </span>
+                </Link>
               ))}
             </Inline>
-            <Inline space="xsmall" align="center">
-              <span>Skomentuj</span>
-              <Dot />
-              <span>
-                Udostępnij:
-                <i css={{ marginLeft: 16 }}>
-                  <Linkedin />
-                </i>
-                <i css={{ marginLeft: 16 }}>
-                  <Twitter />
-                </i>
-              </span>
+            <Share facebook="" twitter="" />
+          </Stack>
+          <div
+            css={{
+              "& > *": {
+                marginBottom: 16,
+              },
+              [`${getMinWidthMediaQuery("minMedium")}`]: {
+                fontSize: 20,
+              },
+            }}
+            dangerouslySetInnerHTML={{ __html: html ?? "Content not provided" }}
+          />
+          <Stack space="large">
+            <Inline space="small" align="center">
+              <Dot /> <Dot /> <Dot />
             </Inline>
+            <Stack align="center" space="small">
+              <Inline space="small">
+                {tags.map(tag => (
+                  <Link to={`/search?q=${tag}&t=tag`} key={tag}>
+                    <span
+                      css={{
+                        fontSize: 16,
+                        color: "#555555",
+                        "&:hover": {
+                          color: "#000000",
+                        },
+                      }}
+                    >{`#${tag.toLocaleLowerCase()}`}</span>
+                  </Link>
+                ))}
+              </Inline>
+              <Stack space="small" align="center">
+                <a title="Twitter" href="">
+                  <span css={{ fontWeight: 400 }}>Skomentuj (Twitter)</span>
+                </a>
+                <div css={{ display: "flex", alignItems: "center" }}>
+                  <Share facebook="" twitter="" />
+                </div>
+              </Stack>
+            </Stack>
           </Stack>
         </Stack>
       </Box>
@@ -84,6 +119,33 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ data }) => {
 };
 
 export default PostTemplate;
+
+interface ShareProps {
+  facebook: string;
+  twitter: string;
+}
+
+const Share: React.FC<ShareProps> = ({ facebook, twitter }) => {
+  const iconColors = {
+    color: "#555555",
+    hoverColor: "#000000",
+  };
+
+  return (
+    <Inline space="small">
+      <a title="Facebook" href={facebook}>
+        <i>
+          <Linkedin {...iconColors} />
+        </i>
+      </a>
+      <a title="Twitter" href={twitter}>
+        <i>
+          <Twitter {...iconColors} />
+        </i>
+      </a>
+    </Inline>
+  );
+};
 
 export const query = graphql`
   query($slug: String!) {

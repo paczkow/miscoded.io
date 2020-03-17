@@ -4,7 +4,15 @@ import { Box } from "./Box/Box";
 import { useStaticQuery, graphql } from "gatsby";
 import { getMinWidthMediaQuery } from "../../styles";
 
-export const Top: React.FC<{}> = ({ children }) => {
+interface TopProps {
+  background?: {
+    fluid: {
+      src: string;
+    };
+  };
+}
+
+export const Top: React.FC<TopProps> = ({ children, background }) => {
   const { image } = useStaticQuery(graphql`
     query {
       image: imageSharp(id: { regex: "/b/" }) {
@@ -25,8 +33,11 @@ export const Top: React.FC<{}> = ({ children }) => {
       css={{
         width: "100%",
         height: 512,
-        background: `url("${image.fluid.src}") rgba(0, 0, 0, 1)`,
+        background: `url("${
+          background ? background.fluid.src : image.fluid.src
+        }") rgba(0, 0, 0, 1)`,
         backgroundSize: "cover",
+        backgroundPosition: "center",
         position: "relative",
         display: "flex",
         justifyContent: "center",

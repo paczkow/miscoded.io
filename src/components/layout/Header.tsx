@@ -11,7 +11,7 @@ export const Header = () => {
   const isScrolled = entry && !inView;
   const styles = isScrolled
     ? {
-        background: "rgba(255, 255, 255, 1)",
+        background: "#fefefe",
         color: "black",
         fill: "black",
       }

@@ -25,7 +25,8 @@ const GlobalStyles: React.FC<{ theme: Theme }> = ({ children, theme }) => (
         }
 
         body {
-          color: #555555;
+          color: #424242;
+          background: #fefefe;
           line-height: var(--baseline);
           font-family: "Roboto", sans-serif;
           margin: 0;
