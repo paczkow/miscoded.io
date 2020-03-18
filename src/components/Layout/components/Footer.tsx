@@ -1,7 +1,7 @@
 import React from "react";
 
-import { Box } from "./Box/Box";
-import { Stack } from "./Stack";
+import { Box } from "../../foundations/layout/Box/Box";
+import { Stack } from "../../foundations/layout/Stack";
 
 export const Footer: React.FC = () => (
   <footer>

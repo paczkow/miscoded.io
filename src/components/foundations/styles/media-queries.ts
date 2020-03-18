@@ -1,4 +1,4 @@
-import { theme } from "../theme";
+import { theme } from "../../../theme";
 
 type Breakpoints = keyof typeof theme.breakpoints;
 

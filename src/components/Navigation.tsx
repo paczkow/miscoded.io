@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "gatsby";
 import { css, SerializedStyles } from "@emotion/core";
-import { getMaxWidthMediaQuery } from "../styles";
+import { getMaxWidthMediaQuery } from "./foundations/styles";
 
 interface Props {
   currentPage: number;

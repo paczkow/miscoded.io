@@ -7,7 +7,7 @@ module.exports = (edges, createPage) => {
   for (let i = 0; i < numPages; i++) {
     createPage({
       path: i === 0 ? "/" : `/page/${i + 1}`,
-      component: path.resolve("./src/templates/index-list-template.tsx"),
+      component: path.resolve("./src/templates/index.tsx"),
       context: {
         totalPages: numPages,
         currentPage: i + 1,

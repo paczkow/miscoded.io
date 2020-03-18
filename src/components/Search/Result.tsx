@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Grid } from "../Layout/Grid";
-import { Box } from "..";
-import { MobileCard } from "../Card/Mobile";
-import { Card } from "../Card/Desktop";
+import { Grid } from "../Grid";
+import { Box } from "../foundations/layout/Box/Box";
+import { MobileCard } from "../cards/Mobile";
+import { Card } from "../cards/Desktop";
 import { mapMarkdownRemarkToPost } from "../../utils/mapMarkdownRemarkToPost";
 import { graphql, useStaticQuery } from "gatsby";
 import { Stack } from "../Layout";

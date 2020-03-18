@@ -4,8 +4,8 @@ import { useQueryParam, StringParam } from "use-query-params";
 
 import { search } from "../../utils/search";
 import { Button } from "../Button";
-import { Stack } from "../Layout/Stack";
-import { Inline } from "../Layout/Inline";
+import { Stack } from "../foundations/layout/Stack";
+import { Inline } from "../foundations/layout/Inline";
 
 interface FormProps {
   categories: { fieldValue: string }[];
@@ -37,7 +37,7 @@ export const Form: React.FC<FormProps> = ({
     setIsDirty(true);
     setQuery(newValue);
     setQueryType(groupType);
-    setSearchValue(newValue);
+    setSearchValue(`${newValue}${groupType}`);
   };
 
   return (
@@ -65,13 +65,17 @@ export const Form: React.FC<FormProps> = ({
       <Group
         groupName="Kategorie"
         items={categories}
-        searchValue={query ?? ""}
+        itemsType="category"
+        query={query ?? ""}
+        queryType={queryType}
         onClick={getHandleSelectGroupItem("category")}
       />
       <Group
         groupName="Tagi"
+        itemsType="tag"
         items={tags}
-        searchValue={query ?? ""}
+        query={query ?? ""}
+        queryType={queryType}
         onClick={getHandleSelectGroupItem("tag")}
       />
     </Stack>
@@ -81,7 +85,9 @@ export const Form: React.FC<FormProps> = ({
 interface GroupProps {
   groupName: string;
   items: { fieldValue: string }[];
-  searchValue: string;
+  itemsType: string;
+  query: string;
+  queryType: string | undefined;
   onClick: (newValue: string) => void;
 }
 
@@ -89,20 +95,27 @@ const Group: React.FC<GroupProps> = ({
   groupName,
   items,
   onClick,
-  searchValue,
+  query,
+  queryType,
+  itemsType,
 }) => (
   <Stack space="small" align="center">
     <h4 css={{ color: "#ffffff" }}>{groupName}</h4>
-    <Inline space="small">
+    <Inline space="small" align="center">
       {items.map(groupItem => {
-        const isSelected = groupItem.fieldValue === searchValue;
+        const isSelected =
+          groupItem.fieldValue === query && queryType == itemsType;
+
         return (
           <Button
             key={groupItem.fieldValue}
             onClick={() => onClick(groupItem.fieldValue)}
             isSelected={isSelected}
           >
-            <span>{groupItem.fieldValue}</span>
+            <span>
+              {itemsType === "tag" ? "#" : ""}
+              {groupItem.fieldValue}
+            </span>
           </Button>
         );
       })}

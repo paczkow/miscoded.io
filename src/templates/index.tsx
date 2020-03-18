@@ -2,14 +2,14 @@ import React from "react";
 import { graphql } from "gatsby";
 
 import { Layout, Inline } from "../components/Layout";
-import { Top } from "../components/Layout/Top";
-import { Box } from "../components/Layout/Box/Box";
-import { Stack } from "../components/Layout/Stack";
-import { MobileCard } from "../components/Card/Mobile";
+import { Top } from "../components/BackgroundImage";
+import { Box } from "../components/foundations/layout/Box/Box";
+import { Stack } from "../components/foundations/layout/Stack";
+import { MobileCard } from "../components/cards/Mobile";
 import { mapMarkdownRemarkToPost } from "../utils/mapMarkdownRemarkToPost";
-import { Card } from "../components/Card/Desktop";
-import { Grid } from "../components/Layout/Grid";
-import { Github, Linkedin, Rss, Twitter } from "../components/Icons/Social";
+import { Card } from "../components/cards/Desktop";
+import { Grid } from "../components/Grid";
+import { Github, Linkedin, Rss, Twitter } from "../components/icons/Social";
 
 interface Props {
   pageContext: PageContext;

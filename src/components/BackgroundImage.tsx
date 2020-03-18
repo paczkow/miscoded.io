@@ -1,8 +1,8 @@
 import React from "react";
 
-import { Box } from "./Box/Box";
+import { Box } from "./foundations/layout/Box/Box";
 import { useStaticQuery, graphql } from "gatsby";
-import { getMinWidthMediaQuery } from "../../styles";
+import { getMinWidthMediaQuery } from "./foundations/styles";
 
 interface TopProps {
   background?: {

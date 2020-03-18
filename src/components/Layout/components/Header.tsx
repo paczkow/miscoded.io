@@ -2,9 +2,9 @@ import React from "react";
 import { Link } from "gatsby";
 import { useInView } from "react-intersection-observer";
 
-import { Box } from "./Box/Box";
-import { SearchIcon } from "../Icons/Search";
-import { getMinWidthMediaQuery } from "../../styles";
+import { Box } from "../../foundations/layout/Box/Box";
+import { SearchIcon } from "../../icons/Search";
+import { getMinWidthMediaQuery } from "../../foundations/styles";
 
 export const Header = () => {
   const [ref, inView, entry] = useInView();

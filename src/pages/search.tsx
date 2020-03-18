@@ -3,9 +3,9 @@ import { graphql } from "gatsby";
 import qs from "query-string";
 
 import { search } from "../utils/search";
-import { Box } from "../components/Layout/Box/Box";
+import { Box } from "../components/foundations/layout/Box/Box";
 import { Layout } from "../components/Layout/Layout";
-import { Top } from "../components/Layout/Top";
+import { Top } from "../components/BackgroundImage";
 import { Form } from "../components/Search/Form";
 import { Index } from "elasticlunr";
 import { FilteredPosts } from "../components/Search/Result";

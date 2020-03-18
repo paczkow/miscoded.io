@@ -3,8 +3,8 @@ import { graphql, Link } from "gatsby";
 
 import { Layout, Inline, Box, Stack, Top } from "../components/Layout";
 import { Dot } from "../components/Dot";
-import { Linkedin, Twitter } from "../components/Icons/Social";
-import { getMinWidthMediaQuery } from "../styles";
+import { Linkedin, Twitter } from "../components/icons/Social";
+import { getMinWidthMediaQuery } from "../components/foundations/styles";
 
 interface PostTemplateProps {
   pageContext: PageContext;
@@ -99,7 +99,7 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ data }) => {
                         },
                       }}
                     >
-                      {tag}
+                      #{tag}
                     </span>
                   </Link>
                 ))}

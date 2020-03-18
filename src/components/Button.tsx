@@ -26,6 +26,7 @@ export const Button: React.FC<ButtonProps> = ({
         border: "2px solid #ffffff",
       },
       "& > span": {
+        fontSize: 14,
         color: `${isSelected ? "#000000" : "#aeaeae"}`,
       },
       "&:hover > span": {

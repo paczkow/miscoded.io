@@ -1,10 +1,10 @@
 import React from "react";
-import { Box } from "../Layout/Box/Box";
+import { Box } from "../foundations/layout/Box/Box";
 import { Image } from "./components/Image";
-import { Inline } from "../Layout/Inline";
-import { Stack } from "../Layout/Stack";
+import { Inline } from "../foundations/layout/Inline";
+import { Stack } from "../foundations/layout/Stack";
 import { Link } from "gatsby";
-import { getMinWidthMediaQuery } from "../../styles";
+import { getMinWidthMediaQuery } from "../foundations/styles";
 
 export const Card: React.FC<Post> = ({
   title,

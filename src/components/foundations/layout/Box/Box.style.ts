@@ -1,4 +1,4 @@
-import { Space } from "../../../theme";
+import { Space } from "../../../../theme";
 import { isMapObject } from "../utils/responsiveProp";
 
 export interface BoxProps {

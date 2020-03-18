@@ -1,6 +1,6 @@
 import React from "react";
 
-import { getMinWidthMediaQuery } from "../../styles/media-queries";
+import { getMinWidthMediaQuery } from "./foundations/styles";
 
 export const Grid: React.FC = ({ children }) => (
   <div
