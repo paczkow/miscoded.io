@@ -90,10 +90,10 @@ const Index = ({ data }: Props) => {
             const post = mapMarkdownRemarkToPost(node);
 
             return (
-              <div key={post.slug}>
+              <article key={post.slug}>
                 <MobileCard {...post} />
                 <Card {...post} />
-              </div>
+              </article>
             );
           })}
         </Grid>

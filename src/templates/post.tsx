@@ -1,5 +1,6 @@
 import React from "react";
 import { graphql, Link } from "gatsby";
+import Markdown from "react-markdown";
 
 import { Box, Stack, Inline } from "../components/foundations/layout";
 import { getMinWidthMediaQuery } from "../components/foundations/styles";
@@ -17,7 +18,7 @@ interface PostTemplateProps {
 
 const PostTemplate: React.FC<PostTemplateProps> = ({ data }) => {
   const {
-    frontmatter: { categories, title, date, tags, image },
+    frontmatter: { categories, title, date, tags, image, imageCredit },
     fields: { readingTime },
     html,
   } = data.markdownRemark;
@@ -36,17 +37,23 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ data }) => {
             </Inline>
           </Stack>
         </Box>
-        <small
+        <Markdown
           css={{
             zIndex: 10,
             position: "absolute",
             bottom: 8,
-            color: "#efefef",
+            color: "#aeaeae",
             fontSize: 12,
+            "& a": {
+              color: "#aeaeae",
+              "&:hover": {
+                color: "#ffffff",
+              },
+            },
           }}
         >
-          Zdjęcie: John Photo (unsphlash)
-        </small>
+          {imageCredit}
+        </Markdown>
       </BackgroundImage>
       <Box
         paddingY={["large", "large"]}
@@ -73,7 +80,7 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ data }) => {
             </Inline>
             <Share facebook="" twitter="" />
           </Stack>
-          <div
+          <article
             css={{
               "& > *": {
                 marginBottom: 16,
@@ -167,6 +174,7 @@ export const query = graphql`
             }
           }
         }
+        imageCredit
       }
       fields {
         slug

@@ -52,6 +52,7 @@ interface MarkdowRemarkNode {
         };
       };
     };
+    imageCredit: string;
     tags: string[];
     title: string;
   };

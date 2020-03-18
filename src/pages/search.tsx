@@ -53,6 +53,7 @@ export default Search;
 
 interface SearchQuery {
   searchIndex: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     index: Index<any>;
   };
   tags: {
