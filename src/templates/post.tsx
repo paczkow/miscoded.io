@@ -1,10 +1,12 @@
 import React from "react";
 import { graphql, Link } from "gatsby";
 
-import { Layout, Inline, Box, Stack, Top } from "../components/Layout";
+import { Box, Stack, Inline } from "../components/foundations/layout";
+import { getMinWidthMediaQuery } from "../components/foundations/styles";
+import { Layout } from "../components/Layout";
+import { BackgroundImage } from "../components/BackgroundImage";
 import { Dot } from "../components/Dot";
 import { Linkedin, Twitter } from "../components/icons/Social";
-import { getMinWidthMediaQuery } from "../components/foundations/styles";
 
 interface PostTemplateProps {
   pageContext: PageContext;
@@ -22,7 +24,7 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ data }) => {
 
   return (
     <Layout>
-      <Top background={image.childImageSharp}>
+      <BackgroundImage background={image.childImageSharp}>
         <Box paddingX="small" css={{ position: "relative", zIndex: 10 }}>
           <Stack space="large" align="center">
             <h1 css={{ color: "#ffffff", textAlign: "center" }}>{title}</h1>
@@ -45,7 +47,7 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ data }) => {
         >
           Zdjęcie: John Photo (unsphlash)
         </small>
-      </Top>
+      </BackgroundImage>
       <Box
         paddingY={["large", "large"]}
         paddingX={["small", "large"]}

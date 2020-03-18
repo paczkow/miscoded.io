@@ -1,10 +1,9 @@
 import React from "react";
-import { Box } from "../foundations/layout/Box/Box";
-import { Stack } from "../foundations/layout/Stack";
-import { Inline } from "../foundations/layout/Inline";
 import { Link } from "gatsby";
-import { Image } from "./components/Image";
+
+import { Box, Inline, Stack } from "../foundations/layout";
 import { getMinWidthMediaQuery } from "../foundations/styles";
+import { Image } from "./components/Image";
 
 export const MobileCard: React.FC<Post> = ({
   title,

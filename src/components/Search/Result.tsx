@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { graphql, useStaticQuery } from "gatsby";
+
+import { Box, Stack } from "../foundations/layout";
 import { Grid } from "../Grid";
-import { Box } from "../foundations/layout/Box/Box";
 import { MobileCard } from "../cards/Mobile";
 import { Card } from "../cards/Desktop";
 import { mapMarkdownRemarkToPost } from "../../utils/mapMarkdownRemarkToPost";
-import { graphql, useStaticQuery } from "gatsby";
-import { Stack } from "../Layout";
 
 interface FilteredPostsProps {
   filteredIds: string[] | null;

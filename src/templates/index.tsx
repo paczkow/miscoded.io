@@ -1,15 +1,14 @@
 import React from "react";
 import { graphql } from "gatsby";
 
-import { Layout, Inline } from "../components/Layout";
-import { Top } from "../components/BackgroundImage";
-import { Box } from "../components/foundations/layout/Box/Box";
-import { Stack } from "../components/foundations/layout/Stack";
-import { MobileCard } from "../components/cards/Mobile";
-import { mapMarkdownRemarkToPost } from "../utils/mapMarkdownRemarkToPost";
+import { Box, Stack, Inline } from "../components/foundations/layout";
+import { Layout } from "../components/Layout";
+import { BackgroundImage } from "../components/BackgroundImage";
 import { Card } from "../components/cards/Desktop";
+import { MobileCard } from "../components/cards/Mobile";
 import { Grid } from "../components/Grid";
-import { Github, Linkedin, Rss, Twitter } from "../components/icons/Social";
+import { Github, Linkedin, Rss, Twitter } from "../components/icons";
+import { mapMarkdownRemarkToPost } from "../utils/mapMarkdownRemarkToPost";
 
 interface Props {
   pageContext: PageContext;
@@ -28,7 +27,7 @@ const Index = ({ data }: Props) => {
   };
   return (
     <Layout>
-      <Top>
+      <BackgroundImage>
         <Stack
           space="large"
           align="center"
@@ -80,7 +79,7 @@ const Index = ({ data }: Props) => {
             </Inline>
           </div>
         </Stack>
-      </Top>
+      </BackgroundImage>
       <Box
         paddingY={["large", "xlarge"]}
         paddingX={["small", "large"]}

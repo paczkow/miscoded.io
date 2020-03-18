@@ -2,10 +2,9 @@
 import React, { useState, FormEvent, useEffect } from "react";
 import { useQueryParam, StringParam } from "use-query-params";
 
-import { search } from "../../utils/search";
+import { Stack, Inline } from "../foundations/layout";
 import { Button } from "../Button";
-import { Stack } from "../foundations/layout/Stack";
-import { Inline } from "../foundations/layout/Inline";
+import { search } from "../../utils/search";
 
 interface FormProps {
   categories: { fieldValue: string }[];

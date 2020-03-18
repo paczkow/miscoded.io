@@ -1,4 +1,5 @@
 import React from "react";
+
 import { Header } from "./components/Header";
 import { GlobalStyles } from "../foundations/styles";
 import { Footer } from "./components/Footer";

@@ -1,10 +1,10 @@
 import React from "react";
+import { useStaticQuery, graphql } from "gatsby";
 
 import { Box } from "./foundations/layout/Box/Box";
-import { useStaticQuery, graphql } from "gatsby";
 import { getMinWidthMediaQuery } from "./foundations/styles";
 
-interface TopProps {
+interface BackgroundImageProps {
   background?: {
     fluid: {
       src: string;
@@ -12,7 +12,10 @@ interface TopProps {
   };
 }
 
-export const Top: React.FC<TopProps> = ({ children, background }) => {
+export const BackgroundImage: React.FC<BackgroundImageProps> = ({
+  children,
+  background,
+}) => {
   const { image } = useStaticQuery(graphql`
     query {
       image: imageSharp(id: { regex: "/b/" }) {

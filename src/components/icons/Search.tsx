@@ -5,7 +5,7 @@ interface SearchIconProps {
   className?: string;
 }
 
-export const SearchIcon: React.FC<SearchIconProps> = ({ color, className }) => (
+export const Search: React.FC<SearchIconProps> = ({ color, className }) => (
   <svg
     width="24"
     height="24"

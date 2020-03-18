@@ -3,8 +3,8 @@ import { Link } from "gatsby";
 import { useInView } from "react-intersection-observer";
 
 import { Box } from "../../foundations/layout/Box/Box";
-import { SearchIcon } from "../../icons/Search";
 import { getMinWidthMediaQuery } from "../../foundations/styles";
+import { Search } from "../../icons/";
 
 export const Header = () => {
   const [ref, inView, entry] = useInView();
@@ -57,7 +57,7 @@ export const Header = () => {
             [`${getMinWidthMediaQuery("minMedium")}`]: { right: 32 },
           }}
         >
-          <SearchIcon color={inView ? "#ffffff" : "#000000"} />
+          <Search color={inView ? "#ffffff" : "#000000"} />
         </Link>
       </Box>
     </header>

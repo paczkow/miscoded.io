@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { graphql } from "gatsby";
 import qs from "query-string";
+import { Index } from "elasticlunr";
 
-import { search } from "../utils/search";
 import { Box } from "../components/foundations/layout/Box/Box";
 import { Layout } from "../components/Layout/Layout";
-import { Top } from "../components/BackgroundImage";
+import { BackgroundImage } from "../components/BackgroundImage";
 import { Form } from "../components/Search/Form";
-import { Index } from "elasticlunr";
 import { FilteredPosts } from "../components/Search/Result";
+import { search } from "../utils/search";
 
 interface SearchProps {
   data: SearchQuery;
@@ -23,7 +23,7 @@ const Search: React.FC<SearchProps> = ({ data }) => {
 
   return (
     <Layout>
-      <Top>
+      <BackgroundImage>
         <div
           css={{
             maxWidth: 288,
@@ -43,7 +43,7 @@ const Search: React.FC<SearchProps> = ({ data }) => {
             />
           </Box>
         </div>
-      </Top>
+      </BackgroundImage>
       <FilteredPosts filteredIds={filteredIds} />
     </Layout>
   );

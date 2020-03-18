@@ -1,4 +1,5 @@
 import React from "react";
+
 import { getMaxWidthMediaQuery } from "../../foundations/styles";
 
 interface ImageProps {
