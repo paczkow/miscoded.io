@@ -8,6 +8,7 @@ module.exports = {
 
   // social
   twitter: "https://twitter.com/",
+  twitterName: "patchkov",
   github: "https://github.com/",
   linkedin: "https://www.linkedin.com/",
   rss: "https://miscoded.io/rss.xml",

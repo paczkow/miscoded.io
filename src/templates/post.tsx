@@ -7,7 +7,7 @@ import { getMinWidthMediaQuery } from "../components/foundations/styles";
 import { Layout } from "../components/Layout";
 import { BackgroundImage } from "../components/BackgroundImage";
 import { Dot } from "../components/Dot";
-import { Linkedin, Twitter } from "../components/icons/Social";
+import { Share } from "../components/Share";
 
 interface PostTemplateProps {
   pageContext: PageContext;
@@ -78,7 +78,7 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ data }) => {
                 </Link>
               ))}
             </Inline>
-            <Share facebook="" twitter="" />
+            <Share description={title} />
           </Stack>
           <article
             css={{
@@ -118,7 +118,7 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ data }) => {
                   <span css={{ fontWeight: 400 }}>Skomentuj (Twitter)</span>
                 </a>
                 <div css={{ display: "flex", alignItems: "center" }}>
-                  <Share facebook="" twitter="" />
+                  <Share description={title} />
                 </div>
               </Stack>
             </Stack>
@@ -130,33 +130,6 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ data }) => {
 };
 
 export default PostTemplate;
-
-interface ShareProps {
-  facebook: string;
-  twitter: string;
-}
-
-const Share: React.FC<ShareProps> = ({ facebook, twitter }) => {
-  const iconColors = {
-    color: "#555555",
-    hoverColor: "#000000",
-  };
-
-  return (
-    <Inline space="small">
-      <a title="Facebook" href={facebook}>
-        <i>
-          <Linkedin {...iconColors} />
-        </i>
-      </a>
-      <a title="Twitter" href={twitter}>
-        <i>
-          <Twitter {...iconColors} />
-        </i>
-      </a>
-    </Inline>
-  );
-};
 
 export const query = graphql`
   query($slug: String!) {
