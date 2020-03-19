@@ -6,8 +6,8 @@ const config = require("./config");
 module.exports = {
   siteMetadata: {
     title: config.title,
-    description: config.description,
     author: config.author,
+    siteUrl: config.url,
     social: {
       twitter: config.twitter,
       github: config.github,
@@ -19,6 +19,7 @@ module.exports = {
     "gatsby-plugin-react-helmet",
     "gatsby-transformer-sharp",
     "gatsby-plugin-sharp",
+    "gatsby-plugin-feed",
     {
       resolve: "gatsby-source-filesystem",
       options: {

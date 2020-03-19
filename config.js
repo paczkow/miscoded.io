@@ -1,19 +1,18 @@
 module.exports = {
   // website info
   title: "miscoded.io",
-  titleAlt: "Blog Michał Paczków",
+  titleAlt: "Blog Michała Paczków",
   url: process.env.ROOT_URL || "https://miscoded.io",
-  description: `Blog Michał Paczków. Weryfikuję tu swoją wiedzę dzieląc się nią z Tobą.`,
   author: "Michał Paczków",
 
   // social
-  twitter: "https://twitter.com/",
   twitterName: "patchkov",
-  github: "https://github.com/",
+  twitter: "https://twitter.com/",
   linkedin: "https://www.linkedin.com/",
+  github: "https://github.com/",
   rss: "https://miscoded.io/rss.xml",
 
   // settings
-  postsPerPage: 5,
+  postsPerPage: 8,
   googleAnalyticsID: "",
 };

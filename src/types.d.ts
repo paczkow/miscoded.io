@@ -32,6 +32,17 @@ interface Post {
   title: string;
 }
 
+interface Site {
+  siteMetadata: {
+    social: {
+      twitter: string;
+      github: string;
+      linkedin: string;
+      rss: string;
+    };
+  };
+}
+
 interface MarkdowRemarkNode {
   id: string;
   excerpt: string;
@@ -60,9 +71,7 @@ interface MarkdowRemarkNode {
 }
 
 interface AllMarkdownRemark {
-  allMarkdownRemark: {
-    edges: {
-      node: MarkdowRemarkNode;
-    }[];
-  };
+  edges: {
+    node: MarkdowRemarkNode;
+  }[];
 }

@@ -12,11 +12,22 @@ import { mapMarkdownRemarkToPost } from "../utils/mapMarkdownRemarkToPost";
 
 interface Props {
   pageContext: PageContext;
-  data: AllMarkdownRemark;
+  data: {
+    allMarkdownRemark: AllMarkdownRemark;
+    site: Site;
+  };
 }
 
-const Index = ({ data }: Props) => {
-  const { allMarkdownRemark } = data;
+const Index = ({
+  data: {
+    allMarkdownRemark,
+    site: {
+      siteMetadata: {
+        social: { twitter, linkedin, github, rss },
+      },
+    },
+  },
+}: Props) => {
   const iconColors = {
     color: "#aeaeae",
     hoverColor: "#ffffff",
@@ -63,17 +74,16 @@ const Index = ({ data }: Props) => {
           </div>
           <div css={{ position: "relative", zIndex: 1000 }}>
             <Inline space="large">
-              <a title="Twitter" href="/twitter">
+              <a title="Twitter" href={twitter}>
                 <Twitter {...iconColors} />
               </a>
-
-              <a title="Github" href="/github">
-                <Github {...iconColors} />
-              </a>
-              <a title="Linkedin" href="/linkedin">
+              <a title="Linkedin" href={linkedin}>
                 <Linkedin {...iconColors} />
               </a>
-              <a title="Rss" href="/rss">
+              <a title="Github" href={github}>
+                <Github {...iconColors} />
+              </a>
+              <a title="Rss" href={rss}>
                 <Rss {...iconColors} />
               </a>
             </Inline>
@@ -106,6 +116,16 @@ export default Index;
 
 export const query = graphql`
   query($skip: Int!, $limit: Int!) {
+    site {
+      siteMetadata {
+        social {
+          twitter
+          linkedin
+          github
+          rss
+        }
+      }
+    }
     allMarkdownRemark(
       sort: { fields: [frontmatter___date], order: DESC }
       limit: $limit
