@@ -48,7 +48,7 @@ const Index = ({
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            width: 550,
+            width: 660,
           }}
         >
           <div
@@ -61,8 +61,10 @@ const Index = ({
               ...descriptionFontStyle,
             }}
           >
-            WITAM CIĘ W MIEJSCU W KTÓRYM WERYFIKUJĘ SWOJĄ WIEDZĘ DZIELĄC SIĘ NIĄ
-            Z TOBĄ
+            <p>
+              Cześć, witam Cię w miejscu w którym (mam nadzieję) poszerzysz
+              swoją wiedzę, a przy okazji zweryfikujesz moją.{" "}
+            </p>
           </div>
           <div
             css={{
