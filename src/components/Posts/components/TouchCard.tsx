@@ -1,11 +1,10 @@
 import React from "react";
 import { Link } from "gatsby";
 
-import { Box, Inline, Stack } from "../foundations/layout";
-import { getMinWidthMediaQuery } from "../foundations/styles";
-import { Image } from "./components/Image";
+import { Box, Inline, Stack } from "../../foundations/layout";
+import { OverlayImage } from "./Image";
 
-export const MobileCard: React.FC<Post> = ({
+export const TouchCard: React.FC<Post> = ({
   title,
   categories,
   date,
@@ -19,14 +18,11 @@ export const MobileCard: React.FC<Post> = ({
     <Box
       css={{
         height: "100%",
-        maxWidth: "320px",
+        maxWidth: "352px",
         boxShadow: "0px 4px 30px rgba(0, 0, 0, 0.2)",
-        [`${getMinWidthMediaQuery("minLarge")}`]: {
-          display: "none",
-        },
       }}
     >
-      <Image image={image} tracedSVG={tracedSVG}>
+      <OverlayImage image={image} tracedSVG={tracedSVG}>
         <Box
           paddingX="small"
           paddingBottom="medium"
@@ -67,7 +63,7 @@ export const MobileCard: React.FC<Post> = ({
             </Inline>
           </Stack>
         </Box>
-      </Image>
+      </OverlayImage>
       <Box paddingY="small" paddingBottom="medium" paddingX="small">
         <Stack space="xsmall">
           <Inline space="xsmall">

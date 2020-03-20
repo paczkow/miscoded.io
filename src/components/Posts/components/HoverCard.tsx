@@ -1,11 +1,10 @@
 import React from "react";
 import { Link } from "gatsby";
 
-import { Box, Inline, Stack } from "../foundations/layout/";
-import { getMinWidthMediaQuery } from "../foundations/styles";
-import { Image } from "./components/Image";
+import { Box, Inline, Stack } from "../../foundations/layout/";
+import { Image } from "./Image";
 
-export const Card: React.FC<Post> = ({
+export const HoverCard: React.FC<Post> = ({
   title,
   categories,
   date,
@@ -21,11 +20,7 @@ export const Card: React.FC<Post> = ({
         height: "100%",
         maxWidth: "352px",
         boxShadow: "0px 4px 30px rgba(0, 0, 0, 0.2)",
-        display: "none",
         transition: "transform 0.3s ease",
-        [`${getMinWidthMediaQuery("minLarge")}`]: {
-          display: "block",
-        },
         "&:hover": {
           transform: "scale(1.1)",
         },

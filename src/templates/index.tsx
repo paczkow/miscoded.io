@@ -3,10 +3,8 @@ import { graphql } from "gatsby";
 
 import { Box, Stack, Inline } from "../components/foundations/layout";
 import { Layout } from "../components/Layout";
+import { Posts } from "../components/Posts/Posts";
 import { BackgroundImage } from "../components/BackgroundImage";
-import { Card } from "../components/cards/Desktop";
-import { MobileCard } from "../components/cards/Mobile";
-import { Grid } from "../components/Grid";
 import { Github, Linkedin, Rss, Twitter } from "../components/icons";
 import { mapMarkdownRemarkToPost } from "../utils/mapMarkdownRemarkToPost";
 
@@ -36,6 +34,10 @@ const Index = ({
     fontFamily: "Source Code Pro",
     fontWeight: 300,
   };
+  const posts = allMarkdownRemark.edges.map(({ node }) =>
+    mapMarkdownRemarkToPost(node)
+  );
+
   return (
     <Layout>
       <BackgroundImage>
@@ -95,18 +97,7 @@ const Index = ({
         paddingX={["small", "large"]}
         css={{ display: "flex", justifyContent: "center" }}
       >
-        <Grid>
-          {allMarkdownRemark.edges.map(({ node }) => {
-            const post = mapMarkdownRemarkToPost(node);
-
-            return (
-              <article key={post.slug}>
-                <MobileCard {...post} />
-                <Card {...post} />
-              </article>
-            );
-          })}
-        </Grid>
+        <Posts data={posts} />
       </Box>
     </Layout>
   );
