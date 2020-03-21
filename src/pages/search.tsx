@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import React, { useState } from "react";
+import { WindowLocation } from "@reach/router";
 import { graphql } from "gatsby";
 import qs from "query-string";
 import { Index } from "elasticlunr";
@@ -7,19 +9,32 @@ import { Box } from "../components/foundations/layout/Box/Box";
 import { Layout } from "../components/Layout/Layout";
 import { BackgroundImage } from "../components/BackgroundImage";
 import { Form } from "../components/Search/Form";
-import { FilteredPosts } from "../components/Search/Result";
 import { search } from "../utils/search";
+import { Posts } from "../components/Posts/Posts";
+import { mapMarkdownRemarkToPost } from "../utils/mapMarkdownRemarkToPost";
 
 interface SearchProps {
   data: SearchQuery;
+  location: WindowLocation;
 }
 
-const Search: React.FC<SearchProps> = ({ data }) => {
+const Search: React.FC<SearchProps> = ({ data, location }) => {
+  const { posts, tags, categories, searchIndex } = data;
+
+  const filterPosts = (filteredIds: string[] | null) =>
+    filteredIds
+      ? posts.edges
+          .filter(({ node }) => filteredIds.includes(node.id))
+          .map(({ node }) => mapMarkdownRemarkToPost(node))
+      : posts.edges.map(({ node }) => mapMarkdownRemarkToPost(node));
+
   const { q: query, t: queryType } = qs.parse(location.search);
-  const { tags, categories, searchIndex } = data;
-  const [filteredIds, setFilteredIds] = useState<string[] | null>(
-    search(query as string, queryType as string, searchIndex)
+  const [filteredPosts, setFilteredPosts] = useState(
+    filterPosts(search(query as string, queryType as string, searchIndex))
   );
+
+  const handleOnChange = (ids: string[] | null) =>
+    setFilteredPosts(filterPosts(ids));
 
   return (
     <Layout>
@@ -39,12 +54,26 @@ const Search: React.FC<SearchProps> = ({ data }) => {
               tags={tags.group}
               categories={categories.group}
               elasticLunrSearchIndex={searchIndex}
-              onChange={ids => setFilteredIds(ids)}
+              onChange={handleOnChange}
             />
           </Box>
         </div>
       </BackgroundImage>
-      <FilteredPosts filteredIds={filteredIds} />
+
+      <Box
+        paddingTop={["large", "xlarge"]}
+        display="flex"
+        justifyContent="center"
+      >
+        <h2>Znalezionych postów: {filteredPosts.length}</h2>
+      </Box>
+      <Box
+        paddingY={["large", "xlarge"]}
+        paddingX={["small", "large"]}
+        css={{ display: "flex", justifyContent: "center" }}
+      >
+        <Posts data={filteredPosts} />
+      </Box>
     </Layout>
   );
 };
@@ -56,6 +85,7 @@ interface SearchQuery {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     index: Index<any>;
   };
+  posts: AllMarkdownRemark;
   tags: {
     group: { fieldValue: string }[];
   };
@@ -66,6 +96,36 @@ interface SearchQuery {
 
 export const query = graphql`
   {
+    posts: allMarkdownRemark(
+      sort: { fields: [frontmatter___date], order: DESC }
+    ) {
+      edges {
+        node {
+          id
+          excerpt(pruneLength: 160)
+          frontmatter {
+            title
+            categories
+            date(formatString: "DD, MMMM YYYY", locale: "pl")
+            tags
+            image {
+              childImageSharp {
+                fluid {
+                  src
+                  tracedSVG
+                }
+              }
+            }
+          }
+          fields {
+            slug
+            readingTime {
+              minutes
+            }
+          }
+        }
+      }
+    }
     searchIndex: siteSearchIndex {
       index
     }

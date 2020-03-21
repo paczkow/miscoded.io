@@ -8,6 +8,7 @@ module.exports = {
     title: config.title,
     author: config.author,
     siteUrl: config.url,
+    description: "Blog programisty, nie tylko o programowaniu",
     social: {
       twitter: config.twitter,
       github: config.github,
@@ -49,6 +50,7 @@ module.exports = {
         ],
       },
     },
+    "gatsby-plugin-use-query-params",
     "gatsby-plugin-emotion",
     {
       resolve: "gatsby-plugin-web-font-loader",

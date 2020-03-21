@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, FormEvent, useEffect } from "react";
-import { useQueryParam, StringParam } from "use-query-params";
+import { useQueryParams, StringParam } from "use-query-params";
 
 import { Stack, Inline } from "../foundations/layout";
 import { Button } from "../Button";
@@ -19,8 +19,10 @@ export const Form: React.FC<FormProps> = ({
   onChange,
   elasticLunrSearchIndex,
 }) => {
-  const [query, setQuery] = useQueryParam("q", StringParam);
-  const [queryType, setQueryType] = useQueryParam("t", StringParam);
+  const [{ q: query, t: queryType }, setQuery] = useQueryParams({
+    q: StringParam,
+    t: StringParam,
+  });
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, setSearchValue] = useState(query ?? "");
   const [isDirty, setIsDirty] = useState(false);
@@ -34,8 +36,10 @@ export const Form: React.FC<FormProps> = ({
     newValue: string
   ) => {
     setIsDirty(true);
-    setQuery(newValue);
-    setQueryType(groupType);
+    setQuery({
+      q: newValue,
+      t: groupType,
+    });
     setSearchValue(`${newValue}${groupType}`);
   };
 
@@ -55,8 +59,10 @@ export const Form: React.FC<FormProps> = ({
         value={query ?? ""}
         onChange={(e: FormEvent<HTMLInputElement>) => {
           setIsDirty(true);
-          setQuery(e.currentTarget.value);
-          setQueryType(undefined);
+          setQuery({
+            q: e.currentTarget.value,
+            t: undefined,
+          });
           setSearchValue(e.currentTarget.value);
         }}
         placeholder="Wyszukaj"

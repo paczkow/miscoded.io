@@ -21,6 +21,10 @@ export const HoverCard: React.FC<Post> = ({
         maxWidth: "352px",
         boxShadow: "0px 4px 30px rgba(0, 0, 0, 0.2)",
         transition: "transform 0.3s ease",
+        display: "none",
+        "@media(hover: hover)": {
+          display: "block",
+        },
         "&:hover": {
           transform: "scale(1.1)",
         },

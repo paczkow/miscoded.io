@@ -20,6 +20,10 @@ export const TouchCard: React.FC<Post> = ({
         height: "100%",
         maxWidth: "352px",
         boxShadow: "0px 4px 30px rgba(0, 0, 0, 0.2)",
+        display: "none",
+        "@media(hover: none)": {
+          display: "block",
+        },
       }}
     >
       <OverlayImage image={image} tracedSVG={tracedSVG}>

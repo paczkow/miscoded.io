@@ -1,4 +1,5 @@
 import React from "react";
+import { WindowLocation } from "@reach/router";
 import { graphql, Link } from "gatsby";
 import Markdown from "react-markdown";
 
@@ -11,12 +12,13 @@ import { Share } from "../components/Share";
 
 interface PostTemplateProps {
   pageContext: PageContext;
+  location: WindowLocation;
   data: {
     markdownRemark: MarkdowRemarkNode;
   };
 }
 
-const PostTemplate: React.FC<PostTemplateProps> = ({ data }) => {
+const PostTemplate: React.FC<PostTemplateProps> = ({ data, location }) => {
   const {
     frontmatter: { categories, title, date, tags, image, imageCredit },
     fields: { readingTime },
@@ -78,7 +80,7 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ data }) => {
                 </Link>
               ))}
             </Inline>
-            <Share description={title} />
+            <Share location={location} description={title} />
           </Stack>
           <article
             css={{
@@ -118,7 +120,7 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ data }) => {
                   <span css={{ fontWeight: 400 }}>Skomentuj (Twitter)</span>
                 </a>
                 <div css={{ display: "flex", alignItems: "center" }}>
-                  <Share description={title} />
+                  <Share location={location} description={title} />
                 </div>
               </Stack>
             </Stack>
