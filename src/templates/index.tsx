@@ -74,7 +74,7 @@ const Index = ({
               ...descriptionFontStyle,
             }}
           >
-            MICHAŁ PACZKÓW
+            Michał Paczków
           </div>
           <div css={{ position: "relative", zIndex: 1000 }}>
             <Inline space="large">

@@ -8,7 +8,7 @@ module.exports = {
     title: config.title,
     author: config.author,
     siteUrl: config.url,
-    description: "Blog programisty, nie tylko o programowaniu",
+    description: config.description,
     social: {
       twitter: config.twitter,
       github: config.github,

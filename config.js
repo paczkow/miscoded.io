@@ -5,12 +5,13 @@ module.exports = {
   url: process.env.ROOT_URL || "https://miscoded.io",
   author: "Michał Paczków",
   description: "Blog programisty, nie tylko o programowaniu",
+
   // social
-  twitterName: "patchkov",
-  twitter: "https://twitter.com/",
-  linkedin: "https://www.linkedin.com/",
-  github: "https://github.com/",
-  rss: "https://miscoded.io/rss.xml",
+  twitterName: "patchk0v",
+  twitter: "https://twitter.com/patchk0v",
+  linkedin: "https://www.linkedin.com/in/mpaczkow/",
+  github: "https://github.com/patchk0v",
+  rss: "/rss.xml",
 
   // settings
   postsPerPage: 8,
