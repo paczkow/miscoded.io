@@ -9,6 +9,7 @@ import { Layout } from "../components/Layout";
 import { BackgroundImage } from "../components/BackgroundImage";
 import { Dot } from "../components/Dot";
 import { Share } from "../components/Share";
+import SEO from "../components/SEO";
 
 interface PostTemplateProps {
   pageContext: PageContext;
@@ -23,110 +24,129 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ data, location }) => {
     frontmatter: { categories, title, date, tags, image, imageCredit },
     fields: { readingTime },
     html,
+    excerpt,
   } = data.markdownRemark;
 
   return (
     <Layout>
-      <BackgroundImage background={image.childImageSharp}>
-        <Box paddingX="small" css={{ position: "relative", zIndex: 10 }}>
-          <Stack space="large" align="center">
-            <h1 css={{ color: "#ffffff", textAlign: "center" }}>{title}</h1>
-            <Inline space="small">
-              <span css={{ fontSize: 14, color: "#ffffff" }}>{date}</span>
-              <span css={{ fontSize: 14, color: "#ffffff" }}>
-                {Math.ceil(readingTime.minutes)} min. czytania
-              </span>
-            </Inline>
-          </Stack>
-        </Box>
-        <Markdown
-          css={{
-            zIndex: 10,
-            position: "absolute",
-            bottom: 8,
-            color: "#aeaeae",
-            fontSize: 12,
-            "& a": {
-              color: "#aeaeae",
-              "&:hover": {
-                color: "#ffffff",
-              },
-            },
-          }}
-        >
-          {imageCredit}
-        </Markdown>
-      </BackgroundImage>
-      <Box
-        paddingY={["large", "large"]}
-        paddingX={["small", "large"]}
-        css={{ maxWidth: "39rem", margin: "0 auto" }}
-        justifyContent="center"
-      >
-        <Stack space={["medium", "medium", "large"]}>
-          <Stack space="small">
-            <Inline space="small">
-              {categories.map(category => (
-                <Link to={`/search?q=${category}&t=category`} key={category}>
-                  <span
-                    css={{
-                      fontSize: 16,
-                      color: "#555555",
-                      "&:hover": { color: "#000000" },
-                    }}
-                  >
-                    {category}
+      <SEO
+        title={title}
+        description={excerpt}
+        image={{
+          src: image.childImageSharp.fluid.src,
+          height: "800",
+          width: "1200",
+        }}
+        pathname={location.pathname}
+      />
+      <article>
+        <header>
+          <BackgroundImage background={image.childImageSharp}>
+            <Box paddingX="small" css={{ position: "relative", zIndex: 10 }}>
+              <Stack space="large" align="center">
+                <h1 css={{ color: "#ffffff", textAlign: "center" }}>{title}</h1>
+                <Inline space="small">
+                  <span css={{ fontSize: 14, color: "#ffffff" }}>{date}</span>
+                  <span css={{ fontSize: 14, color: "#ffffff" }}>
+                    {Math.ceil(readingTime.minutes)} min. czytania
                   </span>
-                </Link>
-              ))}
-            </Inline>
-            <Share location={location} description={title} />
-          </Stack>
-          <article
-            css={{
-              "& > *": {
-                marginBottom: 16,
-              },
-              [`${getMinWidthMediaQuery("minMedium")}`]: {
-                fontSize: 20,
-              },
-            }}
-            dangerouslySetInnerHTML={{ __html: html ?? "Content not provided" }}
-          />
-          <Stack space="large">
-            <Inline space="small" align="center">
-              <Dot /> <Dot /> <Dot />
-            </Inline>
-            <Stack align="center" space="small">
+                </Inline>
+              </Stack>
+            </Box>
+            <Markdown
+              css={{
+                zIndex: 10,
+                position: "absolute",
+                bottom: 8,
+                color: "#aeaeae",
+                fontSize: 12,
+                "& a": {
+                  color: "#aeaeae",
+                  "&:hover": {
+                    color: "#ffffff",
+                  },
+                },
+              }}
+            >
+              {imageCredit}
+            </Markdown>
+          </BackgroundImage>
+        </header>
+        <Box
+          paddingY={["large", "large"]}
+          paddingX={["small", "large"]}
+          css={{ maxWidth: "39rem", margin: "0 auto" }}
+          justifyContent="center"
+        >
+          <Stack space={["medium", "medium", "large"]}>
+            <Stack space="small">
               <Inline space="small">
-                {tags.map(tag => (
-                  <Link to={`/search?q=${tag}&t=tag`} key={tag}>
+                {categories.map(category => (
+                  <Link to={`/search?q=${category}&t=category`} key={category}>
                     <span
                       css={{
                         fontSize: 16,
                         color: "#555555",
-                        "&:hover": {
-                          color: "#000000",
-                        },
+                        "&:hover": { color: "#000000" },
                       }}
                     >
-                      #{tag}
+                      {category}
                     </span>
                   </Link>
                 ))}
               </Inline>
-              <Stack space="small" align="center">
-                <a title="Twitter" href="">
-                  <span css={{ fontWeight: 400 }}>Skomentuj (Twitter)</span>
-                </a>
-                <div css={{ display: "flex", alignItems: "center" }}>
-                  <Share location={location} description={title} />
-                </div>
-              </Stack>
+              <Share location={location} description={title} />
+            </Stack>
+            <div
+              css={{
+                "& > *": {
+                  marginBottom: 16,
+                },
+                [`${getMinWidthMediaQuery("minMedium")}`]: {
+                  fontSize: 20,
+                },
+              }}
+              dangerouslySetInnerHTML={{
+                __html: html ?? "Content not provided",
+              }}
+            />
+            <Stack space="large">
+              <Inline space="small" align="center">
+                <Dot /> <Dot /> <Dot />
+              </Inline>
+              <footer>
+                <Stack align="center" space="small">
+                  <Inline space="small">
+                    {tags.map(tag => (
+                      <Link to={`/search?q=${tag}&t=tag`} key={tag}>
+                        <span
+                          css={{
+                            fontSize: 16,
+                            color: "#555555",
+                            "&:hover": {
+                              color: "#000000",
+                            },
+                          }}
+                        >
+                          #{tag}
+                        </span>
+                      </Link>
+                    ))}
+                  </Inline>
+                  <Stack space="small" align="center">
+                    <a title="Twitter" href="">
+                      <span css={{ fontWeight: 400 }}>Skomentuj (Twitter)</span>
+                    </a>
+                    <div css={{ display: "flex", alignItems: "center" }}>
+                      <Share location={location} description={title} />
+                    </div>
+                  </Stack>
+                </Stack>
+              </footer>
             </Stack>
           </Stack>
-        </Stack>
-      </Box>
+        </Box>
+      </article>
     </Layout>
   );
 };
@@ -137,6 +157,7 @@ export const query = graphql`
   query($slug: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
       html
+      excerpt(pruneLength: 160)
       frontmatter {
         title
         categories

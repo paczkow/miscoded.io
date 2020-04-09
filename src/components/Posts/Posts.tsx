@@ -7,9 +7,9 @@ import { TouchCard } from "./components/TouchCard";
 export const Posts: React.FC<{ data: Post[] }> = ({ data }) => (
   <Grid>
     {data.map(post => (
-      <article key={post.slug}>
+      <div key={post.slug}>
         <HoverCard {...post} /> <TouchCard {...post} />
-      </article>
+      </div>
     ))}
   </Grid>
 );

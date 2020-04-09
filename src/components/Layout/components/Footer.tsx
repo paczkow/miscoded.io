@@ -23,7 +23,9 @@ export const Footer: React.FC = () => (
       />
       <Stack space="xsmall" align="center">
         <h4>miscoded.io, 2020</h4>
-        <span css={{ fontSize: 14 }}>contact@miscoded.io</span>
+        <a href="mailto:contact@miscoded.io">
+          <span css={{ fontSize: 14 }}>contact@miscoded.io</span>
+        </a>
       </Stack>
     </Box>
   </footer>

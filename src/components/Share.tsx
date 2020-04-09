@@ -23,7 +23,7 @@ export const Share: React.FC<{
       <TwitterShareButton
         title={description}
         url={location.href}
-        via={config.twitterName}
+        via={config.twitterUser}
       >
         <Twitter {...iconColors} />
       </TwitterShareButton>

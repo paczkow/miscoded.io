@@ -7,6 +7,7 @@ import { Posts } from "../components/Posts/Posts";
 import { BackgroundImage } from "../components/BackgroundImage";
 import { Github, Linkedin, Rss, Twitter } from "../components/icons";
 import { mapMarkdownRemarkToPost } from "../utils/mapMarkdownRemarkToPost";
+import SEO from "../components/SEO";
 
 interface Props {
   pageContext: PageContext;
@@ -40,6 +41,7 @@ const Index = ({
 
   return (
     <Layout>
+      <SEO title="Blog programisty, głównie o...programowaniu. Wzorce projektowe, frontend, Typescript, Javascript." />
       <BackgroundImage>
         <Stack
           space="large"
@@ -62,8 +64,10 @@ const Index = ({
             }}
           >
             <p>
-              Cześć, witam Cię w miejscu w którym (mam nadzieję) poszerzysz
-              swoją wiedzę, a przy okazji zweryfikujesz moją.{" "}
+              Blog programisty, głównie o...programowaniu. <br />
+              <br /> Dla osób szukających informacji o wzorcach projektowych,
+              frontendzie, Javascript, Typescript, czy sposobach zwiększania
+              efektywności w zawodzie opartym o wiedzę.
             </p>
           </div>
           <div

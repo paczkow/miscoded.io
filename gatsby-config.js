@@ -9,8 +9,10 @@ module.exports = {
     author: config.author,
     siteUrl: config.url,
     description: config.description,
+    keywords: config.keywords,
     social: {
       twitter: config.twitter,
+      twitterUser: config.twitterUser,
       github: config.github,
       linkedin: config.linkedin,
       rss: config.rss,
