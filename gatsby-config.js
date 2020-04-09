@@ -67,7 +67,7 @@ module.exports = {
                       fields { slug }
                       frontmatter {
                         title
-                        date(formatString: "DD MMMM, YYYY", locale: "pl"
+                        date(formatString: "DD MMMM YYYY")
                         image {
                           childImageSharp {
                             fluid {
