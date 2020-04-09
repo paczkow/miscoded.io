@@ -50,7 +50,7 @@ module.exports = {
                   enclosure: edge.node.frontmatter.image && {
                     url:
                       site.siteMetadata.siteUrl +
-                      edge.node.frontmatter.image.publicURL,
+                      edge.node.frontmatter.image.childImageSharp.fluid.src,
                   },
                 });
               });
@@ -62,14 +62,18 @@ module.exports = {
                 ) {
                   edges {
                     node {
-                      excerpt
+                      excerpt(pruneLength: 160)
                       html
                       fields { slug }
                       frontmatter {
                         title
-                        date
+                        date(formatString: "DD MMMM, YYYY", locale: "pl"
                         image {
-                          publicURL
+                          childImageSharp {
+                            fluid {
+                              src 
+                            }
+                          }
                         }
                       }
                     }
