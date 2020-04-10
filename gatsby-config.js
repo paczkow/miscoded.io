@@ -84,8 +84,7 @@ module.exports = {
               }
             `,
             output: "/rss.xml",
-            title:
-              "Blog Michała Paczków. Wzorce projektowe, Javascript, Typescript",
+            title: "miscoded.io - RSS Feed",
           },
         ],
       },
