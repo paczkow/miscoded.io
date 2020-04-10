@@ -34,6 +34,7 @@ interface Post {
 
 interface Site {
   siteMetadata: {
+    description: string;
     social: {
       twitter: string;
       github: string;

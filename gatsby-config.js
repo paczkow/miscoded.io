@@ -52,6 +52,8 @@ module.exports = {
                       site.siteMetadata.siteUrl +
                       edge.node.frontmatter.image.childImageSharp.fluid.src,
                   },
+                  // eslint-disable-next-line @typescript-eslint/camelcase
+                  custom_elements: [{ "content:encoded": edge.node.html }],
                 });
               });
             },
@@ -62,7 +64,7 @@ module.exports = {
                 ) {
                   edges {
                     node {
-                      excerpt(pruneLength: 160)
+                      excerpt(pruneLength: 140)
                       html
                       fields { slug }
                       frontmatter {
@@ -82,7 +84,8 @@ module.exports = {
               }
             `,
             output: "/rss.xml",
-            title: "RSS Feed of miscoded.io",
+            title:
+              "Blog Michała Paczków. Wzorce projektowe, Javascript, Typescript",
           },
         ],
       },

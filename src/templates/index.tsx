@@ -22,6 +22,7 @@ const Index = ({
     allMarkdownRemark,
     site: {
       siteMetadata: {
+        description,
         social: { twitter, linkedin, github, rss },
       },
     },
@@ -41,7 +42,7 @@ const Index = ({
 
   return (
     <Layout>
-      <SEO title="Blog programisty, głównie o...programowaniu. Wzorce projektowe, frontend, Typescript, Javascript." />
+      <SEO title={description} />
       <BackgroundImage>
         <Stack
           space="large"
@@ -66,8 +67,7 @@ const Index = ({
             <p>
               Blog programisty, głównie o...programowaniu. <br />
               <br /> Dla osób szukających informacji o wzorcach projektowych,
-              frontendzie, Javascript, Typescript, czy sposobach zwiększania
-              efektywności w zawodzie opartym o wiedzę.
+              frontendzie, Javascript i Typescript.
             </p>
           </div>
           <div
@@ -115,6 +115,7 @@ export const query = graphql`
   query($skip: Int!, $limit: Int!) {
     site {
       siteMetadata {
+        description
         social {
           twitter
           linkedin
