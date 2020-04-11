@@ -5,7 +5,7 @@ module.exports = {
   url: process.env.ROOT_URL || "https://miscoded.io",
   author: "Michał Paczków",
   description:
-    "Blog programisty, głównie o...programowaniu. Dla osób szukających informacji o wzorcach projektowych, frontendzie, Javascript i Typescript.",
+    "Blog Michała Paczków. Piszę o wzorcach projektowych, frontendzie, Javascript, Typescript.",
   keywords: [
     "programowanie",
     "frontend",
