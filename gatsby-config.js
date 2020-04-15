@@ -41,7 +41,6 @@ module.exports = {
         feeds: [
           {
             serialize: ({ query: { site, allMarkdownRemark } }) => {
-              console.log(site.description);
               return allMarkdownRemark.edges.map(edge => {
                 return Object.assign({}, edge.node.frontmatter, {
                   description: edge.node.excerpt,
@@ -85,7 +84,9 @@ module.exports = {
               }
             `,
             output: "/rss.xml",
-            title: "Michał Paczków's miscoded.io Blog RSS Feed",
+            title: "Miscoded.io Blog RSS Feed (PL)",
+            language: "pl",
+            description: config.description,
           },
         ],
       },
