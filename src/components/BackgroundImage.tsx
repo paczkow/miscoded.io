@@ -55,7 +55,7 @@ export const BackgroundImage: React.FC<BackgroundImageProps> = ({
           left: 0,
           top: 0,
           content: '""',
-          background: "rgba(0,0,0,0.75)",
+          background: "rgba(0,0,0,0.5)",
         },
       }}
     >
