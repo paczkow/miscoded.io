@@ -84,7 +84,7 @@ W momencie pisania artykułu specyfikacja ECMAScript rozróżnia przynajmniej 4 
 W tym artykule zajmiemy się dwoma podstawowymi kontekstami: globalnym i funkcji.
 
 Kontekst globalny tworzony jest przed rozpoczęciem przetwarzania kodu skryptu, kontekst funkcyjny natomiast tworzy się za **każdym wywołaniem funkcji**, nawet jeśli wywołuje ona samą siebie.
-
+<!-- TODO: Add frames with Execution Contexts -->
 ```javascript
 let globalVar = 10;
 
