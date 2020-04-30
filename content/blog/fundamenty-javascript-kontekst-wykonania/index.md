@@ -110,7 +110,7 @@ Dla globalnego kontekstu faza tworzenia, ma miejsce przed przetworzeniem pierwsz
 ### Utworzenie zakresu
 
 Określenie które identyfikatory zmiennych i funkcji są dostępne w ramach bieżącego zakresu.
-Silnik Javascript skanuje kod, w poszukiwaniu deklaracji zmiennych i funkcji po czym umieszcza ja w pamięci. 
+Silnik Javascript skanuje kod, w poszukiwaniu deklaracji zmiennych i funkcji po czym umieszcza ja w pamięci.
 Zmiennym nie przypisuje się tu wartości.
 
 ### Utworzenie odniesienia do zewnętrznego zakresu
@@ -160,20 +160,20 @@ Kontekst wykonania zapisany w pseudokodzie mógłby wyglądać w ten sposób:
 ```
 // Creation Phase
 ExecutionContext = {
-	a: <unitialized>
-	b: undefined
-	foo: <reference to foo function>
-	outer: null // it's global context
-	this: <reference to window object>
+ a: <unitialized>
+ b: undefined
+ foo: <reference to foo function>
+ outer: null // it's global context
+ this: <reference to window object>
 }
 
 // Execution Phase
 ExecutionContext = {
-	a: 20
-	b: 40
-	foo: <reference to foo function>
-	outer: null
-	this: <reference to window object>
+ a: 20
+ b: 40
+ foo: <reference to foo function>
+ outer: null
+ this: <reference to window object>
 }
 ```
 
@@ -288,7 +288,7 @@ GlobalExectionContext = {
       // Identifier bindings go here
       c: undefined,
       multiply: < func >,
-		__bindingObject__: <reference do global/window object>
+  __bindingObject__: <reference do global/window object>
     }
     outer: <null>,
   }
@@ -325,7 +325,7 @@ Kiedy wszelkie wartości zmiennych zostaną już przypisane i rozpocznie się wy
 
 ```
 FunctionExectionContext = {
-	LexicalEnvironment: {
+ LexicalEnvironment: {
     EnvironmentRecord: {
       Type: "Declarative",
       // Identifier bindings go here
@@ -333,7 +333,7 @@ FunctionExectionContext = {
     outer: <GlobalLexicalEnvironment>,
     ThisBinding: <Global Object or undefined>,
   },
-	VariableEnvironment: {
+ VariableEnvironment: {
     EnvironmentRecord: {
       Type: "Declarative",
       // Identifier bindings go here
