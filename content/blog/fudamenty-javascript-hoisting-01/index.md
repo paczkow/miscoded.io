@@ -240,6 +240,8 @@ function foo() {
 }
 ```
 
+[Link](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/apA.md#whats-the-deal-with-tdz) jeśli chciałbyś dowiedzieć się więcej na temat TDZ, np. dlaczego został wprowadzony.
+
 ## Wykorzystanie wynoszenia w praktyce
 
 Poznaliśmy koncepcję wynoszenia, oraz jej realizację w silniku Javascript. Czas odpowiedzieć sobie na pytanie czy ma ona jakieś zastosowanie praktyczne. Osobiście znalazłem tylko jedną, sensowną propozycję wykorzystania tego mechanizmu. Podał ją Kyle Simpson w książce "You Don't Know JS".
