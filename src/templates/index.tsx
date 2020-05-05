@@ -33,8 +33,8 @@ const Index = ({
     hoverColor: "#ffffff",
   };
   const descriptionFontStyle = {
-    fontFamily: "Source Code Pro",
-    fontWeight: 300,
+    letterSpacing: "0.2em",
+    fontSize: "1.2rem",
   };
   const posts = allMarkdownRemark.edges.map(({ node }) =>
     mapMarkdownRemarkToPost(node)
@@ -64,21 +64,7 @@ const Index = ({
               ...descriptionFontStyle,
             }}
           >
-            <p>
-              Blog programisty, głównie o...programowaniu. <br />
-              <br /> Dla osób szukających informacji o wzorcach projektowych,
-              frontendzie, Javascript i Typescript.
-            </p>
-          </div>
-          <div
-            css={{
-              position: "relative",
-              zIndex: 1000,
-              color: "#ffffff",
-              ...descriptionFontStyle,
-            }}
-          >
-            Michał Paczków
+            <p>{description}</p>
           </div>
           <div css={{ position: "relative", zIndex: 1000 }}>
             <Inline space="large">

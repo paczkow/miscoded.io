@@ -4,7 +4,7 @@ import { useInView } from "react-intersection-observer";
 
 import { Box } from "../../foundations/layout/Box/Box";
 import { getMinWidthMediaQuery } from "../../foundations/styles";
-import { Search } from "../../icons/";
+import { Search, Logo } from "../../icons/";
 
 export const Header = () => {
   const [ref, inView, entry] = useInView();
@@ -40,25 +40,39 @@ export const Header = () => {
             ...styles,
           }}
         >
-          <Link to="/">
-            <h1
-              css={{
-                position: "relative",
-                color: inView ? "#ffffff" : "#000000",
-              }}
-            >
-              MISCODED.IO
-            </h1>
+          <Link to="/" css={{ marginLeft: "auto" }}>
+            <div css={{ display: "flex", alignItems: "center" }}>
+              <Logo
+                width="28"
+                height="37"
+                color={inView ? "#ffffff" : "#000000"}
+              />
+              <h1
+                css={{
+                  position: "relative",
+                  color: inView ? "#ffffff" : "#000000",
+                  marginLeft: "16px",
+                  letterSpacing: "0.1em",
+                  fontSize: "28px",
+                }}
+              >
+                MISCODED.IO
+              </h1>
+            </div>
           </Link>
+
           <Link
             to="/search"
             css={{
-              position: "absolute",
-              right: 16,
+              marginLeft: "auto",
               [`${getMinWidthMediaQuery("minMedium")}`]: { right: 32 },
             }}
           >
-            <Search color={inView ? "#ffffff" : "#000000"} />
+            <Search
+              width="18"
+              height="18"
+              color={inView ? "#ffffff" : "#000000"}
+            />
           </Link>
         </Box>
       </nav>

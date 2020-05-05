@@ -3,12 +3,19 @@ import React from "react";
 interface SearchIconProps {
   color?: string;
   className?: string;
+  width?: string;
+  height?: string;
 }
 
-export const Search: React.FC<SearchIconProps> = ({ color, className }) => (
+export const Search: React.FC<SearchIconProps> = ({
+  width = "24",
+  height = "24",
+  color,
+  className,
+}) => (
   <svg
-    width="24"
-    height="24"
+    width={width}
+    height={height}
     className={className}
     viewBox="0 0 24 24"
     xmlns="http://www.w3.org/2000/svg"

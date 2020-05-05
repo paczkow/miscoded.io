@@ -134,8 +134,10 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ data, location }) => {
                     ))}
                   </Inline>
                   <Stack space="small" align="center">
-                    <a title="Twitter" href="">
-                      <span css={{ fontWeight: 400 }}>Skomentuj (Twitter)</span>
+                    <a title="Facebook" href="">
+                      <span css={{ fontWeight: 400 }}>
+                        Skomentuj (Facebook)
+                      </span>
                     </a>
                     <div css={{ display: "flex", alignItems: "center" }}>
                       <Share location={location} description={title} />

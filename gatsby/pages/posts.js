@@ -8,6 +8,8 @@ module.exports = (edges, createPage) => {
     createPage({
       path: i === 0 ? "/" : `/page/${i + 1}`,
       component: path.resolve("./src/templates/index.tsx"),
+      //TODO: pass locale here to compare with allMarkdowRemark in src/tempalates/index
+      // like for slug for posts
       context: {
         totalPages: numPages,
         currentPage: i + 1,
