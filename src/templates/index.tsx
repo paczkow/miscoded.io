@@ -98,7 +98,7 @@ const Index = ({
 export default Index;
 
 export const query = graphql`
-  query($skip: Int!, $limit: Int!) {
+  query($locale: String!, $skip: Int!, $limit: Int!) {
     site {
       siteMetadata {
         description
@@ -111,6 +111,7 @@ export const query = graphql`
       }
     }
     allMarkdownRemark(
+      filter: { frontmatter: { language: { eq: $locale } } }
       sort: { fields: [frontmatter___date], order: DESC }
       limit: $limit
       skip: $skip

@@ -5,39 +5,47 @@ const createPosts = require("./pages/posts");
 const createPages = async ({ graphql, actions }) => {
   const { createPage } = actions;
   const result = await graphql(`
-    query blogPosts {
-      allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
+    query {
+      groupedByLanguage: allMarkdownRemark {
+        group(field: frontmatter___language) {
+          fieldValue
+          nodes {
+            fields {
+              slug
+            }
+          }
+        }
+      }
+
+      posts: allMarkdownRemark(
+        sort: { fields: [frontmatter___date], order: DESC }
+      ) {
         edges {
           node {
             fields {
               slug
             }
             frontmatter {
-              title
-              date
-              author
-              categories
-              tags
+              language
             }
-            html
           }
         }
       }
     }
   `);
-  const { edges } = result.data.allMarkdownRemark;
+  const { edges } = result.data.posts;
 
-  edges.forEach((post, _) => {
+  edges.forEach(({ node: { fields, frontmatter } }) => {
     createPage({
-      path: post.node.fields.slug,
+      path: `/${frontmatter.language}${fields.slug}`,
       component: path.resolve("src/templates/post.tsx"),
       context: {
-        slug: post.node.fields.slug,
+        slug: fields.slug,
       },
     });
   });
 
-  createPosts(edges, createPage);
+  createPosts(result.data.groupedByLanguage.group, createPage);
 };
 
 module.exports = createPages;
