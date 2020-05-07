@@ -95,8 +95,9 @@ interface SearchQuery {
 }
 
 export const query = graphql`
-  {
+  query($locale: String!) {
     posts: allMarkdownRemark(
+      filter: { frontmatter: { language: { eq: $locale } } }
       sort: { fields: [frontmatter___date], order: DESC }
     ) {
       edges {
@@ -129,12 +130,16 @@ export const query = graphql`
     searchIndex: siteSearchIndex {
       index
     }
-    tags: allMarkdownRemark {
+    tags: allMarkdownRemark(
+      filter: { frontmatter: { language: { eq: $locale } } }
+    ) {
       group(field: frontmatter___tags) {
         fieldValue
       }
     }
-    categories: allMarkdownRemark {
+    categories: allMarkdownRemark(
+      filter: { frontmatter: { language: { eq: $locale } } }
+    ) {
       group(field: frontmatter___categories) {
         fieldValue
       }

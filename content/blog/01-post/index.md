@@ -10,6 +10,7 @@ categories:
   - News
   - Events
   - Portugal
+  - Polska
 tags:
   -  porto
 ---

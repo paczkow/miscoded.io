@@ -12,7 +12,6 @@ import { Share } from "../components/Share";
 import SEO from "../components/SEO";
 
 interface PostTemplateProps {
-  pageContext: PageContext;
   location: WindowLocation;
   data: {
     markdownRemark: MarkdowRemarkNode;

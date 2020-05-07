@@ -7,6 +7,14 @@ module.exports = (groups, createPage) => {
     const locale = group.fieldValue;
     const numPages = Math.ceil(group.nodes.length / siteConfig.postsPerPage);
 
+    createPage({
+      path: `/${locale}/search`,
+      component: path.resolve("./src/templates/search.tsx"),
+      context: {
+        locale,
+      },
+    });
+
     for (let i = 0; i < numPages; i++) {
       createPage({
         path: i === 0 ? `/${locale}` : `/${locale}/page/${i + 1}`,
