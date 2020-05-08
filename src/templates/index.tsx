@@ -1,6 +1,6 @@
 import React from "react";
 import { graphql } from "gatsby";
-import { FormattedMessage, IntlProvider } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 import { Box, Stack, Inline } from "../components/foundations/layout";
 import { Layout } from "../components/Layout";
@@ -9,8 +9,6 @@ import { BackgroundImage } from "../components/BackgroundImage";
 import { Github, Linkedin, Rss, Twitter } from "../components/icons";
 import { mapMarkdownRemarkToPost } from "../utils/mapMarkdownRemarkToPost";
 import SEO from "../components/SEO";
-
-import Messages from "../../translations/translations.json";
 
 interface Props {
   pageContext: PageContext;
@@ -30,7 +28,6 @@ const Index = ({
       },
     },
   },
-  pageContext: { locale },
 }: Props) => {
   const iconColors = {
     color: "#aeaeae",
@@ -46,60 +43,55 @@ const Index = ({
 
   return (
     <Layout>
-      <IntlProvider
-        locale={locale}
-        messages={Messages[locale] as { [key: string]: string }}
-      >
-        <SEO title={description} />
-        <BackgroundImage>
-          <Stack
-            space="large"
-            align="center"
+      <SEO title={description} />
+      <BackgroundImage>
+        <Stack
+          space="large"
+          align="center"
+          css={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: 660,
+          }}
+        >
+          <div
             css={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              width: 660,
+              position: "relative",
+              zIndex: 1000,
+              textAlign: "center",
+              color: "#ffffff",
+              padding: "0 16px",
+              ...descriptionFontStyle,
             }}
           >
-            <div
-              css={{
-                position: "relative",
-                zIndex: 1000,
-                textAlign: "center",
-                color: "#ffffff",
-                padding: "0 16px",
-                ...descriptionFontStyle,
-              }}
-            >
-              <FormattedMessage id="description" />
-            </div>
-            <div css={{ position: "relative", zIndex: 1000 }}>
-              <Inline space="large">
-                <a title="Twitter" href={twitter}>
-                  <Twitter {...iconColors} />
-                </a>
-                <a title="Linkedin" href={linkedin}>
-                  <Linkedin {...iconColors} />
-                </a>
-                <a title="Github" href={github}>
-                  <Github {...iconColors} />
-                </a>
-                <a title="Rss" href={rss}>
-                  <Rss {...iconColors} />
-                </a>
-              </Inline>
-            </div>
-          </Stack>
-        </BackgroundImage>
-        <Box
-          paddingY={["large", "xlarge"]}
-          paddingX={["small", "large"]}
-          css={{ display: "flex", justifyContent: "center" }}
-        >
-          <Posts data={posts} />
-        </Box>
-      </IntlProvider>
+            <FormattedMessage id="description" />
+          </div>
+          <div css={{ position: "relative", zIndex: 1000 }}>
+            <Inline space="large">
+              <a title="Twitter" href={twitter}>
+                <Twitter {...iconColors} />
+              </a>
+              <a title="Linkedin" href={linkedin}>
+                <Linkedin {...iconColors} />
+              </a>
+              <a title="Github" href={github}>
+                <Github {...iconColors} />
+              </a>
+              <a title="Rss" href={rss}>
+                <Rss {...iconColors} />
+              </a>
+            </Inline>
+          </div>
+        </Stack>
+      </BackgroundImage>
+      <Box
+        paddingY={["large", "xlarge"]}
+        paddingX={["small", "large"]}
+        css={{ display: "flex", justifyContent: "center" }}
+      >
+        <Posts data={posts} />
+      </Box>
     </Layout>
   );
 };
