@@ -1,8 +1,7 @@
-const messages = {
+export default {
   pl: {
     description:
       "Blog o wzorcach projektowych, mechanizmach wewnętrznych i zwiększaniu jakości kodu w świecie Javascript",
-    "reading-time": "",
     "read-more": "",
     "search.placeholder": "",
     "search.categories": "",
@@ -10,8 +9,6 @@ const messages = {
     "search.submit": "",
     "search.found-posts": "",
     "post.comment": "",
-    "post.cover-photo": "",
+    "post.photo": "",
   },
 };
-
-export default messages;

@@ -4,15 +4,6 @@ module.exports = {
   titleAlt: "Blog Michała Paczków",
   url: process.env.ROOT_URL || "https://miscoded.io",
   author: "Michał Paczków",
-  description:
-    "Blog o wzorcach projektowych, mechanizmach wewnętrznych i zwiększaniu jakości kodu w świecie Javascript",
-  keywords: [
-    "programowanie",
-    "frontend",
-    "javascript",
-    "typescript",
-    "wzorce projektowe",
-  ],
 
   // social
   twitterUser: "patchk0v",

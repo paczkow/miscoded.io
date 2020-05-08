@@ -1,6 +1,7 @@
 const remark = require("remark");
 const stripMarkdown = require("strip-markdown");
 
+const translations = require("./translations/config");
 const config = require("./config");
 
 module.exports = {
@@ -8,8 +9,8 @@ module.exports = {
     title: config.title,
     author: config.author,
     siteUrl: config.url,
-    description: config.description,
-    keywords: config.keywords,
+    description: translations.pl.description,
+    keywords: translations.pl.keywords,
     social: {
       twitter: config.twitter,
       twitterUser: config.twitterUser,
@@ -60,6 +61,7 @@ module.exports = {
             query: `
               {
                 allMarkdownRemark(
+                  filter: { fields: { langKey: { eq: "pl" }}}
                   sort: { order: DESC, fields: [frontmatter___date] },
                 ) {
                   edges {
