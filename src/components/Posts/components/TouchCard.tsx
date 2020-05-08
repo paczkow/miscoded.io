@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "gatsby";
+import { FormattedMessage } from "react-intl";
 
 import { Box, Inline, Stack } from "../../foundations/layout";
 import { OverlayImage } from "./Image";
@@ -67,7 +68,7 @@ export const TouchCard: React.FC<Post> = ({
                       color: "#ffffff",
                     }}
                   >
-                    {readingTime} min. czytania
+                    {readingTime} min. <FormattedMessage id="read" />
                   </span>
                 </Inline>
               </Stack>
@@ -94,7 +95,7 @@ export const TouchCard: React.FC<Post> = ({
                     fontSize: "18px",
                   }}
                 >
-                  Czytaj więcej
+                  <FormattedMessage id="read-more" />
                 </h4>
               </Link>
             </footer>

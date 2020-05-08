@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "gatsby";
+import { FormattedMessage } from "react-intl";
 
 import { usePageContext } from "../../../context/Page";
 import { Box, Inline, Stack } from "../../foundations/layout/";
@@ -89,7 +90,9 @@ export const HoverCard: React.FC<Post> = ({
               </Link>
               <Inline space="xsmall">
                 <span css={{ fontSize: 14 }}>{date}</span>
-                <span css={{ fontSize: 14 }}>{readingTime} min. czytania</span>
+                <span css={{ fontSize: 14 }}>
+                  {readingTime} min. <FormattedMessage id="read" />
+                </span>
               </Inline>
             </header>
             <p>{excerpt}</p>
@@ -104,7 +107,7 @@ export const HoverCard: React.FC<Post> = ({
                     },
                   }}
                 >
-                  Czytaj więcej
+                  <FormattedMessage id="read-more" />
                 </h4>
               </Link>
             </footer>

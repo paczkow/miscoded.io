@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { WindowLocation } from "@reach/router";
 import { graphql } from "gatsby";
+import { FormattedMessage } from "react-intl";
 import qs from "query-string";
 import { Index } from "elasticlunr";
 
@@ -68,7 +69,9 @@ const Search: React.FC<SearchProps> = ({ data, pageContext, location }) => {
         display="flex"
         justifyContent="center"
       >
-        <h2>Znalezionych postów: {filteredPosts.length}</h2>
+        <h2>
+          <FormattedMessage id="search.found-posts" />: {filteredPosts.length}
+        </h2>
       </Box>
       <Box
         paddingY={["large", "xlarge"]}

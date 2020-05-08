@@ -4,7 +4,7 @@ date: 2018-01-21
 author: Michał Paczków
 publish: true
 image: image.jpg
-imageCredit: "Zdjęcie: [John Photograph](https://unsplash.com/)"
+imageCredit: "[John Photograph](https://unsplash.com/)"
 categories:
   - News
   - Events

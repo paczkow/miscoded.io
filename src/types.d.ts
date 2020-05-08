@@ -1,7 +1,7 @@
 type Dictionary<K extends string, T> = { [P in K]?: T };
 
 interface PageContext {
-  locale: "pl";
+  locale: string;
   totalPages: number;
   currentPage: number;
   limit: number;

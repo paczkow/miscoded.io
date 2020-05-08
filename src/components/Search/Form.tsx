@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, FormEvent, useEffect } from "react";
 import { useQueryParams, StringParam } from "use-query-params";
+import { useIntl } from "react-intl";
 
 import { Stack, Inline } from "../foundations/layout";
 import { Button } from "../Button";
@@ -19,6 +20,7 @@ export const Form: React.FC<FormProps> = ({
   onChange,
   elasticLunrSearchIndex,
 }) => {
+  const intl = useIntl();
   const [{ q: query, t: queryType }, setQuery] = useQueryParams({
     q: StringParam,
     t: StringParam,
@@ -65,10 +67,10 @@ export const Form: React.FC<FormProps> = ({
           });
           setSearchValue(e.currentTarget.value);
         }}
-        placeholder="Wyszukaj"
+        placeholder={intl.formatMessage({ id: "search.placeholder" })}
       />
       <Group
-        groupName="Kategorie"
+        groupName={intl.formatMessage({ id: "search.categories" })}
         items={categories}
         itemsType="category"
         query={query ?? ""}
@@ -76,7 +78,7 @@ export const Form: React.FC<FormProps> = ({
         onClick={getHandleSelectGroupItem("category")}
       />
       <Group
-        groupName="Tagi"
+        groupName={intl.formatMessage({ id: "search.tags" })}
         itemsType="tag"
         items={tags}
         query={query ?? ""}

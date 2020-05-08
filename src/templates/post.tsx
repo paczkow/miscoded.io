@@ -10,6 +10,7 @@ import { BackgroundImage } from "../components/BackgroundImage";
 import { Dot } from "../components/Dot";
 import { Share } from "../components/Share";
 import SEO from "../components/SEO";
+import { FormattedMessage } from "react-intl";
 
 interface PostTemplateProps {
   location: WindowLocation;
@@ -29,7 +30,7 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ data, location }) => {
   return (
     <Layout>
       <SEO
-        lang={langKey as "pl"}
+        lang={langKey}
         title={title}
         description={excerpt}
         image={{
@@ -48,7 +49,8 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ data, location }) => {
                 <Inline space="small">
                   <span css={{ fontSize: 14, color: "#ffffff" }}>{date}</span>
                   <span css={{ fontSize: 14, color: "#ffffff" }}>
-                    {Math.ceil(readingTime.minutes)} min. czytania
+                    {Math.ceil(readingTime.minutes)} min.{" "}
+                    <FormattedMessage id="read" />
                   </span>
                 </Inline>
               </Stack>
@@ -139,7 +141,7 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ data, location }) => {
                   <Stack space="small" align="center">
                     <a title="Facebook" href="">
                       <span css={{ fontWeight: 400 }}>
-                        Skomentuj (Facebook)
+                        <FormattedMessage id="post.comment" /> (Facebook)
                       </span>
                     </a>
                     <div css={{ display: "flex", alignItems: "center" }}>

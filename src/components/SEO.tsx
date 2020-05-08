@@ -1,16 +1,16 @@
 import React from "react";
 import Helmet from "react-helmet";
 import { useStaticQuery, graphql } from "gatsby";
-
-import Messages from "../../translations/messages.json";
+import { useIntl } from "react-intl";
 
 const SEO: React.FC<{
-  lang: "pl";
+  lang: string;
   description?: string;
   title?: string;
   image?: { src: string; width: string; height: string };
   pathname?: string;
 }> = ({ lang, description, title, image: metaImage, pathname }) => {
+  const intl = useIntl();
   const {
     site: { siteMetadata },
   } = useStaticQuery(
@@ -29,7 +29,8 @@ const SEO: React.FC<{
   );
 
   const metaTitle = title || siteMetadata.title;
-  const metaDescription = description || Messages[lang].description;
+  const metaDescription =
+    description || intl.formatMessage({ id: "description" });
   const image =
     metaImage && metaImage.src
       ? `${siteMetadata.siteUrl}${metaImage.src}`
@@ -40,8 +41,8 @@ const SEO: React.FC<{
       htmlAttributes={{
         lang,
       }}
-      title={title}
-      titleTemplate={`%s | ${siteMetadata.title}`}
+      title={metaTitle}
+      titleTemplate={`%s | ${metaDescription}`}
       link={
         canonical
           ? [
