@@ -42,7 +42,7 @@ export const Header = () => {
             ...styles,
           }}
         >
-          <Link to={`${langKey || locale}`} css={{ marginLeft: "auto" }}>
+          <Link to={`/${langKey || locale}`} css={{ marginLeft: "auto" }}>
             <div css={{ display: "flex", alignItems: "center" }}>
               <Logo
                 width="28"

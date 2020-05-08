@@ -29,6 +29,7 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ data, location }) => {
   return (
     <Layout>
       <SEO
+        lang={langKey as "pl"}
         title={title}
         description={excerpt}
         image={{

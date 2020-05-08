@@ -2,13 +2,15 @@ import React from "react";
 import Helmet from "react-helmet";
 import { useStaticQuery, graphql } from "gatsby";
 
+import Messages from "../../translations/messages.json";
+
 const SEO: React.FC<{
-  lang?: string;
+  lang: "pl";
   description?: string;
+  title?: string;
   image?: { src: string; width: string; height: string };
-  title: string;
   pathname?: string;
-}> = ({ lang = "pl", description, title, image: metaImage, pathname }) => {
+}> = ({ lang, description, title, image: metaImage, pathname }) => {
   const {
     site: { siteMetadata },
   } = useStaticQuery(
@@ -17,7 +19,6 @@ const SEO: React.FC<{
         site {
           siteMetadata {
             title
-            description
             author
             keywords
             siteUrl
@@ -27,13 +28,13 @@ const SEO: React.FC<{
     `
   );
 
-  const metaDescription = description || siteMetadata.description;
+  const metaTitle = title || siteMetadata.title;
+  const metaDescription = description || Messages[lang].description;
   const image =
     metaImage && metaImage.src
       ? `${siteMetadata.siteUrl}${metaImage.src}`
       : null;
   const canonical = pathname ? `${siteMetadata.siteUrl}${pathname}` : null;
-
   return (
     <Helmet
       htmlAttributes={{
@@ -62,11 +63,12 @@ const SEO: React.FC<{
         },
         {
           property: `og:title`,
-          content: title,
+          content: metaTitle,
         },
         {
           property: `og:description`,
-          content: metaDescription,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          content: metaDescription as any,
         },
         {
           property: `og:type`,
@@ -78,7 +80,7 @@ const SEO: React.FC<{
         },
         {
           name: `twitter:title`,
-          content: title,
+          content: metaTitle,
         },
         {
           name: `twitter:description`,

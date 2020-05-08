@@ -12,13 +12,15 @@ import { Form } from "../components/Search/Form";
 import { search } from "../utils/search";
 import { Posts } from "../components/Posts/Posts";
 import { mapMarkdownRemarkToPost } from "../utils/mapMarkdownRemarkToPost";
+import SEO from "../components/SEO";
 
 interface SearchProps {
   data: SearchQuery;
+  pageContext: PageContext;
   location: WindowLocation;
 }
 
-const Search: React.FC<SearchProps> = ({ data, location }) => {
+const Search: React.FC<SearchProps> = ({ data, pageContext, location }) => {
   const { posts, tags, categories, searchIndex } = data;
 
   const filterPosts = (filteredIds: string[] | null) =>
@@ -38,6 +40,7 @@ const Search: React.FC<SearchProps> = ({ data, location }) => {
 
   return (
     <Layout>
+      <SEO lang={pageContext.locale} />
       <BackgroundImage>
         <div
           css={{

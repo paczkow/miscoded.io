@@ -4,6 +4,7 @@ module.exports = {
   titleAlt: "Blog Michała Paczków",
   url: process.env.ROOT_URL || "https://miscoded.io",
   author: "Michał Paczków",
+  keywords: ["Wzorce projektowe", "Javascript"],
 
   // social
   twitterUser: "patchk0v",

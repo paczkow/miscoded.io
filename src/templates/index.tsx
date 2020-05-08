@@ -19,11 +19,11 @@ interface Props {
 }
 
 const Index = ({
+  pageContext: { locale },
   data: {
     allMarkdownRemark,
     site: {
       siteMetadata: {
-        description,
         social: { twitter, linkedin, github, rss },
       },
     },
@@ -43,7 +43,7 @@ const Index = ({
 
   return (
     <Layout>
-      <SEO title={description} />
+      <SEO lang={locale} />
       <BackgroundImage>
         <Stack
           space="large"
