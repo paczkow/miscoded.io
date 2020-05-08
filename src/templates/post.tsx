@@ -21,7 +21,7 @@ interface PostTemplateProps {
 const PostTemplate: React.FC<PostTemplateProps> = ({ data, location }) => {
   const {
     frontmatter: { categories, title, date, tags, image, imageCredit },
-    fields: { readingTime },
+    fields: { readingTime, langKey },
     html,
     excerpt,
   } = data.markdownRemark;
@@ -81,7 +81,10 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ data, location }) => {
             <Stack space="small">
               <Inline space="small">
                 {categories.map(category => (
-                  <Link to={`/search?q=${category}&t=category`} key={category}>
+                  <Link
+                    to={`/${langKey}/search?q=${category}&t=category`}
+                    key={category}
+                  >
                     <span
                       css={{
                         fontSize: 16,
@@ -175,6 +178,7 @@ export const query = graphql`
       }
       fields {
         slug
+        langKey
         readingTime {
           minutes
         }

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "gatsby";
 
+import { usePageContext } from "../../../context/Page";
 import { Box, Inline, Stack } from "../../foundations/layout/";
 import { Image } from "./Image";
 
@@ -14,6 +15,8 @@ export const HoverCard: React.FC<Post> = ({
   image,
   tracedSVG,
 }) => {
+  const { locale } = usePageContext();
+
   return (
     <article>
       <Box
@@ -50,7 +53,10 @@ export const HoverCard: React.FC<Post> = ({
             <Box padding="small">
               <Inline space="small">
                 {categories.map(category => (
-                  <Link to={`/search?q=${category}&t=category`} key={category}>
+                  <Link
+                    to={`/${locale}/search?q=${category}&t=category`}
+                    key={category}
+                  >
                     <span
                       css={{
                         fontSize: 14,

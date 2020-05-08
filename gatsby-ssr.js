@@ -1,7 +1,11 @@
-/**
- * Implement Gatsby's SSR (Server Side Rendering) APIs in this file.
- *
- * See: https://www.gatsbyjs.org/docs/ssr-apis/
- */
+import React from "react";
+import { PageContextProvider } from "./src/context/Page";
 
-// You can delete this file if you're not using it
+// eslint-disable-next-line react/display-name
+export const wrapPageElement = ({ element, props }) => {
+  return (
+    <PageContextProvider value={props.pageContext}>
+      <div>{element}</div>
+    </PageContextProvider>
+  );
+};

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "gatsby";
 import { useInView } from "react-intersection-observer";
+import { usePageContext } from "../../../context/Page";
 
 import { Box } from "../../foundations/layout/Box/Box";
 import { getMinWidthMediaQuery } from "../../foundations/styles";
@@ -8,6 +9,7 @@ import { Search, Logo } from "../../icons/";
 
 export const Header = () => {
   const [ref, inView, entry] = useInView();
+  const { langKey, locale } = usePageContext();
   const isScrolled = entry && !inView;
   const styles = isScrolled
     ? {
@@ -40,7 +42,7 @@ export const Header = () => {
             ...styles,
           }}
         >
-          <Link to="/" css={{ marginLeft: "auto" }}>
+          <Link to={`${langKey || locale}`} css={{ marginLeft: "auto" }}>
             <div css={{ display: "flex", alignItems: "center" }}>
               <Logo
                 width="28"
@@ -62,7 +64,7 @@ export const Header = () => {
           </Link>
 
           <Link
-            to="/search"
+            to={`/${langKey || locale}/search`}
             css={{
               marginLeft: "auto",
               [`${getMinWidthMediaQuery("minMedium")}`]: { right: 32 },

@@ -3,6 +3,7 @@ import { Link } from "gatsby";
 
 import { Box, Inline, Stack } from "../../foundations/layout";
 import { OverlayImage } from "./Image";
+import { usePageContext } from "../../../context/Page";
 
 export const TouchCard: React.FC<Post> = ({
   title,
@@ -14,6 +15,8 @@ export const TouchCard: React.FC<Post> = ({
   image,
   tracedSVG,
 }) => {
+  const { locale } = usePageContext();
+
   return (
     <article>
       <Box
@@ -75,7 +78,10 @@ export const TouchCard: React.FC<Post> = ({
           <Stack space="xsmall">
             <Inline space="xsmall">
               {categories.map(category => (
-                <Link to={`/search?q=${category}&t=category`} key={category}>
+                <Link
+                  to={`/${locale}/search?q=${category}&t=category`}
+                  key={category}
+                >
                   <span css={{ fontSize: 14 }}>{category}</span>
                 </Link>
               ))}

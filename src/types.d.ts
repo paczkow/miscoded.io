@@ -49,6 +49,7 @@ interface MarkdowRemarkNode {
   id: string;
   excerpt: string;
   fields: {
+    langKey: string;
     readingTime: {
       minutes: number;
     };
