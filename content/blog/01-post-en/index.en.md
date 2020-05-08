@@ -5,7 +5,6 @@ author: Michał Paczków
 publish: true
 image: image.jpg
 imageCredit: "Zdjęcie: [John Photograph](https://unsplash.com/)"
-language: en
 categories:
   - News
   - Events

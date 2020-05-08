@@ -35,7 +35,7 @@ export default IndexPage;
 export const query = graphql`
   query {
     languages: allMarkdownRemark {
-      group(field: frontmatter___language) {
+      group(field: fields___langKey) {
         fieldValue
       }
     }

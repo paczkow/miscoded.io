@@ -120,6 +120,31 @@ module.exports = {
         ],
       },
     },
+    {
+      resolve: "gatsby-plugin-i18n",
+      options: {
+        langKeyDefault: "pl",
+        useLangKeyLayout: false,
+        pagesPaths: ["content/blog", "src/pages"],
+        markdownRemark: {
+          postPage: "src/templates/post.tsx",
+          query: `
+            {
+              allMarkdownRemark {
+                edges {
+                  node {
+                    fields {
+                      slug,
+                      langKey
+                    }
+                  }
+                }
+              }
+            }
+          `,
+        },
+      },
+    },
     "gatsby-plugin-use-query-params",
     "gatsby-plugin-emotion",
     {

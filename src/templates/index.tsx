@@ -120,7 +120,7 @@ export const query = graphql`
       }
     }
     allMarkdownRemark(
-      filter: { frontmatter: { language: { eq: $locale } } }
+      filter: { fields: { langKey: { eq: $locale } } }
       sort: { fields: [frontmatter___date], order: DESC }
       limit: $limit
       skip: $skip
