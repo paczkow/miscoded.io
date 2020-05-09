@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 const remark = require("remark");
 const stripMarkdown = require("strip-markdown");
 
@@ -24,6 +25,16 @@ module.exports = {
     "gatsby-transformer-sharp",
     "gatsby-plugin-sharp",
     "gatsby-plugin-sitemap",
+    {
+      resolve: "gatsby-plugin-manifest",
+      options: {
+        name: "Programming blog by Michał Paczków",
+        short_name: "miscoded.io",
+        description: messages.pl.description,
+        icon: `${__dirname}/assets/img/favicon.png`,
+        start_url: "/pl/blog/",
+      },
+    },
     {
       resolve: "gatsby-plugin-feed",
       options: {

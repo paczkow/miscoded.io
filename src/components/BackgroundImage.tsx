@@ -18,7 +18,7 @@ export const BackgroundImage: React.FC<BackgroundImageProps> = ({
 }) => {
   const { image } = useStaticQuery(graphql`
     query {
-      image: imageSharp(id: { regex: "/b/" }) {
+      image: imageSharp(fixed: { originalName: { regex: "/background/" } }) {
         fluid(
           quality: 100
           traceSVG: { color: "rgb(56, 47, 92)", threshold: 75 }
