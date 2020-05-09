@@ -11,6 +11,7 @@ import { Dot } from "../components/Dot";
 import { Share } from "../components/Share";
 import SEO from "../components/SEO";
 import { FormattedMessage } from "react-intl";
+import { usePathPrefixContext } from "../context/path-prefix-context";
 
 interface PostTemplateProps {
   location: WindowLocation;
@@ -26,6 +27,8 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ data, location }) => {
     html,
     excerpt,
   } = data.markdownRemark;
+
+  const pathPrefix = usePathPrefixContext();
 
   return (
     <Layout>
@@ -85,7 +88,7 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ data, location }) => {
               <Inline space="small">
                 {categories.map(category => (
                   <Link
-                    to={`/${langKey}/search?q=${category}&t=category`}
+                    to={`${pathPrefix}/search?q=${category}&t=category`}
                     key={category}
                   >
                     <span
@@ -123,7 +126,10 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ data, location }) => {
                 <Stack align="center" space="small">
                   <Inline space="small">
                     {tags.map(tag => (
-                      <Link to={`/search?q=${tag}&t=tag`} key={tag}>
+                      <Link
+                        to={`${pathPrefix}/search?q=${tag}&t=tag`}
+                        key={tag}
+                      >
                         <span
                           css={{
                             fontSize: 16,

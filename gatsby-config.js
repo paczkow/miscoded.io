@@ -127,7 +127,7 @@ module.exports = {
       options: {
         langKeyDefault: "pl",
         useLangKeyLayout: false,
-        pagesPaths: ["content/blog", "src/pages"],
+        pagesPaths: ["content", "src/pages"],
         markdownRemark: {
           postPage: "src/templates/post.tsx",
           query: `

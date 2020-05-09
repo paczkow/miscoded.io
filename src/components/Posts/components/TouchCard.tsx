@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl";
 
 import { Box, Inline, Stack } from "../../foundations/layout";
 import { OverlayImage } from "./Image";
-import { usePageContext } from "../../../context/Page";
+import { usePathPrefixContext } from "../../../context/path-prefix-context";
 
 export const TouchCard: React.FC<Post> = ({
   title,
@@ -16,7 +16,7 @@ export const TouchCard: React.FC<Post> = ({
   image,
   tracedSVG,
 }) => {
-  const { locale } = usePageContext();
+  const pathPrefix = usePathPrefixContext();
 
   return (
     <article>
@@ -80,7 +80,7 @@ export const TouchCard: React.FC<Post> = ({
             <Inline space="xsmall">
               {categories.map(category => (
                 <Link
-                  to={`/${locale}/search?q=${category}&t=category`}
+                  to={`${pathPrefix}/search?q=${category}&t=category`}
                   key={category}
                 >
                   <span css={{ fontSize: 14 }}>{category}</span>

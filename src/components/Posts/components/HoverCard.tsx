@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "gatsby";
 import { FormattedMessage } from "react-intl";
 
-import { usePageContext } from "../../../context/Page";
+import { usePathPrefixContext } from "../../../context/path-prefix-context";
 import { Box, Inline, Stack } from "../../foundations/layout/";
 import { Image } from "./Image";
 
@@ -16,7 +16,7 @@ export const HoverCard: React.FC<Post> = ({
   image,
   tracedSVG,
 }) => {
-  const { locale } = usePageContext();
+  const prefixPath = usePathPrefixContext();
 
   return (
     <article>
@@ -55,7 +55,7 @@ export const HoverCard: React.FC<Post> = ({
               <Inline space="small">
                 {categories.map(category => (
                   <Link
-                    to={`/${locale}/search?q=${category}&t=category`}
+                    to={`${prefixPath}/search?q=${category}&t=category`}
                     key={category}
                   >
                     <span

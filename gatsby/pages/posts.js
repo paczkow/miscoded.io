@@ -7,8 +7,10 @@ module.exports = (groups, createPage) => {
     const locale = group.fieldValue;
     const numPages = Math.ceil(group.nodes.length / siteConfig.postsPerPage);
 
+    const pathPrefix = `/${locale}/blog`;
+
     createPage({
-      path: `/${locale}/search`,
+      path: `${pathPrefix}/search`,
       component: path.resolve("./src/templates/search.tsx"),
       context: {
         locale,
@@ -17,7 +19,7 @@ module.exports = (groups, createPage) => {
 
     for (let i = 0; i < numPages; i++) {
       createPage({
-        path: i === 0 ? `/${locale}` : `/${locale}/page/${i + 1}`,
+        path: i === 0 ? `${pathPrefix}` : `${pathPrefix}/page/${i + 1}`,
         component: path.resolve("./src/templates/index.tsx"),
 
         context: {
@@ -26,8 +28,8 @@ module.exports = (groups, createPage) => {
           currentPage: i + 1,
           limit: siteConfig.postsPerPage,
           skip: i * siteConfig.postsPerPage,
-          prevPagePath: i <= 1 ? `/${locale}` : `/${locale}/page/${i}`,
-          nextPagePath: `/${locale}/page/${i + 2}`,
+          prevPagePath: i <= 1 ? `${pathPrefix}` : `${pathPrefix}/page/${i}`,
+          nextPagePath: `${pathPrefix}/page/${i + 2}`,
           hasPrevPage: i !== 0,
           hasNextPage: i !== numPages - 1,
         },

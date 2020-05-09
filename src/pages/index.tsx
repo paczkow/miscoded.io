@@ -24,7 +24,7 @@ const IndexPage = ({
     const langs = group.map(l => l.fieldValue);
     const urlLang = getRedirectLanguage(langs);
 
-    navigate(`/${urlLang}`);
+    navigate(`/${urlLang}/blog`);
   }, []);
 
   return null;
