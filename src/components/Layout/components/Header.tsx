@@ -45,9 +45,15 @@ export const Header = () => {
           <Link to={pathPrefix} css={{ marginLeft: "auto" }}>
             <div css={{ display: "flex", alignItems: "center" }}>
               <Logo
-                width="28"
-                height="37"
+                width="36"
+                height="45"
                 color={inView ? "#ffffff" : "#000000"}
+                css={{
+                  [`${getMinWidthMediaQuery("minMedium")}`]: {
+                    width: "44px",
+                    height: "55px",
+                  },
+                }}
               />
               <h1
                 css={{
@@ -55,7 +61,10 @@ export const Header = () => {
                   color: inView ? "#ffffff" : "#000000",
                   marginLeft: "16px",
                   letterSpacing: "0.1em",
-                  fontSize: "28px",
+                  fontSize: "24px",
+                  [`${getMinWidthMediaQuery("minMedium")}`]: {
+                    fontSize: "28px",
+                  },
                 }}
               >
                 MISCODED.IO
@@ -67,7 +76,11 @@ export const Header = () => {
             to={`${pathPrefix}/search`}
             css={{
               marginLeft: "auto",
-              [`${getMinWidthMediaQuery("minMedium")}`]: { right: 32 },
+              marginTop: "8px",
+              [`${getMinWidthMediaQuery("minMedium")}`]: {
+                right: "32px",
+                marginTop: 0,
+              },
             }}
           >
             <Search
