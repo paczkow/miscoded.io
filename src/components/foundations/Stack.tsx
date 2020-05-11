@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Box } from "./Box/Box";
-import { Space } from "../../../theme";
+import { Space } from "../../theme";
 import { toFlexXAlign } from "./utils/align";
 
 interface StackProps {

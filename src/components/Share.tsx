@@ -3,7 +3,7 @@ import { WindowLocation } from "@reach/router";
 import { FacebookShareButton, TwitterShareButton } from "react-share";
 
 import config from "../../config";
-import { Inline } from "../components/foundations/layout";
+import { Inline } from "./foundations";
 import { Facebook, Twitter } from "../components/icons/Social";
 
 export const Share: React.FC<{

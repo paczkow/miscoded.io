@@ -3,7 +3,7 @@ import { Link } from "gatsby";
 import { FormattedMessage } from "react-intl";
 
 import { usePathPrefixContext } from "../../../context/path-prefix-context";
-import { Box, Inline, Stack } from "../../foundations/layout/";
+import { Box, Inline, Stack } from "../../foundations";
 import { Image } from "./Image";
 
 export const HoverCard: React.FC<Post> = ({

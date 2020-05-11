@@ -3,8 +3,8 @@ import { WindowLocation } from "@reach/router";
 import { graphql, Link } from "gatsby";
 import Markdown from "react-markdown";
 
-import { Box, Stack, Inline } from "../components/foundations/layout";
-import { getMinWidthMediaQuery } from "../components/foundations/styles";
+import { Box, Stack, Inline } from "../components/foundations";
+import { getMinWidthMediaQuery } from "../styles";
 import { Layout } from "../components/Layout";
 import { BackgroundImage } from "../components/BackgroundImage";
 import { Dot } from "../components/Dot";

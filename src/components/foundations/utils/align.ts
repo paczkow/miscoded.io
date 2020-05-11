@@ -1,4 +1,4 @@
-import { Space } from "../../../../theme";
+import { Space } from "../../../theme";
 
 export const getNegativeMargin = (spaces: Record<Space, number>) => (
   space: ResponsiveProp<Space>

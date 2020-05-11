@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "gatsby";
 import { FormattedMessage } from "react-intl";
 
-import { Box, Inline, Stack } from "../../foundations/layout";
+import { Box, Inline, Stack } from "../../foundations";
 import { OverlayImage } from "./Image";
 import { usePathPrefixContext } from "../../../context/path-prefix-context";
 

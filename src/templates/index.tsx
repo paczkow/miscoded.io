@@ -2,7 +2,7 @@ import React from "react";
 import { graphql } from "gatsby";
 import { FormattedMessage } from "react-intl";
 
-import { Box, Stack, Inline } from "../components/foundations/layout";
+import { Box, Stack, Inline } from "../components/foundations";
 import { Layout } from "../components/Layout";
 import { Posts } from "../components/Posts/Posts";
 import { BackgroundImage } from "../components/BackgroundImage";

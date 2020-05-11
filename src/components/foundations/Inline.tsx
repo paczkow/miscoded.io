@@ -1,6 +1,6 @@
 import React from "react";
 
-import { theme, Space } from "../../../theme";
+import { theme, Space } from "../../theme";
 import { Box } from "./Box/Box";
 import { getNegativeMargin, toFlexXAlign } from "./utils/align";
 

@@ -3,8 +3,8 @@ import { Link } from "gatsby";
 import { useInView } from "react-intersection-observer";
 import { usePathPrefixContext } from "../../../context/path-prefix-context";
 
-import { Box } from "../../foundations/layout/Box/Box";
-import { getMinWidthMediaQuery } from "../../foundations/styles";
+import { Box } from "../../foundations/Box/Box";
+import { getMinWidthMediaQuery } from "../../../styles";
 import { Search, Logo } from "../../icons/";
 
 export const Header = () => {

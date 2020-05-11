@@ -2,7 +2,7 @@ import React from "react";
 import { Global, css } from "@emotion/core";
 import { withTheme } from "emotion-theming";
 
-import { Theme } from "../../../theme";
+import { Theme } from "../theme";
 import { getMinWidthMediaQuery } from "./media-queries";
 
 const GlobalStyles: React.FC<{ theme: Theme }> = ({ children, theme }) => (

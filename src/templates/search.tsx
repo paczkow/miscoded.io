@@ -6,7 +6,7 @@ import { FormattedMessage } from "react-intl";
 import qs from "query-string";
 import { Index } from "elasticlunr";
 
-import { Box } from "../components/foundations/layout/Box/Box";
+import { Box } from "../components/foundations/Box/Box";
 import { Layout } from "../components/Layout/Layout";
 import { BackgroundImage } from "../components/BackgroundImage";
 import { Form } from "../components/Search/Form";
