@@ -6,8 +6,8 @@ import {
   mergeMediaQueriesRangesDictionaries,
   resolveCssFourSideProp,
   toObjectStyles,
-} from "./Box.style";
-import { getToNumber } from "../utils/responsiveProp";
+} from "./box.style";
+import { getToNumber } from "../utils/responsive-prop";
 
 const toNumber = getToNumber(theme.space);
 const breakpoints = ["base", ...Object.keys(theme.breakpoints)];

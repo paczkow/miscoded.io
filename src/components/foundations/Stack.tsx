@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Box } from "./Box/Box";
+import { Box } from "./box/box";
 import { Space } from "../../theme";
 import { toFlexXAlign } from "./utils/align";
 

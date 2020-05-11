@@ -4,7 +4,7 @@ import { FacebookShareButton, TwitterShareButton } from "react-share";
 
 import config from "../../config";
 import { Inline } from "./foundations";
-import { Facebook, Twitter } from "../components/icons/Social";
+import { Facebook, Twitter } from "./icons/social";
 
 export const Share: React.FC<{
   description: string;

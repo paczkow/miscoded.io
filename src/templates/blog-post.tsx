@@ -5,22 +5,22 @@ import Markdown from "react-markdown";
 
 import { Box, Stack, Inline } from "../components/foundations";
 import { getMinWidthMediaQuery } from "../styles";
-import { Layout } from "../components/Layout";
-import { BackgroundImage } from "../components/BackgroundImage";
-import { Dot } from "../components/Dot";
-import { Share } from "../components/Share";
-import SEO from "../components/SEO";
+import { Layout } from "../components/layout/layout";
+import { BackgroundImage } from "../components/background-image";
+import { Dot } from "../components/dot";
+import { Share } from "../components/share";
+import SEO from "../components/seo";
 import { FormattedMessage } from "react-intl";
 import { usePathPrefixContext } from "../context/path-prefix-context";
 
-interface PostTemplateProps {
+interface BlogPostProps {
   location: WindowLocation;
   data: {
     markdownRemark: MarkdowRemarkNode;
   };
 }
 
-const PostTemplate: React.FC<PostTemplateProps> = ({ data, location }) => {
+const BlogPost: React.FC<BlogPostProps> = ({ data, location }) => {
   const {
     frontmatter: { categories, title, date, tags, image, imageCredit },
     fields: { readingTime, langKey },
@@ -164,7 +164,7 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ data, location }) => {
   );
 };
 
-export default PostTemplate;
+export default BlogPost;
 
 export const query = graphql`
   query($slug: String!) {

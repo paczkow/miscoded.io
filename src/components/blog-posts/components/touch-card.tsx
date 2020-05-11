@@ -3,7 +3,7 @@ import { Link } from "gatsby";
 import { FormattedMessage } from "react-intl";
 
 import { Box, Inline, Stack } from "../../foundations";
-import { OverlayImage } from "./Image";
+import { OverlayImage } from "./image";
 import { usePathPrefixContext } from "../../../context/path-prefix-context";
 
 export const TouchCard: React.FC<Post> = ({

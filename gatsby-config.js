@@ -86,7 +86,7 @@ module.exports = {
                         image {
                           childImageSharp {
                             fluid {
-                              src 
+                              src
                             }
                           }
                         }
@@ -140,7 +140,7 @@ module.exports = {
         useLangKeyLayout: false,
         pagesPaths: ["content", "src/pages"],
         markdownRemark: {
-          postPage: "src/templates/post.tsx",
+          postPage: "src/templates/blog-post.tsx",
           query: `
             {
               allMarkdownRemark {

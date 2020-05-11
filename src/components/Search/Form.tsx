@@ -4,7 +4,7 @@ import { useQueryParams, StringParam } from "use-query-params";
 import { useIntl } from "react-intl";
 
 import { Stack, Inline } from "../foundations";
-import { Button } from "../Button";
+import { Button } from "../button";
 import { search } from "../../utils/search";
 
 interface FormProps {

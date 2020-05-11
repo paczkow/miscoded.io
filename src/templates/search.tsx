@@ -6,14 +6,14 @@ import { FormattedMessage } from "react-intl";
 import qs from "query-string";
 import { Index } from "elasticlunr";
 
-import { Box } from "../components/foundations/Box/Box";
-import { Layout } from "../components/Layout/Layout";
-import { BackgroundImage } from "../components/BackgroundImage";
-import { Form } from "../components/Search/Form";
+import { Box } from "../components/foundations/box/box";
+import { Layout } from "../components/layout/layout";
+import { BackgroundImage } from "../components/background-image";
+import { Form } from "../components/search/form";
 import { search } from "../utils/search";
-import { Posts } from "../components/Posts/Posts";
-import { mapMarkdownRemarkToPost } from "../utils/mapMarkdownRemarkToPost";
-import SEO from "../components/SEO";
+import { Posts } from "../components/blog-posts/blog-posts";
+import { mapMarkdownRemarkToPost } from "../utils/map-markdown-remark-to-post";
+import SEO from "../components/seo";
 
 interface SearchProps {
   data: SearchQuery;

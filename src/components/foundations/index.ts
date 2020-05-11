@@ -1,3 +1,3 @@
-export { Box } from "./Box/Box";
-export { Inline } from "./Inline";
-export { Stack } from "./Stack";
+export { Box } from "./box/box";
+export { Inline } from "./inline";
+export { Stack } from "./stack";

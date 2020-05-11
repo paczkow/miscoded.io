@@ -1,5 +1,5 @@
 import { Space } from "../../../theme";
-import { isMapObject } from "../utils/responsiveProp";
+import { isMapObject } from "../utils/responsive-prop";
 
 export interface BoxProps {
   width?: ResponsiveProp<number>;

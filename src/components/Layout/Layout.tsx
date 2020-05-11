@@ -1,8 +1,8 @@
 import React from "react";
 
-import { Header } from "./components/Header";
+import { Header } from "./components/header";
 import { GlobalStyles } from "../../styles";
-import { Footer } from "./components/Footer";
+import { Footer } from "./components/footer";
 
 export const Layout: React.FC = ({ children }) => {
   return (

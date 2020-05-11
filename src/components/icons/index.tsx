@@ -1,3 +1,3 @@
-export { Search } from "./Search";
-export { Twitter, Github, Linkedin, Rss } from "./Social";
-export { Logo } from "./Logo";
+export { Search } from "./search";
+export { Twitter, Github, Linkedin, Rss } from "./social";
+export { Logo } from "./logo";

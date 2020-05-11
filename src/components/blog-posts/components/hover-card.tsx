@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl";
 
 import { usePathPrefixContext } from "../../../context/path-prefix-context";
 import { Box, Inline, Stack } from "../../foundations";
-import { Image } from "./Image";
+import { Image } from "./image";
 
 export const HoverCard: React.FC<Post> = ({
   title,

@@ -3,12 +3,12 @@ import { graphql } from "gatsby";
 import { FormattedMessage } from "react-intl";
 
 import { Box, Stack, Inline } from "../components/foundations";
-import { Layout } from "../components/Layout";
-import { Posts } from "../components/Posts/Posts";
-import { BackgroundImage } from "../components/BackgroundImage";
+import { Layout } from "../components/layout/layout";
+import { Posts } from "../components/blog-posts/blog-posts";
+import { BackgroundImage } from "../components/background-image";
 import { Github, Linkedin, Rss, Twitter } from "../components/icons";
-import { mapMarkdownRemarkToPost } from "../utils/mapMarkdownRemarkToPost";
-import SEO from "../components/SEO";
+import { mapMarkdownRemarkToPost } from "../utils/map-markdown-remark-to-post";
+import SEO from "../components/seo";
 
 interface Props {
   pageContext: PageContext;

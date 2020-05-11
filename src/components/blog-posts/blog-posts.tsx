@@ -1,8 +1,8 @@
 import React from "react";
 
-import { Grid } from "../Grid";
-import { HoverCard } from "./components/HoverCard";
-import { TouchCard } from "./components/TouchCard";
+import { Grid } from "../grid";
+import { HoverCard } from "./components/hover-card";
+import { TouchCard } from "./components/touch-card";
 
 export const Posts: React.FC<{ data: Post[] }> = ({ data }) => (
   <Grid>

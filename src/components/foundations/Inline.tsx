@@ -1,7 +1,7 @@
 import React from "react";
 
 import { theme, Space } from "../../theme";
-import { Box } from "./Box/Box";
+import { Box } from "./box/box";
 import { getNegativeMargin, toFlexXAlign } from "./utils/align";
 
 interface InlineProps {

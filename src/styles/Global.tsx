@@ -5,7 +5,7 @@ import { withTheme } from "emotion-theming";
 import { Theme } from "../theme";
 import { getMinWidthMediaQuery } from "./media-queries";
 
-const GlobalStyles: React.FC<{ theme: Theme }> = ({ children, theme }) => (
+const GlobalStyles: React.FC<{ theme: Theme }> = ({ children }) => (
   <React.Fragment>
     <Global
       styles={css`
