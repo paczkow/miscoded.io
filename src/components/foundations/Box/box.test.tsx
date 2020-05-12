@@ -5,7 +5,7 @@ import {
   mergeMediaQueriesRangesDictionaries,
   resolveCssFourSideProp,
   toObjectStyles,
-} from "./box.style";
+} from "./Box.style";
 
 describe("Box component", () => {
   let theme: Theme;

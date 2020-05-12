@@ -6,7 +6,7 @@ import {
   mergeMediaQueriesRangesDictionaries,
   resolveCssFourSideProp,
   toObjectStyles,
-} from "./box.style";
+} from "./Box.style";
 import { getToNumber } from "../utils/responsive-prop";
 
 const toNumber = getToNumber(theme.space);
