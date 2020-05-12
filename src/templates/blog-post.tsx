@@ -1,6 +1,7 @@
 import React from "react";
 import { WindowLocation } from "@reach/router";
 import { graphql, Link } from "gatsby";
+import { DiscussionEmbed } from "disqus-react";
 import Markdown from "react-markdown";
 
 import { Box, Stack, Inline } from "../components/foundations";
@@ -23,12 +24,21 @@ interface BlogPostProps {
 const BlogPost: React.FC<BlogPostProps> = ({ data, location }) => {
   const {
     frontmatter: { categories, title, date, tags, image, imageCredit },
-    fields: { readingTime, langKey },
+    fields: { readingTime, langKey, slug },
     html,
     excerpt,
   } = data.markdownRemark;
 
   const pathPrefix = usePathPrefixContext();
+
+  const disqusConfig = {
+    shortname: process.env.GATSBY_DISQUS_NAME!,
+    config: {
+      url: slug,
+      identifier: slug,
+      title,
+    },
+  };
 
   return (
     <Layout>
@@ -145,15 +155,17 @@ const BlogPost: React.FC<BlogPostProps> = ({ data, location }) => {
                     ))}
                   </Inline>
                   <Stack space="small" align="center">
-                    <a title="Facebook" href="">
-                      <span css={{ fontWeight: 400 }}>
-                        <FormattedMessage id="post.comment" /> (Facebook)
-                      </span>
+                    <a
+                      title="Facebook"
+                      href="https://www.facebook.com/miscoded.io"
+                    >
+                      <span css={{ fontWeight: 400 }}>Facebook fanpage</span>
                     </a>
                     <div css={{ display: "flex", alignItems: "center" }}>
                       <Share location={location} description={title} />
                     </div>
                   </Stack>
+                  <DiscussionEmbed {...disqusConfig} />
                 </Stack>
               </footer>
             </Stack>
