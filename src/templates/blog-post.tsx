@@ -34,7 +34,7 @@ const BlogPost: React.FC<BlogPostProps> = ({ data, location }) => {
   const disqusConfig = {
     shortname: process.env.GATSBY_DISQUS_NAME!,
     config: {
-      url: slug,
+      url: "https://miscoded.io",
       identifier: slug,
       title,
     },
@@ -154,19 +154,29 @@ const BlogPost: React.FC<BlogPostProps> = ({ data, location }) => {
                       </Link>
                     ))}
                   </Inline>
-                  <Stack space="small" align="center">
+                  <Stack
+                    space="small"
+                    align="center"
+                    css={{ marginBottom: "16px" }}
+                  >
                     <a
                       title="Facebook"
                       href="https://www.facebook.com/miscoded.io"
                     >
                       <span css={{ fontWeight: 400 }}>Facebook fanpage</span>
                     </a>
-                    <div css={{ display: "flex", alignItems: "center" }}>
+                    <div
+                      css={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
                       <Share location={location} description={title} />
                     </div>
                   </Stack>
-                  <DiscussionEmbed {...disqusConfig} />
                 </Stack>
+                <DiscussionEmbed {...disqusConfig} />
               </footer>
             </Stack>
           </Stack>
