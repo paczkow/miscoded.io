@@ -6,6 +6,7 @@ import { usePathPrefixContext } from "../../../context/path-prefix-context";
 import { Box } from "../../foundations/box/box";
 import { getMinWidthMediaQuery } from "../../../styles";
 import { Search, Logo } from "../../icons";
+import { BlackGradientLogo } from "../../icons/black-gardient-logo";
 
 export const Header = () => {
   const [ref, inView, entry] = useInView();
@@ -44,17 +45,30 @@ export const Header = () => {
         >
           <Link to={pathPrefix} css={{ marginLeft: "auto" }}>
             <div css={{ display: "flex", alignItems: "center" }}>
-              <Logo
-                width="36"
-                height="45"
-                color={inView ? "#ffffff" : "#000000"}
-                css={{
-                  [`${getMinWidthMediaQuery("minMedium")}`]: {
-                    width: "44px",
-                    height: "55px",
-                  },
-                }}
-              />
+              {inView ? (
+                <Logo
+                  width="36"
+                  height="45"
+                  color="#ffffff"
+                  css={{
+                    [`${getMinWidthMediaQuery("minMedium")}`]: {
+                      width: "44px",
+                      height: "55px",
+                    },
+                  }}
+                />
+              ) : (
+                <BlackGradientLogo
+                  width="36"
+                  height="45"
+                  css={{
+                    [`${getMinWidthMediaQuery("minMedium")}`]: {
+                      width: "44px",
+                      height: "55px",
+                    },
+                  }}
+                />
+              )}
               <h1
                 css={{
                   position: "relative",
