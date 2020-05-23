@@ -6,7 +6,7 @@ import { usePathPrefixContext } from "../../../context/path-prefix-context";
 import { Box } from "../../foundations/box/box";
 import { getMinWidthMediaQuery } from "../../../styles";
 import { Search, Logo } from "../../icons";
-import { BlackGradientLogo } from "../../icons/black-gardient-logo";
+import { BlackGradientLogo } from "../../icons/black-gradient-logo";
 
 export const Header = () => {
   const [ref, inView, entry] = useInView();

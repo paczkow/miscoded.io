@@ -58,7 +58,7 @@ const GlobalStyles: React.FC<{ theme: Theme }> = ({ children }) => (
         }
 
         h3 {
-          font-size: calc(var(--baseline) * 1rem);
+          font-size: calc(var(--baseline) * 0.75rem);
         }
 
         h4 {
@@ -74,17 +74,38 @@ const GlobalStyles: React.FC<{ theme: Theme }> = ({ children }) => (
           color: black;
         }
 
+        figcaption {
+          font-size: 0.75rem;
+          text-align: center;
+          margin-top: 8px;
+        }
+
+        /* Adjust the position of the line numbers */
+        .gatsby-highlight pre[class*="language-"].line-numbers {
+          padding-left: 2.8em;
+        }
+
         .gatsby-highlight {
+          background-color: #2d2d2d;
+          border-radius: 0.3em;
+          margin: 0.5em 0;
+          padding: 1em;
           overflow: auto;
+        }
+
+        .gatsby-highlight pre[class*="language-"].line-numbers {
+          padding: 0;
+          padding-left: 2.8em;
+          overflow: initial;
+        }
+
+        div:not(.gatsby-highlight) code {
+          font-size: 0.8em;
         }
 
         ${getMinWidthMediaQuery("minMedium")} {
           :root {
             --baseline: 1.7778;
-          }
-
-          html {
-            font-size: 112.5%;
           }
         }
       `}

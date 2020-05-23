@@ -90,7 +90,7 @@ const BlogPost: React.FC<BlogPostProps> = ({ data, location }) => {
         <Box
           paddingY={["large", "large"]}
           paddingX={["small", "large"]}
-          css={{ maxWidth: "39rem", margin: "0 auto" }}
+          css={{ maxWidth: "48rem", margin: "0 auto" }}
           justifyContent="center"
         >
           <Stack space={["medium", "medium", "large"]}>
@@ -121,7 +121,7 @@ const BlogPost: React.FC<BlogPostProps> = ({ data, location }) => {
                   marginBottom: 16,
                 },
                 [`${getMinWidthMediaQuery("minMedium")}`]: {
-                  fontSize: 20,
+                  fontSize: 18,
                 },
               }}
               dangerouslySetInnerHTML={{
