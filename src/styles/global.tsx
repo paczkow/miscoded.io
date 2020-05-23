@@ -67,6 +67,7 @@ const GlobalStyles: React.FC<{ theme: Theme }> = ({ children }) => (
 
         p {
           margin: 0;
+          letter-spacing: 0.05em;
         }
 
         a {
