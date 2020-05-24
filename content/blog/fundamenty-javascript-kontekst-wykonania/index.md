@@ -7,10 +7,11 @@ image: assets/cover.jpg
 imageCredit: "Zdjęcie: [Moren Hsu](https://unsplash.com/@moren)"
 categories:
   - Javascript
-  - Średniozaawansowany
+  - Frontend
+  - Backend 
 tags:
-  - Silnik Javascript
-  - Fundamenty Javascript
+  - silnik-javascript
+  - fudamenty-javascript
 ---
 
 # Fundamenty Javascript: kontekst wykonania

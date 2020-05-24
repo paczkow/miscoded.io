@@ -52,7 +52,6 @@ export const Form: React.FC<FormProps> = ({
           width: 200,
           background: "transparent",
           border: 0,
-          borderRadius: 0,
           borderBottom: "1px solid #ffffff",
           padding: 8,
           fontSize: 16,
@@ -71,7 +70,7 @@ export const Form: React.FC<FormProps> = ({
       />
       <Group
         groupName={intl.formatMessage({ id: "search.categories" })}
-        items={categories}
+        items={categories.map(category => category.fieldValue)}
         itemsType="category"
         query={query ?? ""}
         queryType={queryType}
@@ -80,7 +79,7 @@ export const Form: React.FC<FormProps> = ({
       <Group
         groupName={intl.formatMessage({ id: "search.tags" })}
         itemsType="tag"
-        items={tags}
+        items={tags.map(tag => `${tag.fieldValue}`)}
         query={query ?? ""}
         queryType={queryType}
         onClick={getHandleSelectGroupItem("tag")}
@@ -91,7 +90,7 @@ export const Form: React.FC<FormProps> = ({
 
 interface GroupProps {
   groupName: string;
-  items: { fieldValue: string }[];
+  items: string[];
   itemsType: string;
   query: string;
   queryType: string | undefined;
@@ -106,23 +105,19 @@ const Group: React.FC<GroupProps> = ({
   queryType,
   itemsType,
 }) => (
-  <Stack space="small" align="center">
+  <Stack space="xsmall" align="center">
     <h4 css={{ color: "#ffffff" }}>{groupName}</h4>
-    <Inline space="small" align="center">
-      {items.map(groupItem => {
-        const isSelected =
-          groupItem.fieldValue === query && queryType == itemsType;
+    <Inline space="xsmall" align="center">
+      {items.map(item => {
+        const isSelected = item === query && queryType == itemsType;
 
         return (
           <Button
-            key={groupItem.fieldValue}
-            onClick={() => onClick(groupItem.fieldValue)}
+            key={item}
+            onClick={() => onClick(item)}
             isSelected={isSelected}
           >
-            <span>
-              {itemsType === "tag" ? "#" : ""}
-              {groupItem.fieldValue}
-            </span>
+            <span>{item}</span>
           </Button>
         );
       })}

@@ -140,17 +140,26 @@ const BlogPost: React.FC<BlogPostProps> = ({ data, location }) => {
                         to={`${pathPrefix}/search?q=${tag}&t=tag`}
                         key={tag}
                       >
-                        <span
-                          css={{
-                            fontSize: 16,
-                            color: "#555555",
-                            "&:hover": {
-                              color: "#000000",
-                            },
+                        <button
+                          style={{
+                            background: "#efefef",
+                            padding: 8,
+                            border: "1px solid #e7e7e7",
+                            borderRadius: 2,
                           }}
                         >
-                          #{tag}
-                        </span>
+                          <span
+                            css={{
+                              fontSize: 16,
+                              color: "#555555",
+                              "&:hover": {
+                                color: "#000000",
+                              },
+                            }}
+                          >
+                            {tag}
+                          </span>
+                        </button>
                       </Link>
                     ))}
                   </Inline>
