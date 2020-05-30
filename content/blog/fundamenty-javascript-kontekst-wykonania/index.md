@@ -1,5 +1,5 @@
 ---
-title: Fundamenty Javascript - Kontekst Wykonania
+title: Opanuj fundamenty! Kontekst wykonania.
 date: 2020-04-17
 author: Michał Paczków
 publish: true
@@ -8,33 +8,30 @@ imageCredit: "Zdjęcie: [Moren Hsu](https://unsplash.com/@moren)"
 categories:
   - Javascript
   - Frontend
-  - Backend 
+  - Backend
 tags:
   - silnik-javascript
   - fudamenty-javascript
 ---
 
-# Fundamenty Javascript: kontekst wykonania
-
-Cześć!  Czytasz właśnie pierwszy wpis na blogu miscoded.io. Będę tu opisywał rzeczy związane ze światem frontendu, poczynając od opisu działania silnika Javascript poprzez wzorce projektowe, a kończąc na testowaniu aplikacji.
+Cześć! Czytasz właśnie pierwszy wpis na blogu miscoded.io. Będę tu opisywał rzeczy związane ze światem Javascript, poczynając od opisu działania silnika poprzez wzorce projektowe, a kończąc na testowaniu aplikacji.
 
 ## Fundamenty Javascript
 
-Mistrzem gry zostaje ten kto dobrze poznał jej reguły, dlatego ważne żebyś znał zasady rządzące światem JSa. Możemy je określić fundamentami języka, a są nimi:
+Mistrzem gry zostaje ten kto, dobrze poznał jej reguły, dlatego ważne, żebyś znał zasady rządzące światem JSa. Możemy je określić fundamentami języka, a są nimi:
 
 - kontekst wykonania (ang. Execution Context)
 - zakres zmiennych (ang. Scope of variables)
 - domknięcia (ang. Closures)
 - proptypy (ang. Prototype)
-- pętla zdarzeń (ang. Event Loop)
 
 W tym i następnych postach przyjrzymy się każdemu z tych zagadnień, odpowiadając jednocześnie na pytanie, jak jego znajomość poprawi jakość Twojego kodu.
 
-Część z Was pewnie zada sobie w tym momencie pytanie: "Po co mi to wiedzieć? Do programowania w React czy Angularze nie jest mi to potrzebne!". Można powiedzieć, że po części masz racje, nie musisz posiadać wiedzy, o kontekście wykonania żeby stworzyć aplikację z użyciem (wpisz tutaj dowolny framework lub bibliotekę której używasz). Jednak każda biblioteka czy framework w JS wykorzystuje mechanizmy które opiszemy w tym i następnych postach. Jeśli dobrze je poznasz, ułatwi Ci to zrozumienie działania kodu i tym samym jego łatwiejsze debugowanie i rozwiązywanie potencjalnych błędów i problemów.
+Część z Was pewnie zada sobie w tym momencie pytanie: "Po co mi to wiedzieć? Do programowania w React czy Angularze nie jest mi to potrzebne!". Można powiedzieć, że te osoby po części mają rację, nie muszą posiadać wiedzy, o kontekście wykonania, żeby stworzyć aplikację z użyciem (wpisz tutaj dowolny framework lub bibliotekę, której używasz). Jednak każda biblioteka czy framework w JS wykorzystuje mechanizmy, które opiszę w tym i następnych postach. Jeśli dobrze je poznasz, ułatwi Ci to zrozumienie działania kodu i tym samym jego łatwiejsze debugowanie i rozwiązywanie potencjalnych błędów i problemów.
 
 Przykładem może być odpowiednie przypisanie wartości `this` w komponentach klasowych w React. Wiesz kiedy i dlaczego należy użyć `bind`? Jaka jest różnica między zwykłą funkcją, a strzałkową w tej sytuacji? Rozumiesz mechanizm działający "pod spodem" takiego procesu? Potrafisz wyjaśnić gdzie Javascript przechowuje informację o wartości zmiennej `this`?
 
-Jeśli na któreś z pytań odpowiedziałeś przecząco, zapraszam do dalszej części artykułu (nawet jeśli wszystkie odpowiedzi były twierdzące też zapraszam). Ponizej kod do opisanego problemu.
+Jeśli na któreś z pytań odpowiedziałeś przecząco, zapraszam do dalszej części artykułu (nawet jeśli wszystkie odpowiedzi były twierdzące też zapraszam). Poniżej kod do opisanego problemu.
 
 ```javascript
 class Toggle extends React.Component {
@@ -72,35 +69,22 @@ class Toggle extends React.Component {
 }
 ```
 
-### Kontekst wykonania (ang. Execution Context)
+## Kontekst wykonania (ang. Execution Context)
 
-Zacznijmy od definicji: **kontekst wykonania jest abstrakcyjną koncepcją która zawiera informację o środowisku, w którym wykonywany jest bieżący kod**. Możesz traktować to jak obiekt w którym znajdują się min. identyfikatory zmiennych i funkcji. Zanim przejdziemy dalej, rozważmy przykład nieco mniej abstrakcyjny.
-
-Załóżmy, że chciałbyś kupić nowego laptopa. Udajesz się do sklepu ze sprzętem elektronicznym, podchodzisz do sprzedawcy i przedstawiasz wymagania dotyczące laptopa. Sprzedawca po krótkiej rozmowie kieruje Cię do eksperta. Ekspert po wysłuchaniu Twoich wymagań dobiera odpowiedni komputer, następnie zostajesz poproszony o ponowne podejście do sprzedawcy, żeby zapłacić. Po zapłacie kończysz wizytę w sklepie zadowolony z nowego komputera.
-
-W tej krótkiej historii mamy przedstawioną koncepcje kontekstów. Chcemy kupić laptop w ramach określonych wymagań (kod), początkowo kontaktujemy się ze sprzedawcą (kontekst globalny) który odsyła nas do eksperta w odpowiednim dziale (kontekst funkcji). Ekspert posiada wszelkie niezbędne informację (nazwy zmiennych, funkcji), do przetworzenia Twojego zapytania, następnie odsyła Cię ponownie do sprzedawcy (wykorzystanie execution stack), żeby dokonać zapłaty. Po tym kończysz wizytę w sklepie (koniec programu).
+Zacznijmy od definicji: **kontekst wykonania jest abstrakcyjną koncepcją która zawiera informację o środowisku, w którym wykonywany jest bieżący kod**. Możesz traktować to jak obiekt w którym znajdują się min. identyfikatory zmiennych i funkcji czy wartość `this`.
 
 W momencie pisania artykułu specyfikacja ECMAScript rozróżnia przynajmniej 4 rodzaje kodu. Nazwijmy je kodem globalnym, funkcji, modułu i funkcji `eval`. Każdy z nich wykonywany jest w ramach kontekstu wykonania, którego struktura w zależności od rodzaju kodu jest inna. Dodatkowo mamy np. generatory, dla których struktura kontekstu wykonania będzie inna niż tego wykorzystywanego przez zwykłe funkcje.
 
 W tym artykule zajmiemy się dwoma podstawowymi kontekstami: globalnym i funkcji.
 
-Kontekst globalny tworzony jest przed rozpoczęciem przetwarzania kodu skryptu, kontekst funkcyjny natomiast tworzy się za **każdym wywołaniem funkcji**, nawet jeśli wywołuje ona samą siebie.
-<!-- TODO: Add frames with Execution Contexts -->
-```javascript
-let globalVar = 10;
+Kontekst globalny tworzony jest **przed rozpoczęciem przetwarzania kodu skryptu**, kontekst funkcyjny tworzy się za **każdym wywołaniem funkcji**, nawet jeśli wywołuje ona samą siebie.
 
-function outer() {
-  let outerVar = 20;
+## Dwie fazy kontekstu wykonania
 
-  function inner() {
-    let innerVar = 30;
-  }
-}
-```
+Jak dowiedzieliśmy się z poprzedniego rozdziału, konteksty tworzone są na różnych etapach wykonywania kodu. Należy dodać, że na zbudowanie kontekstu składają się dwie fazy:
 
-## Tworzenie kontekstu wykonania
-
-Jak dowiedzieliśmy się z poprzedniego rozdziału, konteksty tworzone są na różnych etapach wykonywania kodu. Należy dodać, że na zbudowanie kontekstu składają się dwie fazy. *Faza tworzenia* (ang. Creation Phase) i *faza wykonania* (ang. Execution Phase).
+- _faza tworzenia_ (ang. Creation Phase)
+- _faza wykonania_ (ang. Execution Phase).
 
 Dla globalnego kontekstu faza tworzenia, ma miejsce przed przetworzeniem pierwszej linii skryptu, a dla kontekstu funkcji, gdy funkcja zostanie wywołana, lecz przed wykonaniem zwartego w niej kodu (wartości nie są jeszcze przypisane do zmiennych). Podczas tej fazy występuje:
 
@@ -110,17 +94,20 @@ Dla globalnego kontekstu faza tworzenia, ma miejsce przed przetworzeniem pierwsz
 
 ### Utworzenie zakresu
 
-Określenie które identyfikatory zmiennych i funkcji są dostępne w ramach bieżącego zakresu.
-Silnik Javascript skanuje kod, w poszukiwaniu deklaracji zmiennych i funkcji po czym umieszcza ja w pamięci. 
-Zmiennym nie przypisuje się tu wartości.
+Na początku nalezałoby zadać sobie pytanie czym jest zakres?
+Możesz myśleć o nim jak o słowniku który mapuje identyfikatory zmiennych na konkretne wartości.
+Utworzeniem zakresu nazywamy określenie, które identyfikatory zmiennych i funkcji są dostępne w ramach bieżącego zakresu
+(jakie identyfikatory należą do tego obiektu)
+Silnik Javascript skanuje kod, w poszukiwaniu deklaracji zmiennych i funkcji po czym umieszcza ja w pamięci.
+Zmiennym nie przypisuje się w tym momencie wartości.
 
 ### Utworzenie odniesienia do zewnętrznego zakresu
 
-Kiedy silnik JS chce uzyskać dostęp do zmiennej przeszukuje najpierw zakres w bieżącym kontekście wykonania, jeśli nie znalazł identyfikatora szukanej zmiennej, przechodzi do zewnętrznego kontekstu. Sytuacja powtarza się, aż do znalezienia odpowiedniego identyfikatora, bądź przejścia do kontekstu globalnego, który jest najbardziej zewnętrznym kontekstem. Tworzenie takich łańcuchów możliwe jest dzięki zapisaniu referencji do zewnętrznego kontekstu.
+Kiedy silnik JS chce uzyskać dostęp do zmiennej przeszukuje najpierw zakres w bieżącym kontekście wykonania, jeśli nie znalazł identyfikatora szukanej zmiennej, przechodzi do zewnętrznego zakresu. Sytuacja powtarza się, aż do znalezienia odpowiedniego identyfikatora, bądź przejścia do zakresu globalnego, który jest najbardziej zewnętrznym zakresem. Tworzenie takich łańcuchów możliwe jest dzięki zapisaniu referencji do zewnętrznego zakresu.
 
 ### Ustawienie wartości `this`
 
-Dla słowa kluczowego `this` ustawienie wartości nie wiąże się z wspomnianym przeszukiwaniem przy użyciu zakresów. Jego wartość ustalana jest raz w momencie tworzenia kontekstu. `this` wskazuje na obiekt na rzecz którego zostało wywołane. Dla kontekstu globalnego jest to zawsze obiekt hosta (`window` w przeglądarce). Jeśli natomiast wywołasz funkcje z użyciem referencji do obiektu, `this` wskazuje na ten obiekt.
+Dla słowa kluczowego `this` ustawienie wartości nie wiąże się ze wspomnianym przeszukiwaniem przy użyciu zakresów. Jego wartość ustalana jest raz w momencie tworzenia kontekstu. `this` wskazuje na obiekt, na którego rzecz zostało wywołane. Dla kontekstu globalnego jest to zawsze obiekt hosta (`window` w przeglądarce). Jeśli natomiast wywołasz funkcje z użyciem referencji do obiektu, `this` wskazuje na ten obiekt.
 
 ```javascript
 const person = {
@@ -131,6 +118,7 @@ const person = {
 };
 
 person.sayHello(); // "Hi, I'm Joe" -> function calling by reference to object
+// this points out object "person"
 
 const hello = person.sayHello;
 
@@ -145,7 +133,7 @@ Następna po fazie tworzenia jest faza wykonania. W tej fazie mamy:
 1. przypisane wartości zmiennych
 2. wykonywanie kodu
 
-W zobrazowaniu obydwu faz posłuzymy się następującym fragmentem kodu:
+Żeby lepiej uświadomić sobie jak wygląda ten proces, ponizej znajdziesz fragment kodu wraz z animacją przedstawiającą obydwie fazy zarówno dla kontkestu globalnego jak i funkcji `foo`:
 
 ```javascript
 let a = 20;
@@ -156,31 +144,11 @@ function foo() {
 }
 ```
 
-Kontekst wykonania zapisany w pseudokodzie mógłby wyglądać w ten sposób:
-
-```
-// Creation Phase
-ExecutionContext = {
-	a: <unitialized>
-	b: undefined
-	foo: <reference to foo function>
-	outer: null // it's global context
-	this: <reference to window object>
-}
-
-// Execution Phase
-ExecutionContext = {
-	a: 20
-	b: 40
-	foo: <reference to foo function>
-	outer: null
-	this: <reference to window object>
-}
-```
+![Animacja przedstawiające fazy podczas wykonywania kodu Javascript](./assets/phases.gif "Animacja przedstawiające dwie fazy wykorzystywane przez silnik Javscript")
 
 ## Struktura kontekstu wykonania
 
-Powiedzieliśmy, już sobie o tym jakie są rodzaje kontekstu, jak wygląda proces ich tworzenia. Czas na zapoznanie się ze strukturą kontekstu. Zgodnie ze specyfikacją, możemy przedstawić to jako obiekt:
+Powiedzieliśmy, już sobie o tym, jakie są rodzaje kontekstu oraz jak wygląda proces ich tworzenia. Czas na zapoznanie się ze strukturą kontekstu. Zgodnie ze specyfikacją, możemy przedstawić to jako obiekt::
 
 ```
 ExecutionContext = {
@@ -194,14 +162,14 @@ Należy dodać, że to obiekt teoretyczny. Nie możemy dostać się do niego z p
 
 Właściwość ThisBinding odpowiedzialna jest za ustawienie `this`.
 
-Pozostałe obiekty wchodzące w skład kontekstu wykonania to LexicalEnvironment i VariableEnvironment. Należy dodać, że posiadają one identyczną strukturę o nazwie...Lexical Environment. Składa się ona z odniesienia do zakresu zewnętrznego i obiektu nazwanego **EnvironmentRecord** o który możesz myśleć jak o słowniku który odwzorowuje nazwy zmiennych na ich wartości.
+Pozostałe obiekty wchodzące w skład kontekstu wykonania to LexicalEnvironment i VariableEnvironment. Należy dodać, że posiadają one identyczną strukturę o nazwie...Lexical Environment. Składa się ona z odniesienia do zakresu zewnętrznego i obiektu nazwanego **EnvironmentRecord** o który możesz myśleć jak o słowniku, który odwzorowuje nazwy zmiennych na ich wartości. Takiej samej definicji użyłem przy chwilę wcześniej przy definicji zakresu, bo to właśnie ten obiekt mamy na myśli mówiąc o zakresie.
 
-**EnvironmentRecord** posiada inna strukturę i nazwę dla kontekstu globalnego i kontekstu funkcji:
+**EnvironmentRecord** posiada inną strukturę i nazwę dla kontekstu globalnego i kontekstu funkcji:
 
 - **Declarative Environment Record - (kontekst funkcji)** przechowuje deklaracje zmiennych, funkcji i przesłanych argumentów. To w tym obiekcie znajduje się również zmienna `arguments`.
-- **Object Environment Record - (kontekst globalny)** służy od definiowania powiązań między zmiennymi i funkcjami dla kontekstu globalnego. Przechowuje również odniesienia do obiektu globanego.
+- **Object Environment Record - (kontekst globalny)** służy od definiowania powiązań między zmiennymi i funkcjami dla kontekstu globalnego. Przechowuje również odniesienia do obiektu globanego.
 
-Część z Was mogłaby zadać teraz pytanie. "Dlaczego kontekst wykonania posiada LexicalEnvironment, oraz VariableEnvironment o identycznej strukturze? Nie wystarczy tylko jeden taki obiekt? Jakie są między nimi różnice?"
+Część z Was mogłaby zadać teraz pytanie. "Dlaczego kontekst wykonania posiada LexicalEnvironment oraz VariableEnvironment o identycznej strukturze? Nie wystarczy tylko jeden taki obiekt? Jakie są między nimi różnice?"
 
 Otóż definicje funkcji oraz zmienne stworzone poprzez `var` przechowywane są w VariableEnvironment, natomiast te stworzone przez słowa kluczowe `let` i `const` znajdują się w LexicalEnvironment.
 
@@ -209,7 +177,7 @@ Kolejna z różnic związana jest ze słowem kluczowym `with`. Pominę to z racj
 
 ## Przykłady
 
-Poniżej znajduje się kod wraz ze schematem struktury kontekstów wykonania (globalnego i funkcji foo). Założmy że kod znajduje się momencie fazy wykonania dla funkcji `foo`, kiedy wszelkie zmienne zostały już przypisane.
+Poniżej znajduje się kod wraz ze schematem struktury kontekstów wykonania (globalnego i funkcji foo). Założmy, że kod znajduje się momencie fazy wykonania dla funkcji `foo`, kiedy wszelkie zmienne zostały już przypisane.
 
 ```javascript
 let y = 10;
@@ -297,7 +265,7 @@ GlobalExectionContext = {
 }
 ```
 
-W momencie w którym silnik Javascript napotka wywołanie funkcji `c = multiply(20, 30);` zostanie utworzony nowy kontekst funkcji. W fazie tworzenia kontekst ten będzie miał postać:
+W momencie, w którym silnik Javascript napotka wywołanie funkcji `c = multiply(20, 30);` zostanie utworzony nowy kontekst funkcji. W fazie tworzenia kontekst ten będzie miał postać:
 
 ```
 FunctionExectionContext = {
@@ -349,7 +317,7 @@ FunctionExectionContext = {
 
 ### Execution Stack
 
-Konteksty podczas wykonywania kodu przechowywane są w strukturze zwanej Execution Stack. Jest to stos o strukturze LIFO (last in, first out). Jeśli nie nie znasz tego konceptu możesz myśleć o tym, jak o stosie talerzy. Ostatni talerz odłożony na stos (znajdujacy sie na szczycie) jest pierwszym który zostanie z niego zabrany.
+Konteksty podczas wykonywania kodu przechowywane są w strukturze zwanej Execution Stack. Jest to stos o strukturze LIFO (last in, first out). Jeśli nie nie znasz tego pojęcia, możesz myśleć o tym, jak o stosie talerzy. Ostatni talerz odłożony na stos (znajdujący się na szczycie) jest pierwszym, który zostanie z niego zabrany.
 
 W momencie uruchamiania skryptu silnik Javascript tworzy kontekst globalny i umieszcza go w Execution Stack.
 
@@ -372,6 +340,9 @@ console.log("Inside Global Execution Context");
 
 ## Podsumowanie
 
-Programista powinien choć w minimalnym stopniu znać i rozumieć proces przetwarzania i działania wewnętrznych mechanizmów związanych z wykonywaniem kodu który napisał. Dzięki temu będzie mógł tworzyć efektywniejsze rozwiązania, łatwiej znajdować i poprawiać potencjalne problemy. Dziś wykonaliśmy pierwszy krok w stronę zrozumienia tych mechanizmów dla języka Javascript, poznaliśmy kontekst wykonania. Przeanalizowaliśmy jego strukturę, proces tworzenia i dowiedzieliśmy się jak nowo utworzone konteksty przechowywane są na stosie.
+Programista powinien, choć w minimalnym stopniu znać i rozumieć proces przetwarzania i działania wewnętrznych mechanizmów związanych z wykonywaniem kodu, który napisał. Dzięki temu będzie mógł tworzyć efektywniejsze rozwiązania, łatwiej znajdować i poprawiać potencjalne problemy. Dziś wykonaliśmy pierwszy krok w stronę zrozumienia tych mechanizmów dla języka Javascript, poznaliśmy kontekst wykonania. Przeanalizowaliśmy jego strukturę, proces tworzenia i dowiedzieliśmy się, jak nowo utworzone konteksty przechowywane są na stosie.
 
-Jeśli miałbyś zapamiętać tylko 1 najważniejszą rzecz z tego artykułu chciałbym, żeby to była informacja o tym, że **kontekst wykonania dla funkcji tworzy się w momencie jej wywołania (a nie utworzenia) i właśnie wtedy określa się na który obiekt będzie wskazywać zmienna** `this`.
+Jeśli miałbyś zapamiętać tylko najważniejsze rzeczy z tego artykułu, chciałbym, żeby to były informacje o tym, że:
+
+- tworzenie kontekstu składa się z dwóch faz. Ta wiedza przyda się choćby do zrozumienia mechanizmu windowania (ang. Hoisting)
+- kontekst wykonania dla funkcji tworzy się w momencie jej wywołania (a nie utworzenia) i właśnie wtedy określa się, na który obiekt będzie wskazywać zmienna `this`.

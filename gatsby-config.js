@@ -136,6 +136,7 @@ module.exports = {
               showLineNumbers: true,
             },
           },
+          "gatsby-remark-copy-linked-files",
         ],
       },
     },

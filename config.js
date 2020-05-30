@@ -10,7 +10,7 @@ module.exports = {
   twitterUser: "patchk0v",
   twitter: "https://twitter.com/patchk0v",
   linkedin: "https://www.linkedin.com/in/mpaczkow/",
-  github: "https://github.com/patchk0v",
+  github: "https://github.com/patchkov",
   rss: "/rss.xml",
 
   // settings
