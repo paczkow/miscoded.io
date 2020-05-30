@@ -1,6 +1,6 @@
 ---
 title: Opanuj fundamenty! Kontekst wykonania.
-date: 2020-04-17
+date: 2020-05-30
 author: Michał Paczków
 publish: true
 image: assets/cover.jpg
