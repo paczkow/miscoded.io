@@ -144,7 +144,12 @@ function foo() {
 }
 ```
 
-![Animacja przedstawiające fazy podczas wykonywania kodu Javascript](./assets/phases.gif "Animacja przedstawiające dwie fazy wykorzystywane przez silnik Javscript")
+<figure style="width: 100%; margin-left: 0;">
+  <a href="assets/phases.gif">  
+    <img style="width: 100%" src="assets/phases.gif"/>
+  </a>
+  <figcaption>Animacja przedstawiająca fazę tworzenia i wykonywania dla kontekstu globalnego i funkcji</figcaption>
+</figure>
 
 ## Struktura kontekstu wykonania
 
