@@ -31,7 +31,7 @@ Część z Was pewnie zada sobie w tym momencie pytanie: "Po co mi to wiedzieć?
 
 Przykładem może być odpowiednie przypisanie wartości `this` w komponentach klasowych w React. Wiesz kiedy i dlaczego należy użyć `bind`? Jaka jest różnica między zwykłą funkcją, a strzałkową w tej sytuacji? Rozumiesz mechanizm działający "pod spodem" takiego procesu? Potrafisz wyjaśnić gdzie Javascript przechowuje informację o wartości zmiennej `this`?
 
-Jeśli na któreś z pytań odpowiedziałeś przecząco, zapraszam do dalszej części artykułu (nawet jeśli wszystkie odpowiedzi były twierdzące też zapraszam). Poniżej kod do opisanego problemu.
+Jeśli na któreś z pytań odpowiedziałeś przecząco, zapraszam do dalszej części artykułu (nawet jeśli wszystkie odpowiedzi były twierdzące też zapraszam). Poniżej kod dla wspomnianego problemu:
 
 ```javascript
 class Toggle extends React.Component {
@@ -146,9 +146,9 @@ function foo() {
 
 <figure style="width: 100%; margin-left: 0;">
   <a href="assets/phases.gif">  
-    <img style="width: 100%" src="assets/phases.gif"/>
+    <img style="width: 100%" src="assets/execution-context.gif"/>
   </a>
-  <figcaption>Animacja przedstawiająca fazę tworzenia i wykonywania dla kontekstu globalnego i funkcji</figcaption>
+  <figcaption>Animacja przedstawiająca fazę tworzenia i wykonania dla kontekstu globalnego i funkcji</figcaption>
 </figure>
 
 ## Struktura kontekstu wykonania
@@ -167,7 +167,10 @@ Należy dodać, że to obiekt teoretyczny. Nie możemy dostać się do niego z p
 
 Właściwość ThisBinding odpowiedzialna jest za ustawienie `this`.
 
-Pozostałe obiekty wchodzące w skład kontekstu wykonania to LexicalEnvironment i VariableEnvironment. Należy dodać, że posiadają one identyczną strukturę o nazwie...Lexical Environment. Składa się ona z odniesienia do zakresu zewnętrznego i obiektu nazwanego **EnvironmentRecord** o który możesz myśleć jak o słowniku, który odwzorowuje nazwy zmiennych na ich wartości. Takiej samej definicji użyłem przy chwilę wcześniej przy definicji zakresu, bo to właśnie ten obiekt mamy na myśli mówiąc o zakresie.
+Pozostałe obiekty wchodzące w skład kontekstu wykonania to LexicalEnvironment i VariableEnvironment. Należy dodać, że posiadają one identyczną strukturę o nazwie...Lexical Environment. Składa się ona z:
+
+- odniesienia do zakresu zewnętrznego
+- obiektu nazwanego **EnvironmentRecord** o którym możesz myśleć jak o słowniku, który odwzorowuje nazwy zmiennych na ich wartości. Takiej samej definicji użyłem chwilę wcześniej przy definicji zakresu, bo to właśnie ten obiekt mamy na myśli mówiąc o zakresie.
 
 **EnvironmentRecord** posiada inną strukturę i nazwę dla kontekstu globalnego i kontekstu funkcji:
 
@@ -195,7 +198,7 @@ function foo(z) {
 foo(30); // 150
 ```
 
-![Struktura kontekstu](assets/context.png "Struktura kontekstów w momencie wywołania funkcji foo (faza wykonania)")
+![Struktura kontekstu](assets/execution-context.png "Struktura kontekstów w momencie wywołania funkcji foo (faza wykonania)")
 
 W ramach wizualizacji kolejnego przykładu zastosujemy pseudokod pokazujący strukturę kontekstu wykonania dla poniższego kodu Javascript, tym razem z podziałem na fazę tworzenia i wykonania:
 
@@ -349,5 +352,5 @@ Programista powinien, choć w minimalnym stopniu znać i rozumieć proces przetw
 
 Jeśli miałbyś zapamiętać tylko najważniejsze rzeczy z tego artykułu, chciałbym, żeby to były informacje o tym, że:
 
-- tworzenie kontekstu składa się z dwóch faz. Ta wiedza przyda się choćby do zrozumienia mechanizmu windowania (ang. Hoisting)
-- kontekst wykonania dla funkcji tworzy się w momencie jej wywołania (a nie utworzenia) i właśnie wtedy określa się, na który obiekt będzie wskazywać zmienna `this`.
+- przetwarzanie kodu w Javascript składa się z dwóch faz. Ta wiedza przyda się choćby do zrozumienia mechanizmu windowania (ang. Hoisting)
+- kontekst wykonania dla funkcji tworzy się w momencie jej wywołania (a nie utworzenia) i właśnie wtedy określa się, na który obiekt będzie wskazywać zmienna `this`
