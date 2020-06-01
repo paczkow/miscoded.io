@@ -1,5 +1,5 @@
 ---
-title: Opanuj fundamenty! Kontekst wykonania.
+title: Opanuj Fundamenty! Kontekst wykonania.
 date: 2020-05-30
 author: Michał Paczków
 publish: true
@@ -83,8 +83,8 @@ Kontekst globalny tworzony jest **przed rozpoczęciem przetwarzania kodu skryptu
 
 Jak dowiedzieliśmy się z poprzedniego rozdziału, konteksty tworzone są na różnych etapach wykonywania kodu. Należy dodać, że na zbudowanie kontekstu składają się dwie fazy:
 
-- _faza tworzenia_ (ang. Creation Phase)
-- _faza wykonania_ (ang. Execution Phase).
+- *faza tworzenia* (ang. Creation Phase)
+- *faza wykonania* (ang. Execution Phase).
 
 Dla globalnego kontekstu faza tworzenia, ma miejsce przed przetworzeniem pierwszej linii skryptu, a dla kontekstu funkcji, gdy funkcja zostanie wywołana, lecz przed wykonaniem zwartego w niej kodu (wartości nie są jeszcze przypisane do zmiennych). Podczas tej fazy występuje:
 
@@ -265,7 +265,7 @@ GlobalExectionContext = {
       // Identifier bindings go here
       c: undefined,
       multiply: < func >,
-		__bindingObject__: <reference do global/window object>
+  __bindingObject__: <reference do global/window object>
     }
     outer: <null>,
   }
@@ -302,7 +302,7 @@ Kiedy wszelkie wartości zmiennych zostaną już przypisane i rozpocznie się wy
 
 ```
 FunctionExectionContext = {
-	LexicalEnvironment: {
+ LexicalEnvironment: {
     EnvironmentRecord: {
       Type: "Declarative",
       // Identifier bindings go here
@@ -310,7 +310,7 @@ FunctionExectionContext = {
     outer: <GlobalLexicalEnvironment>,
     ThisBinding: <Global Object or undefined>,
   },
-	VariableEnvironment: {
+ VariableEnvironment: {
     EnvironmentRecord: {
       Type: "Declarative",
       // Identifier bindings go here
