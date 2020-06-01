@@ -13,8 +13,6 @@ tags:
   - Fundamenty Javascript
 ---
 
-# Fundamenty Javascript: kontekst wykonania
-
 Cześć!  Czytasz właśnie pierwszy wpis na blogu miscoded.io. Będę tu opisywał rzeczy związane ze światem frontendu, poczynając od opisu działania silnika Javascript poprzez wzorce projektowe, a kończąc na testowaniu aplikacji.
 
 ## Fundamenty Javascript

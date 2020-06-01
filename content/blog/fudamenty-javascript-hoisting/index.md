@@ -39,7 +39,7 @@ Jeśli wybrałeś 3 opcję, brawo! To poprawna odpowiedź. Na pytanie "dlaczego 
 
 Będąc precyzyjnym nazwa wynoszenie została użyta tu jako opis koncepcji, służy do zobrazowania tego co się dzieje. Jeśli jednak powiesz, że silnik JS przenosi deklarację funkcji powyżej jej wywołania to błąd! **Kod deklaracji nigdy nie jest przenoszony na górę bloku przez silnik Javascript**. Zatem w jaki sposób jest to realizowane?
 
-Jeśli czytałeś mój [poprzedni post](https://miscoded.io), dowiedziałeś się o dwóch fazach jakie wykonuje silnik Javascript podczas przetwarzania kodu. Są to:
+Jeśli czytałeś mój [poprzedni post](https://miscoded.io/fundamenty-javascript-kontekst-wykonania), dowiedziałeś się o dwóch fazach jakie wykonuje silnik Javascript podczas przetwarzania kodu. Są to:
 
 1. faza tworzenia (ang. Creation Phase)
 2. faza wykonania (ang. Execution Phase).
@@ -52,7 +52,7 @@ W ramach przypomnienia: w momencie wejścia do nowego zakresu np. poprzez wywoł
 
 Wszystkie wyżej wymienione informacje definiowane są w fazie tworzenia, zanim jeszcze zostanie wykonana pierwsza linijka kodu w bieżącym bloku. Jak do tego ma się wynoszenie?
 
-Podczas pierwszej fazy, silnik Javascript skanuje bieżący blok kodu. Każda znaleziona deklaracja jest odpowiednio inicjalizowana, a jej identyfikator od tego momentu jest przechowywany w strukturze zwanej `VariableEnvironment`, będącej jednym z elementów kontekstu wykonania. Dzięki temu w fazie wykonania mamy do niej dostęp w obrębie całego bloku. Jak widzisz nie nastąpiło tu żadne fizyczne przeniesienie.
+Podczas pierwszej fazy, silnik Javascript skanuje bieżący blok kodu. Każda znaleziona deklaracja jest odpowiednio inicjalizowana, a jej identyfikator od tego momentu jest przechowywany w strukturze zwanej `VariableEnvironment`, będącej jednym z elementów kontekstu wykonania. Dzięki temu w fazie wykonania mamy do niej dostęp w obrębie całego bloku. Jak widzisz nie nastąpiło tu żadne fizyczne przeniesienie. Ponizej animacja przedstawiająca fazę tworzenia i wykonania.
 
 W przypadku wynoszenia ważne jest zrozumieniem zarówno abstrakcyjnej koncepcji, obrazującej ten proces jako przeniesienie deklaracji na górę bloku, jaki i kroków wykonywanych przez silnik Javascript. Tylko wtedy jesteśmy w stanie dobrze zrozumieć i odpowiednio wykorzystać ten fundament języka Javascript. Przejdźmy teraz do szczegółów w kontekście zmiennych i funkcji oraz do przykładów które powinny pomóc w lepszym zrozumieniu tego zagadnienia.
 
