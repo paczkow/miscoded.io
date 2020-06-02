@@ -145,10 +145,10 @@ function foo() {
 ```
 
 <figure style="width: 100%; margin-left: 0;">
-  <a href="assets/phases.gif">  
+  <a href="assets/execution-context.gif">  
     <img style="width: 100%" src="assets/execution-context.gif"/>
   </a>
-  <figcaption>Animacja przedstawiająca fazę tworzenia i wykonania dla kontekstu globalnego i funkcji</figcaption>
+  <figcaption>Faza tworzenia i wykonania dla kontekstu globalnego i funkcji</figcaption>
 </figure>
 
 ## Struktura kontekstu wykonania

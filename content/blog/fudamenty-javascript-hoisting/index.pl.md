@@ -4,17 +4,17 @@ date: 2020-06-01
 author: Michał Paczków
 publish: true
 image: assets/cover.jpg
-imageCredit: "Zdjęcie: [Moren Hsu](https://unsplash.com/@moren)"
+imageCredit: "Zdjęcie: [Bence Balla-Schottner](https://unsplash.com/@ballaschottner)"
 categories:
   - Javascript
   - Frontend
-  - Backend 
+  - Backend
 tags:
-  - silnik-javascript 
-  - fundamenty-javascript 
+  - silnik-javascript
+  - fundamenty-javascript
 ---
 
-Witam Cię w drugim poście z serii "Opanuj Fundamenty". Opisuję w niej mechanizmy silnika Javascript. W poprzednim artykule zajęliśmy się kontekstem wykonania (ang. Execution Context). Dziś omówimy Hoisting. Dlaczego ta nazwa może zmylić programistę? Jaka jest róznica między `var`, a `let`? Jak silnik Javascript realizuje ten mechanizm? Czy są jakieś praktyczne powody, aby go użyć? Jeśli chcesz poznać odpowiedzi na te pytania, zapraszam do dalszej lektury.
+Witam Cię w drugim poście z serii "Opanuj Fundamenty". Opisuję w niej działanie silnika Javascript. W poprzednim artykule zajęliśmy się kontekstem wykonania (ang. Execution Context). Dziś omówimy Hoisting. Dlaczego ta nazwa może zmylić programistę? Jaka jest róznica między `var`, a `let`? Jak silnik Javascript realizuje ten mechanizm? Czy są jakieś praktyczne powody, aby go użyć? Jeśli chcesz poznać odpowiedzi na te pytania, zapraszam do dalszej lektury.
 
 ## Hoisting
 
@@ -24,11 +24,11 @@ Po polsku najbardziej odpowiednim słowem jest "wynoszenie", bądź "windowanie"
 console.log(sayHello("World")); // result of calling it?
 
 function sayHello(name) {
-  console.log("Hello" + name);
+  console.log("Hello " + name);
 }
 ```
 
-Wiesz co zostanie wyświetlone w konsoli? Bardzo często padają 3 różne odpowiedzi. Są to
+Wiesz co zostanie wyświetlone w konsoli? Bardzo często padają 3 różne odpowiedzi. Są to:
 
 1. "aaa pewnie jakiś błąd"
 2. undefined
@@ -53,11 +53,18 @@ Wszystkie wyżej wymienione informacje definiowane są w fazie tworzenia, zanim 
 
 Podczas pierwszej fazy, silnik Javascript skanuje bieżący blok kodu. Każda znaleziona deklaracja jest odpowiednio inicjalizowana, a jej identyfikator od tego momentu jest przechowywany w strukturze zwanej `VariableEnvironment`, będącej jednym z elementów kontekstu wykonania. Dzięki temu w fazie wykonania mamy do niej dostęp w obrębie całego bloku. Jak widzisz nie nastąpiło tu żadne fizyczne przeniesienie. Ponizej animacja przedstawiająca fazę tworzenia i wykonania.
 
+<figure style="width: 100%; margin-left: 0;">
+  <a href="assets/execution-context.gif">  
+    <img style="width: 100%" src="assets/execution-context.gif"/>
+  </a>
+  <figcaption>Faza tworzenia i wykonania dla kontekstu globalnego i funkcji</figcaption>
+</figure>
+
 W przypadku wynoszenia ważne jest zrozumieniem zarówno abstrakcyjnej koncepcji, obrazującej ten proces jako przeniesienie deklaracji na górę bloku, jaki i kroków wykonywanych przez silnik Javascript. Tylko wtedy jesteśmy w stanie dobrze zrozumieć i odpowiednio wykorzystać ten fundament języka Javascript. Przejdźmy teraz do szczegółów w kontekście zmiennych i funkcji oraz do przykładów które powinny pomóc w lepszym zrozumieniu tego zagadnienia.
 
 ## Wynoszenie zmiennych
 
-Zaczniemy sobie od zmiennych zadeklarowanych przez słowo kluczowe `var`. W momencie napotkania deklaracji podczas fazy tworzenia silnik Javascript inicjalizuje ją wartością `undefined`, a następnie odkłada jej identyfikator do `VariableEnvironment`. Jak już zostało wspomniane dzięki temu w momencie w którym zacznie się wykonywanie kodu (faza druga) zmienna jest już dostępna w ramach całego bloku. Co ważne zmienna w fazie wykonania jest równa `undefined`, aż do napotkania instrukcji przypisującej jej wartość. Innymi słowy **wynoszenie tyczy się tylko deklaracji**. Spójrzmy na przykład poniżej:
+Zaczniemy sobie od zmiennych zadeklarowanych przez słowo kluczowe `var`. W momencie napotkania deklaracji podczas fazy tworzenia silnik Javascript inicjalizuje ją wartością `undefined`, a następnie odkłada jej identyfikator do `VariableEnvironment`. Jak już zostało wspomniane dzięki temu w momencie w którym zacznie się wykonywanie kodu (faza druga) zmienna jest już dostępna w ramach całego bloku. Co ważne zmienna w fazie wykonania jest równa `undefined`, aż do napotkania instrukcji przypisującej jej wartość. Spójrzmy na przykład poniżej:
 
 ```javascript
 function foo() {
@@ -89,6 +96,15 @@ function foo() {
 
 foo();
 ```
+
+Ponizej znajdziesz animację przedstawiającą przetworzenie wcześniej omówionego kodu.
+
+<figure style="width: 100%; margin-left: 0;">
+  <a href="assets/hoisting.gif">  
+    <img style="width: 100%" src="assets/hoisting.gif"/>
+  </a>
+  <figcaption>Dwie fazy podczas przetwarzania kodu</figcaption>
+</figure>
 
 Zanim przejdziemy do omówienia windowania dla funkcji, krótkie zadanie.
 
@@ -221,9 +237,9 @@ let a = 10;
 }
 ```
 
-W przypadku w którym wynoszenie nie wystąpiłoby w linijce 3 funkcja `console.log` powinna odnieść się do zmiennej z zewnętrznego bloku i wypisać `10`. Tak się nie stało, bo zadziałał hoisting. Pytanie dlaczego podobnie jak w `var` nie dostajemy `undefined`, a bład?
+W przypadku braku windowania funkcja `console.log` w linii 3 powinna odnieść się do zmiennej z zewnętrznego bloku i wypisać `10`. Pytanie dlaczego nie dostajemy `undefined` jak w przypadku słowa kluczowego `var`, a bład?
 Odpowiedzialne jest za to **Temporal Dead Zone (TDZ)**. Mozesz myślec o tym jak o oknie czasowym w którym zmienna juz istnieje, ale nie została jeszcze zaincjalizowana i dlatego próba uzyskania do niej dostępu kończy się błędem.
-Ciekawostką jest to, ze dla słowa kluczowego `var` TDZ równiez występuje jednak ma ona wartość zerową i dlatego nie zaobserujemy tego w naszych programach.
+Ciekawostką jest to, ze dla słowa kluczowego `var` TDZ równiez występuje jednak ma ona wartość zerową i dlatego nie zaobserwujemy tego w naszych programach.
 
 W przykładowym kodzie ponizej zobrazowany jest TDZ w momencie wywołania funkcji `foo`.
 
@@ -245,10 +261,10 @@ function foo() {
 
 Poznaliśmy koncepcję wynoszenia, oraz jej realizację w silniku Javascript. Czas odpowiedzieć sobie na pytanie czy ma ona jakieś zastosowanie praktyczne. Osobiście znalazłem tylko jedną, sensowną propozycję wykorzystania tego mechanizmu. Podał ją Kyle Simpson w książce "You Don't Know JS".
 
-Dotyczy ona windowania funkcji i polega na dodaniu kod wykonywalnego zaraz na początku bloku, powyżej wszystkich deklaracji. Dzięki temu programista może łatwiej znaleźć kod odpowiedzialny za uruchomienie logiki w danym bloku. Jest to szczególnie przydatne w przypadku gdy deklaracje zajmowałyby dużo linii kodu i należałoby się przez nie "przescrollować", żeby znaleźć kod wykonywalny w tym bloku. Poniżej kawałek kodu obrazujący tę ideę:
+Dotyczy tylko funkcji i polega na dodaniu kod wykonywalnego zaraz na początku bloku, powyżej wszystkich deklaracji. Dzięki temu programista może łatwiej znaleźć kod odpowiedzialny za uruchomienie logiki w danym bloku. Jest to szczególnie przydatne, gdy deklaracje zajmowałyby dużo linii kodu i należałoby się przez nie "przescrollować", żeby znaleźć kod wykonywalny w tym bloku. Poniżej kawałek kodu obrazujący tę ideę:
 
 ```javascript
-getStudents();
+const students = getStudents();
 
 // ************* - a lot of declarations here
 
