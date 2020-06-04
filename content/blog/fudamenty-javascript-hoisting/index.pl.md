@@ -14,11 +14,11 @@ tags:
   - fundamenty-javascript
 ---
 
-Witam Cię w drugim poście z serii "Opanuj Fundamenty". Opisuję w niej działanie silnika Javascript. W poprzednim artykule zajęliśmy się kontekstem wykonania (ang. Execution Context). Dziś omówimy Hoisting. Dlaczego ta nazwa może zmylić programistę? Jaka jest róznica między `var`, a `let`? Jak silnik Javascript realizuje ten mechanizm? Czy są jakieś praktyczne powody, aby go użyć? Jeśli chcesz poznać odpowiedzi na te pytania, zapraszam do dalszej lektury.
+Witam Cię w drugim artykule z serii "Opanuj Fundamenty". Opisuję w niej działanie silnika Javascript. W poprzednim artykule zajęliśmy się kontekstem wykonania (ang. Execution Context). Dziś omówimy Hoisting. Dlaczego ta nazwa jest nieprecyzyjna? Jaka jest różnica między `var`, a `let`? Jak silnik Javascript realizuje ten mechanizm? Czy są jakieś praktyczne powody, aby go użyć? Jeśli chcesz poznać odpowiedzi na te pytania, zapraszam do dalszej lektury.
 
 ## Hoisting
 
-Po polsku najbardziej odpowiednim słowem jest "wynoszenie", bądź "windowanie". Jeśli jesteśmy już przy nazwie należy powiedzieć że, potrafi być ona...myląca. Szczególnie dla osób które usłyszały o tym "gdzieś kiedyś" i nigdy nie zagłębiły się w temat. Zanim jednak przejdę do wyjaśnienia, zaczniemy od przykładu:
+Po polsku najbardziej odpowiednim słowem jest "wynoszenie" bądź "windowanie". Jeśli jesteśmy już przy nazwie ,należy powiedzieć, że, jest ona nieprecyzyjna i może zmylić programistę. Zanim jednak przejdę do wyjaśnienia, zaczniemy od przykładu:
 
 ```javascript
 console.log(sayHello("World")); // result of calling it?
@@ -34,9 +34,11 @@ Wiesz co zostanie wyświetlone w konsoli? Bardzo często padają 3 różne odpow
 2. undefined
 3. "Hello World"
 
-Jeśli wybrałeś 3 opcję, brawo! To poprawna odpowiedź. Na pytanie "dlaczego tak się dzieje" wiele osób w tym momencie odpowie, że deklaracja `sayHello` przenoszona jest na górę bloku i dzięki temu w `console.log` mam do niej dostęp, nawet jeśli w kodzie przez nas napisanym funkcja znajduje się poniżej, stąd *wynoszenie*. W takim razie dlaczego nazwa jest myląca? Czego się czepiasz autorze?!
+Jeśli wybrałeś 3 opcję, brawo! To poprawna odpowiedź. Na pytanie "dlaczego tak się dzieje" wiele osób w tym momencie odpowie, że deklaracja `sayHello` przenoszona jest na górę bloku i dzięki temu w `console.log` mam do niej dostęp, nawet jeśli w kodzie przez nas napisanym funkcja znajduje się poniżej, stąd _wynoszenie_.
 
-Będąc precyzyjnym nazwa wynoszenie została użyta tu jako opis koncepcji, służy do zobrazowania tego co się dzieje. Jeśli jednak powiesz, że silnik JS przenosi deklarację funkcji powyżej jej wywołania to błąd! **Kod deklaracji nigdy nie jest przenoszony na górę bloku przez silnik Javascript**. Zatem w jaki sposób jest to realizowane?
+W takim razie, dlaczego nazwa jest myląca? Czego się czepiasz autorze?!
+
+Będąc precyzyjnym nazwa wynoszenie, została użyta tu jako opis koncepcji, służy do zobrazowania tego, co się dzieje. Jeśli jednak powiesz, że silnik JS przenosi deklarację funkcji powyżej jej wywołania to błąd! **Kod deklaracji nigdy nie jest przenoszony na górę bloku przez silnik Javascript**. Zatem w jaki sposób jest to realizowane?
 
 Jeśli czytałeś mój [poprzedni post](https://miscoded.io/pl/blog/fundamenty-javascript-kontekst-wykonania), dowiedziałeś się o dwóch fazach jakie wykonuje silnik Javascript podczas przetwarzania kodu. Są to:
 
@@ -51,7 +53,7 @@ W ramach przypomnienia: w momencie wejścia do nowego zakresu np. poprzez wywoł
 
 Wszystkie wyżej wymienione informacje definiowane są w fazie tworzenia, zanim jeszcze zostanie wykonana pierwsza linijka kodu w bieżącym bloku. Jak do tego ma się wynoszenie?
 
-Podczas pierwszej fazy, silnik Javascript skanuje bieżący blok kodu. Każda znaleziona deklaracja jest odpowiednio inicjalizowana, a jej identyfikator od tego momentu jest przechowywany w strukturze zwanej `VariableEnvironment`, będącej jednym z elementów kontekstu wykonania. Dzięki temu w fazie wykonania mamy do niej dostęp w obrębie całego bloku. Jak widzisz nie nastąpiło tu żadne fizyczne przeniesienie. Ponizej animacja przedstawiająca fazę tworzenia i wykonania.
+Podczas pierwszej fazy, silnik Javascript skanuje bieżący blok kodu. Każda znaleziona deklaracja jest odpowiednio inicjalizowana, a jej identyfikator dodawany do struktury zwanej `VariableEnvironment`, będącej jednym z elementów kontekstu wykonania. Dzięki temu w fazie wykonania mamy do niej dostęp w obrębie całego bloku. Jak widzisz nie nastąpiło tu żadne fizyczne przeniesienie. Poniżej animacja przedstawiająca fazę tworzenia i wykonania.
 
 <figure style="width: 100%; margin-left: 0;">
   <a href="assets/execution-context.gif">  
@@ -60,7 +62,7 @@ Podczas pierwszej fazy, silnik Javascript skanuje bieżący blok kodu. Każda zn
   <figcaption>Faza tworzenia i wykonania dla kontekstu globalnego i funkcji</figcaption>
 </figure>
 
-W przypadku wynoszenia ważne jest zrozumieniem zarówno abstrakcyjnej koncepcji, obrazującej ten proces jako przeniesienie deklaracji na górę bloku, jaki i kroków wykonywanych przez silnik Javascript. Tylko wtedy jesteśmy w stanie dobrze zrozumieć i odpowiednio wykorzystać ten fundament języka Javascript. Przejdźmy teraz do szczegółów w kontekście zmiennych i funkcji oraz do przykładów które powinny pomóc w lepszym zrozumieniu tego zagadnienia.
+W przypadku wynoszenia ważne jest zrozumieniem zarówno abstrakcyjnej koncepcji, obrazującej ten proces jako przeniesienie deklaracji na górę bloku, jak i kroków wykonywanych przez silnik Javascript. Tylko wtedy jesteśmy w stanie dobrze zrozumieć i odpowiednio wykorzystać ten fundament języka Javascript. Przejdźmy teraz do szczegółów w kontekście zmiennych i funkcji oraz do przykładów, które powinny pomóc w lepszym zrozumieniu tego zagadnienia.
 
 ## Wynoszenie zmiennych
 
@@ -76,7 +78,7 @@ function foo() {
 foo();
 ```
 
-W momencie wywołania funkcji `foo` i wejścia do nowego zakresu wykonywana jest faza tworzenia. Silnik Javascript skanuje blok tej funkcji, a w momencie napotkania deklaracji `var x = 10;` przypisuje zmiennej `x` wartość `undefined` i dodaje ją do obiektu `VariableEnvironment`. Będzie on wyglądał następująco:
+W momencie wywołania funkcji `foo` i wejścia do nowego zakresu rozpoczyna się faza tworzenia. Silnik Javascript skanuje blok funkcji, w momencie napotkania deklaracji `var x = 10;` przypisuje zmiennej `x` wartość `undefined` i dodaje ją do obiektu `VariableEnvironment`. Będzie on wyglądał następująco:
 
 ```
 VariableEnvironment = {
@@ -97,13 +99,13 @@ function foo() {
 foo();
 ```
 
-Ponizej znajdziesz animację przedstawiającą przetworzenie wcześniej omówionego kodu.
+Poniżej znajdziesz animację przedstawiającą przetworzenie wcześniej omówionego kodu przez silnik Javascript.
 
 <figure style="width: 100%; margin-left: 0;">
   <a href="assets/hoisting.gif">  
     <img style="width: 100%" src="assets/hoisting.gif"/>
   </a>
-  <figcaption>Dwie fazy podczas przetwarzania kodu</figcaption>
+  <figcaption>Wykorzystanie dwóch faz podczas przetwarzania kodu przez silnik Javascript</figcaption>
 </figure>
 
 Zanim przejdziemy do omówienia windowania dla funkcji, krótkie zadanie.
@@ -167,16 +169,16 @@ function outer() {
 // outer function
 ```
 
-Mamy tutaj do czynienia z dwoma zakresami, globalnym i funkcji. W każdym z nich występuje windowanie. Zanim zostanie wykonana pierwsza linijka skryptu, tworzony jest globalny kontekst wykonania. W fazie tworzenia kiedy silnik JS napotka deklarację funkcji `outer` jej identyfikator jest dodawany do `VariableEnvironemnt` dla globalnego kontekstu wykonania, dzięki czemu jest dostępna w całym bloku globalnym w następnej fazie. W tym momencie rozpoczyna się faza wykonania dla globalnego kontekstu wykonania, w pierwszej linijce mamy wywołanie funkcji `console.log(outer());` . Oznacza to, że tworzony jest kontekst funkcji w ramach którego rozpoczyna się faza tworzenia, silnik JS w momencie napotkania deklaracji funkcji `inner` dodaje jej identyfikator do `VariableEnvironemnt` tyle że tym razem w ramach kontekstu wykonania dla funkcji `outer`. Struktura `VariableEnvironment` przed wykonaniem kodu funkcji `outer` (linia 4) wygląda następująco:
+Mamy tutaj do czynienia z dwoma zakresami, globalnym i funkcji. W każdym z nich występuje windowanie. Zanim zostanie wykonana pierwsza linijka skryptu, tworzony jest globalny kontekst wykonania. W fazie tworzenia kiedy silnik JS napotka deklarację funkcji `outer` jej identyfikator jest dodawany do `VariableEnvironment` dla globalnego kontekstu wykonania, dzięki czemu jest dostępna w całym bloku globalnym w następnej fazie. W tym momencie rozpoczyna się faza wykonania, w pierwszej linijce mamy wywołanie funkcji `console.log(outer());` . Oznacza to, że tworzony jest kontekst funkcji w ramach którego rozpoczyna się faza tworzenia, silnik JS w momencie napotkania deklaracji funkcji `inner` dodaje jej identyfikator do `VariableEnvironment` tyle że tym razem w ramach kontekstu wykonania dla funkcji `outer`. Struktura `VariableEnvironment` dla kontekstu globalnego i funkcji `outer` wygląda następująco:
 
 ```
 // Global Execution Context
-VariableEnironment = {
+VariableEnvironment = {
 	outer: <ref to function>
 }
 
 // outer Execution Context
-VaribaleEnvironment = {
+VariableEnvironment = {
     inner: <ref to function>
 }
 ```
@@ -185,7 +187,7 @@ VaribaleEnvironment = {
 
 Warto wspomnieć o różnicy między deklaracją (ang. Function Declaration), a wyrażeniem funkcyjnym (ang. Function Expression) w kontekście wynoszenia.
 
-Zanim jednak przejdziemy do różnić, krótkie wytłumaczenie czym jest jedno i drugie:
+Zanim jednak przejdziemy do różnic, krótkie wytłumaczenie czym jest jedno i drugie:
 
 - jeśli funkcja jest zadeklarowana jako osobna instrukcja rozpoczynająca się od słowa kluczowego `function` określamy to jako deklaracje funkcji
 - jeśli funkcja tworzona jest jako część wyrażenia mówimy wtedy o wyrażeniu funkcyjnym. Przykładem może być tutaj przypisanie funkcji anonimowej do zmiennej które składa się z:
@@ -198,7 +200,7 @@ function foo() {
 	console.log("Hello world!");
 }
 
-// function expression - creation function is only one part of this expression
+// function expression - creating the function is only one part of this expression
 var foo = function() {
 	console.log("Hello world!"):
 }
@@ -206,7 +208,7 @@ var foo = function() {
 
 Możesz zapamiętać, że deklaracja musi posiadać nazwę po słowie `function`, a wyrażenie funkcyjne nie, patrz kod powyżej.
 
-Wynoszenie dla wyrażenia funkcyjnego działa analogicznie, do mechanizmu opisanego przy słowie kluczowym `var`. To znaczy kiedy silnik JS w fazie tworzenia napotka taka instrukcję, przypisze jej identyfikatorowi wartość `undefined` i umieści go w `VariableEnvironment`. Oznacza to, że w fazie wykonania aż do momentu napotkania instrukcji przypisania wywołanie poprzez ten identyfikator zwróci błąd, `TypeError`, gdyż wartości `undefined` nie można wywołać. W tym momencie można przypomnieć, że windowanie tyczy się tylko deklaracji.
+Wynoszenie dla wyrażenia funkcyjnego działa analogicznie, do mechanizmu opisanego przy słowie kluczowym `var`. To znaczy kiedy silnik JS w fazie tworzenia napotka taka instrukcję, zmiennej przypisze wartość `undefined` i umieści jej identyfikator w `VariableEnvironment`. Oznacza to, że w fazie wykonania aż do momentu napotkania instrukcji przypisania wywołanie poprzez ten identyfikator zwróci błąd, `TypeError`, gdyż wartości `undefined` nie można wywołać.
 
 ```javascript
 foo(); // Uncaught TypeError: foo is not a function
@@ -226,7 +228,7 @@ console.log(a); // ReferenceError
 let a = 10;
 ```
 
-Jak widzimy w przeciwieństwie do słowa kluczowego `var` program pokazuje błąd, po którym jego wykonywanie zostanie przerwane. Czy to oznacza, ze wynoszenie dla `let` i `const` nie istnieje? Nie, dla tych słów kluczowych wynoszenie wciąz występuje, dowód ponizej:
+Jak widzimy w przeciwieństwie do słowa kluczowego `var` program pokazuje błąd, po którym jego wykonywanie zostanie przerwane. Czy to oznacza, ze wynoszenie dla `let` i `const` nie istnieje? Nie, **dla tych słów kluczowych wynoszenie wciąz występuje**, dowód ponizej:
 
 ```javascript
 let a = 10;
@@ -237,11 +239,11 @@ let a = 10;
 }
 ```
 
-W przypadku braku windowania funkcja `console.log` w linii 3 powinna odnieść się do zmiennej z zewnętrznego bloku i wypisać `10`. Pytanie dlaczego nie dostajemy `undefined` jak w przypadku słowa kluczowego `var`, a bład?
-Odpowiedzialne jest za to **Temporal Dead Zone (TDZ)**. Mozesz myślec o tym jak o oknie czasowym w którym zmienna juz istnieje, ale nie została jeszcze zaincjalizowana i dlatego próba uzyskania do niej dostępu kończy się błędem.
+W przypadku braku windowania funkcja `console.log` w linii 3 powinna odnieść się do zmiennej z zewnętrznego bloku i wypisać `10`. Pytanie dlaczego nie dostajemy `undefined` jak w przypadku słowa kluczowego `var`, a błąd?
+Odpowiedzialne jest za to **Temporal Dead Zone (TDZ)**. Możesz myśleć o tym jak o oknie czasowym w którym zmienna juz istnieje, ale nie została jeszcze zaincjalizowana i dlatego próba uzyskania do niej dostępu kończy się błędem.
 Ciekawostką jest to, ze dla słowa kluczowego `var` TDZ równiez występuje jednak ma ona wartość zerową i dlatego nie zaobserwujemy tego w naszych programach.
 
-W przykładowym kodzie ponizej zobrazowany jest TDZ w momencie wywołania funkcji `foo`.
+W przykładowym kodzie poniżej zobrazowany jest TDZ w momencie wywołania funkcji `foo`.
 
 ```javascript
 function foo() {
@@ -266,6 +268,8 @@ Dotyczy tylko funkcji i polega na dodaniu kod wykonywalnego zaraz na początku b
 ```javascript
 const students = getStudents();
 
+doSomethingWithStudents(students);
+
 // ************* - a lot of declarations here
 
 function getStudents() {
@@ -278,13 +282,17 @@ function getStudents() {
   // ************* - a lot of declarations here
 
   function doSomething() {
-    // ..
+    // ...
   }
 }
+
+function doSomethingWithStudents(); {
+  // ...
+ }
 ```
 
 ## Podsumowanie
 
-W dzisiejszym artykule omówiliśmy sobie mechanizm wynoszenia. Wskazaliśmy różnicę pomiędzy koncepcją, a krokami jakie realizuje silnik Javascript, zobaczyliśmy jak wygląda wynoszenie dla zmiennych i funkcji, oraz czy istnieją jakieś praktyczne zastosowania tego mechanizmu.
+W dzisiejszym artykule omówiliśmy sobie mechanizm wynoszenia. Wskazaliśmy różnicę pomiędzy koncepcją a krokami, jakie realizuje silnik Javascript, zobaczyliśmy, jak wygląda wynoszenie dla zmiennych i funkcji, oraz czy istnieją jakieś praktyczne zastosowania tego mechanizmu.
 
-Jeśli miałbyś zapamiętać najważniejszą rzecz z tego artykułu, chciałbym żeby była to różnica między koncepcją wynoszenia (przeniesienie deklaracji na górę bloku), a tym jak ona jest realizowana przez silnik Javascript (wykorzystanie fazy tworzenia do inicjalizacji zmiennych i udostępnienia ich w dla całego bloku w fazie wykonania).
+Jeśli miałbyś zapamiętać najważniejszą rzecz z tego artykułu, chciałbym, żeby była to różnica między koncepcją wynoszenia (przeniesienie deklaracji na górę bloku) a tym, jak faktycznie jest realizowana przez silnik Javascript (wykorzystanie fazy tworzenia do inicjalizacji zmiennych i udostępnienia ich w dla całego bloku w fazie wykonania).

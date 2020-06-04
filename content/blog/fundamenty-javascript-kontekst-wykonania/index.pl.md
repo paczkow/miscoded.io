@@ -11,7 +11,7 @@ categories:
   - Backend
 tags:
   - silnik-javascript
-  - fudamenty-javascript
+  - fundamenty-javascript
 ---
 
 Cześć! Czytasz właśnie pierwszy wpis na blogu miscoded.io. Będę tu opisywał rzeczy związane ze światem Javascript, poczynając od opisu działania silnika poprzez wzorce projektowe, a kończąc na testowaniu aplikacji.
