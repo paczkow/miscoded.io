@@ -1,5 +1,5 @@
 ---
-title: Opanuj Fundamenty! Kontekst wykonania.
+title: Opanuj Fundamenty! Kontekst wykonania
 date: 2020-05-30
 author: Michał Paczków
 publish: true

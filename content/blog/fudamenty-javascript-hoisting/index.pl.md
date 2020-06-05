@@ -1,5 +1,5 @@
 ---
-title: Opanuj Fundamenty! Hoisting, jak to naprawdę działa?
+title: Opanuj Fundamenty! Hoisting
 date: 2020-06-01
 author: Michał Paczków
 publish: true
