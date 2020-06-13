@@ -45,7 +45,7 @@ const BlogPost: React.FC<BlogPostProps> = ({ data, location }) => {
       <SEO
         lang={langKey}
         title={title}
-        description={excerpt}
+        description="miscoded.io"
         image={{
           src: image.childImageSharp.fluid.src,
           height: "800",

@@ -10,6 +10,7 @@ export const HoverCard: React.FC<Post> = ({
   title,
   categories,
   date,
+  description,
   readingTime,
   excerpt,
   slug,
@@ -95,7 +96,7 @@ export const HoverCard: React.FC<Post> = ({
                 </span>
               </Inline>
             </header>
-            <p>{excerpt}</p>
+            <p>{description || excerpt}</p>
             <footer>
               <Link to={slug}>
                 <h4

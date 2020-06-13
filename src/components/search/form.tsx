@@ -56,6 +56,9 @@ export const Form: React.FC<FormProps> = ({
           padding: 8,
           fontSize: 16,
           color: "#ffffff",
+          "::placeholder": {
+            color: "#aeaeae",
+          },
         }}
         value={query ?? ""}
         onChange={(e: FormEvent<HTMLInputElement>) => {

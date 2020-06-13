@@ -123,6 +123,7 @@ export const query = graphql`
           frontmatter {
             title
             categories
+            description
             date(formatString: "DD, MMMM YYYY", locale: "pl")
             tags
             image {

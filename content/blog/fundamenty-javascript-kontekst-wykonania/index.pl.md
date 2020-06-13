@@ -5,6 +5,7 @@ author: Michał Paczków
 publish: true
 image: assets/cover.jpg
 imageCredit: "Zdjęcie: [Moren Hsu](https://unsplash.com/@moren)"
+description: "Czy pisząc kod, zastanawiałeś się jak silnik Javascript go wykonuje? Co dzieje się po wywołaniu funkcji? Jak przechowywane są informacje o zmiennych, których używasz? Dobry programista powinien wiedzieć jak przetwarzany jest jego kod, dlatego warto poznać fundamenty silnika Javascript. Dziś pierwszy z nich, Kontekst Wykonania."
 categories:
   - Javascript
   - Frontend
@@ -83,8 +84,8 @@ Kontekst globalny tworzony jest **przed rozpoczęciem przetwarzania kodu skryptu
 
 Jak dowiedzieliśmy się z poprzedniego rozdziału, konteksty tworzone są na różnych etapach wykonywania kodu. Należy dodać, że na zbudowanie kontekstu składają się dwie fazy:
 
-- *faza tworzenia* (ang. Creation Phase)
-- *faza wykonania* (ang. Execution Phase).
+- _faza tworzenia_ (ang. Creation Phase)
+- _faza wykonania_ (ang. Execution Phase).
 
 Dla globalnego kontekstu faza tworzenia, ma miejsce przed przetworzeniem pierwszej linii skryptu, a dla kontekstu funkcji, gdy funkcja zostanie wywołana, lecz przed wykonaniem zwartego w niej kodu (wartości nie są jeszcze przypisane do zmiennych). Podczas tej fazy występuje:
 

@@ -1,10 +1,11 @@
 ---
 title: Opanuj Fundamenty! Hoisting
-date: 2020-06-01
+date: 2020-06-06
 author: Michał Paczków
 publish: true
 image: assets/cover.jpg
 imageCredit: "Zdjęcie: [Bence Balla-Schottner](https://unsplash.com/@ballaschottner)"
+description: 'Czy w języku Javascript, możemy wywołać funkcję przed jej deklaracją? Czym jest hoisting? Jak jest realizowany i jak wykorzystać go w praktyce? Dziś, w drugiej cześci serii "Opanuj Fundamenty" odpowiemy sobie na te pytania.'
 categories:
   - Javascript
   - Frontend
