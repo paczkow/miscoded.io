@@ -53,6 +53,7 @@ export const Form: React.FC<FormProps> = ({
           background: "transparent",
           border: 0,
           borderBottom: "1px solid #ffffff",
+          borderRadius: 0,
           padding: 8,
           fontSize: 16,
           color: "#ffffff",
