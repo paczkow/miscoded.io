@@ -47,24 +47,26 @@ export const Header = () => {
             <div css={{ display: "flex", alignItems: "center" }}>
               {inView ? (
                 <Logo
-                  width="36"
-                  height="45"
+                  width="48"
+                  height="56"
                   color="#ffffff"
                   css={{
                     [`${getMinWidthMediaQuery("minMedium")}`]: {
-                      width: "44px",
-                      height: "55px",
+                      width: "52px",
+                      height: "64px",
+                      paddingTop: "4px",
                     },
                   }}
                 />
               ) : (
                 <BlackGradientLogo
-                  width="36"
-                  height="45"
+                  width="48"
+                  height="56"
                   css={{
                     [`${getMinWidthMediaQuery("minMedium")}`]: {
-                      width: "44px",
-                      height: "55px",
+                      width: "52px",
+                      height: "64px",
+                      paddingTop: "4px",
                     },
                   }}
                 />
@@ -73,7 +75,7 @@ export const Header = () => {
                 css={{
                   position: "relative",
                   color: inView ? "#ffffff" : "#000000",
-                  marginLeft: "16px",
+                  marginLeft: "8px",
                   letterSpacing: "0.1em",
                   fontSize: "24px",
                   [`${getMinWidthMediaQuery("minMedium")}`]: {

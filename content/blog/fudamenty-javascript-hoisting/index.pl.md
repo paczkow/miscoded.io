@@ -5,7 +5,7 @@ author: Michał Paczków
 publish: true
 image: assets/cover.jpg
 imageCredit: "Zdjęcie: [Bence Balla-Schottner](https://unsplash.com/@ballaschottner)"
-description: 'Czy w języku Javascript, możemy wywołać funkcję przed jej deklaracją? Czym jest hoisting? Jak jest realizowany i jak wykorzystać go w praktyce? Dziś, w drugiej cześci serii "Opanuj Fundamenty" odpowiemy sobie na te pytania.'
+description: 'Czy w języku Javascript, możemy wywołać funkcję przed jej deklaracją? Czym jest hoisting? Jak jest realizowany i jak wykorzystać go w praktyce? To zagadnienia, które poruszymy w drugiej części serii "Opanuj Fundamenty!".'
 categories:
   - Javascript
   - Frontend
@@ -15,7 +15,7 @@ tags:
   - fundamenty-javascript
 ---
 
-Witam Cię w drugim artykule z serii "Opanuj Fundamenty". Opisuję w niej działanie silnika Javascript. W poprzednim artykule zajęliśmy się kontekstem wykonania (ang. Execution Context). Dziś omówimy Hoisting. Dlaczego ta nazwa jest nieprecyzyjna? Jaka jest różnica między `var`, a `let`? Jak silnik Javascript realizuje ten mechanizm? Czy są jakieś praktyczne powody, aby go użyć? Jeśli chcesz poznać odpowiedzi na te pytania, zapraszam do dalszej lektury.
+Witam Cię w drugim artykule z serii "Opanuj Fundamenty". Opisuję w niej działanie silnika Javascript. W poprzednim artykule zajęliśmy się kontekstem wykonania (ang. Execution Context). Dziś omówimy Hoisting. Dlaczego ta nazwa jest nieprecyzyjna? Jaka jest różnica między `var`, a `let`? Jak silnik Javascript realizuje ten mechanizm? Czy są jakieś praktyczne powody, aby go użyć? Na te pytania znajdziesz odpowiedź w dzisiejszym poście. Zapraszam!
 
 ## Hoisting
 

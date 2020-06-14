@@ -5,7 +5,7 @@ author: Michał Paczków
 publish: true
 image: assets/cover.jpeg
 imageCredit: "Zdjęcie: [Samuel Scrimshaw](https://unsplash.com/@samscrim)"
-description: 'Zmienna, jedna z podstawowych konstrukcji programistycznych w Javascript. Czy jednak wiesz co decyduje o jej dostępności? Co ma wspólnego LISP i Javascript? Czym rózni się var od const czy let? W trzeciej cześć serii "Opanuj Fundamenty" odpowiemy na te pytania, omawiając zakres.'
+description: 'Zmienna, jedna z podstawowych konstrukcji programistycznych w Javascript. Czy jednak wiesz, co decyduje o jej dostępności? Co ma wspólnego LISP i Javascript? Czym różni się var od const czy let? W trzeciej części serii "Opanuj Fundamenty!" odpowiemy na te pytania, omawiając zakres.'
 categories:
   - Javascript
   - Frontend
@@ -15,7 +15,7 @@ tags:
   - fundamenty-javascript
 ---
 
-Witam Cię w trzecim artykule z serii "Opanuj Fundamenty". Opisuję w niej podstawowe mechanizmy silnika Javascript. Dziś przyjrzymy się jednemu z kluczowych elementów, zakresowi (ang. Scope). Czy wiesz jakie mamy rodzaje zakresów w Javascript? Co to jest zakres leksykalny? Jak zakres powiązany jest z kontekstem wykonania? Jeśli chcesz poznać odpowiedzi na te pytania, bądź utrwalić swoją wiedzę zapraszam.
+Witam Cię w trzecim artykule z serii "Opanuj Fundamenty!". Opisuję w niej podstawowe mechanizmy silnika Javascript. Dziś przyjrzymy się jednemu z kluczowych elementów, zakresowi (ang. Scope). Dowiesz się co to zakres, jakie mamy rodzaje zakresów w Javascript, czym zakres leksykalny, różni się od dynamicznego, czy jak zakres powiązany jest z kontekstem wykonania. Zapraszam!
 
 ## Zakres zmiennych
 

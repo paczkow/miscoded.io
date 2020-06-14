@@ -5,7 +5,7 @@ author: Michał Paczków
 publish: true
 image: assets/cover.jpg
 imageCredit: "Zdjęcie: [Moren Hsu](https://unsplash.com/@moren)"
-description: "Czy pisząc kod, zastanawiałeś się jak silnik Javascript go wykonuje? Co dzieje się po wywołaniu funkcji? Jak przechowywane są informacje o zmiennych, których używasz? Dobry programista powinien wiedzieć jak przetwarzany jest jego kod, dlatego warto poznać fundamenty silnika Javascript. Dziś pierwszy z nich, Kontekst Wykonania."
+description: "Czy pisząc kod, zastanawiałeś się, jak silnik Javascript go wykonuje? Co dzieje się po wywołaniu funkcji? Jak przechowywane są informacje o zmiennych, których używasz? Dobry programista powinien, wiedzieć jak przetwarzany jest jego kod, dlatego warto poznać fundamenty silnika Javascript. Dziś pierwszy z nich, Kontekst Wykonania."
 categories:
   - Javascript
   - Frontend
