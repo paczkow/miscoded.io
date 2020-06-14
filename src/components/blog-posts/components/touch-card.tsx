@@ -10,6 +10,7 @@ export const TouchCard: React.FC<Post> = ({
   title,
   categories,
   date,
+  description,
   readingTime,
   excerpt,
   slug,
@@ -87,7 +88,7 @@ export const TouchCard: React.FC<Post> = ({
                 </Link>
               ))}
             </Inline>
-            <p>{excerpt}</p>
+            <p>{description || excerpt}</p>
             <footer>
               <Link to={slug}>
                 <h4

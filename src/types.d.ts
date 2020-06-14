@@ -22,6 +22,7 @@ interface CategoryContext extends PageContext {
 
 interface Post {
   id: string;
+  description?: string;
   categories: string[];
   date: string;
   excerpt: string;
@@ -58,6 +59,7 @@ interface MarkdowRemarkNode {
   frontmatter: {
     date: string;
     categories: string[];
+    description?: string;
     image: {
       childImageSharp: {
         fluid: {

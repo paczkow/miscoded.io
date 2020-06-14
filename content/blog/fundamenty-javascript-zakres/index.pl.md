@@ -1,10 +1,11 @@
 ---
 title: Opanuj Fundamenty! Zakres
-date: 2020-06-05
+date: 2020-06-10
 author: Michał Paczków
 publish: true
 image: assets/cover.jpeg
 imageCredit: "Zdjęcie: [Samuel Scrimshaw](https://unsplash.com/@samscrim)"
+description: 'Zmienna, jedna z podstawowych konstrukcji programistycznych w Javascript. Czy jednak wiesz, co decyduje o jej dostępności? Co ma wspólnego LISP i Javascript? Czym różni się var od const czy let? W trzeciej części serii "Opanuj Fundamenty!" odpowiemy na te pytania, omawiając zakres.'
 categories:
   - Javascript
   - Frontend
@@ -14,7 +15,7 @@ tags:
   - fundamenty-javascript
 ---
 
-Witam Cię w trzecim artykule z serii "Opanuj Fundamenty". Opisuję w niej podstawowe mechanizmy silnika Javascript. Dziś przyjrzymy się jednemu z kluczowych elementów, zakresowi (ang. Scope). Czy wiesz jakie mamy rodzaje zakresów w Javascript? Co to jest zakres leksykalny? Jak zakres powiązany jest z kontekstem wykonania? Jeśli chcesz poznać odpowiedzi na te pytania, bądź utrwalić swoją wiedzę zapraszam.
+Witam Cię w trzecim artykule z serii "Opanuj Fundamenty!". Opisuję w niej podstawowe mechanizmy silnika Javascript. Dziś przyjrzymy się jednemu z kluczowych elementów, zakresowi (ang. Scope). Dowiesz się co to zakres, jakie mamy rodzaje zakresów w Javascript, czym zakres leksykalny, różni się od dynamicznego, czy jak zakres powiązany jest z kontekstem wykonania. Zapraszam!
 
 ## Zakres zmiennych
 
@@ -178,7 +179,7 @@ if (Math.random() > 0.5) {
 
 Mimo braku deklaracji zmiennej w funkcji `foo` nie zostanie zwrócony błąd, bo zakres będzie przeszukiwał funkcję `one` lub `two` w zależności od wartości `Math.random`.
 
-Zakres zmiennej zależy **od sposobu wywołania funkcji w której zmienna się znajduje**, a nie fizycznego położenia deklaracji. Takie rozwiązanie ma miejsce choćby w języku LISP. 
+Zakres zmiennej zależy **od sposobu wywołania funkcji w której zmienna się znajduje**, a nie fizycznego położenia deklaracji. Takie rozwiązanie ma miejsce choćby w języku LISP.
 
 W Javascript istnieje bardzo podobny mechanizm. I tutaj pytanie dla Ciebie, co to za mechanizm? Jakie słowo kluczowe go definiuje? Jeśli nie znasz odpowiedzi, znajdziesz ją na końcu artykułu.
 

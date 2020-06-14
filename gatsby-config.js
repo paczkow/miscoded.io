@@ -55,7 +55,8 @@ module.exports = {
             serialize: ({ query: { site, allMarkdownRemark } }) => {
               return allMarkdownRemark.edges.map(edge => {
                 return Object.assign({}, edge.node.frontmatter, {
-                  description: edge.node.excerpt,
+                  description:
+                    edge.node.frontmatter.description || edge.node.excerpt,
                   date: edge.node.frontmatter.date,
                   url: site.siteMetadata.siteUrl + edge.node.fields.slug,
                   guid: site.siteMetadata.siteUrl + edge.node.fields.slug,
@@ -82,6 +83,7 @@ module.exports = {
                       fields { slug }
                       frontmatter {
                         title
+                        description
                         date(formatString: "DD MMMM YYYY")
                         image {
                           childImageSharp {
@@ -179,10 +181,19 @@ module.exports = {
     {
       resolve: "@gatsby-contrib/gatsby-plugin-elasticlunr-search",
       options: {
-        fields: ["title", "excerpt", "slug", "categories", "tags", "date"],
+        fields: [
+          "title",
+          "description",
+          "excerpt",
+          "slug",
+          "categories",
+          "tags",
+          "date",
+        ],
         resolvers: {
           MarkdownRemark: {
             title: node => node.frontmatter.title,
+            description: node => node.frontmatter.description,
             excerpt: node => {
               const text = remark()
                 .use(stripMarkdown)

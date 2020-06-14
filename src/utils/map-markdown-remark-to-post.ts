@@ -4,6 +4,7 @@ export const mapMarkdownRemarkToPost = (
   id: markdownRemark.id,
   title: markdownRemark.frontmatter.title,
   categories: markdownRemark.frontmatter.categories,
+  description: markdownRemark.frontmatter.description,
   tags: markdownRemark.frontmatter.tags,
   date: markdownRemark.frontmatter.date,
   image: markdownRemark.frontmatter.image.childImageSharp.fluid.src,

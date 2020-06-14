@@ -22,7 +22,6 @@ exports.createPages = async ({ graphql, actions }) => {
   `);
 
   const groups = groupByLanguage.group;
-  console.log(groups);
 
   groups.forEach(group => {
     const locale = group.fieldValue;
