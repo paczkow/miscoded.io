@@ -16,7 +16,7 @@ tags:
 
 Witam Cię w czwartym artykule z serii "Opanuj Fundamenty!". Opisuję w niej działanie mechanizmów języka Javascript. W ostatnim poście zajęliśmy się zakresami, dziś dowiesz się więcej o domknięciach. Czym są domknięcia? Jak język Javascript je realizuje, oraz jak można wykorzystać je w praktyce?
 
-## Domknięcie, a dzieciństwo
+## Krótka historia o dzieciństwie
 
 Zanim zagłebimy się w techniczny świat, chciałbym porozmawiać o dzieciństwie. "WTF?! Ziomek, w poście o domknięciach ziomek mówi o swoim dzieciństwie!" Rozumiem, Twoje potencjalne zdziwenie, bądź zażenownie jednak proszę, zebyś doczytał to do końca.
 
