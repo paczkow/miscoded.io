@@ -16,13 +16,11 @@ tags:
 
 Witam Cię w czwartym artykule z serii "Opanuj Fundamenty!". Opisuję w niej działanie mechanizmów języka Javascript. W ostatnim poście zajęliśmy się zakresami, dziś dowiesz się więcej o domknięciach. Czym są domknięcia? Jak język Javascript je realizuje, oraz jak można wykorzystać je w praktyce?
 
-## Krótka historia o dzieciństwie
+## Dzieciństwo i co z niego pamiętamy
 
-Zanim zagłebimy się w techniczny świat, chciałbym porozmawiać o dzieciństwie. "WTF?! Ziomek, w poście o domknięciach ziomek mówi o swoim dzieciństwie!" Rozumiem, Twoje potencjalne zdziwenie, bądź zażenownie jednak proszę, zebyś doczytał to do końca.
+Zanim zagłębimy się w techniczny świat, chciałbym porozmawiać o dzieciństwie. Spokojnie nie będzie to żadna psychologiczna, coachingowa gadka. Ma pomóc w zrozumieniu dzisiejszego tematu.
 
-Już od kilku lat, mieszkam poza swoją rodzinną miejscowością, ale za każdym razem, gdy do niej wracam, doskonale pamiętam wszystkie miejsca, w których bawiłem się jako dziecko, podstawówkę, boisko do piłki. Nawet teraz bez problemu jestem w stanie przywołać te wszystkie miejsca, które były związane z moimi początkiem.
-
-Nie powiedziałem Ci dlatego, że naszedł mnie czas na wspomnienia. To zapamiętanie i odnoszenie się do miejsc z dzieciństwa, miejsc Twojego początku, może być dobrą analogią do domknięcia. Zapamiętaj ją na później.
+Już od kilku lat, mieszkam poza swoją rodzinną miejscowością, ale za każdym razem, gdy do niej wracam, doskonale pamiętam wszystkie miejsca, w których bawiłem się jako dziecko, podstawówkę, boisko do piłki. Nawet teraz bez problemu jestem w stanie przywołać wszystkie te miejsca, **które były związane z moimi początkiem.** Zapamiętaj to co powiedziałem, przyda się później.
 
 ## Domknięcie
 
