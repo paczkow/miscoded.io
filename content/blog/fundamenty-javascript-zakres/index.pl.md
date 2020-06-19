@@ -1,21 +1,20 @@
 ---
-title: Opanuj Fundamenty! Zakres
+title: Krótka historia o zakresach i dostępność
 date: 2020-06-10
 author: Michał Paczków
 publish: true
+description: Czy wiesz, co decyduje o dostępności zmiennej w Javascript? Co łączy LISP z Javascript'em? W trzeciej części serii "Opanuj Fundamenty!" odpowiemy sobie na te pytania, omawiając zakres.
 image: assets/cover.jpeg
 imageCredit: "Zdjęcie: [Samuel Scrimshaw](https://unsplash.com/@samscrim)"
-description: 'Zmienna, jedna z podstawowych konstrukcji programistycznych w Javascript. Czy jednak wiesz, co decyduje o jej dostępności? Co ma wspólnego LISP i Javascript? Czym różni się var od const czy let? W trzeciej części serii "Opanuj Fundamenty!" odpowiemy na te pytania, omawiając zakres.'
 categories:
   - Javascript
-  - Frontend
-  - Backend
+  - Under the hood
 tags:
   - silnik-javascript
   - fundamenty-javascript
 ---
 
-Witam Cię w trzecim artykule z serii "Opanuj Fundamenty!". Opisuję w niej podstawowe mechanizmy silnika Javascript. Dziś przyjrzymy się jednemu z kluczowych elementów, zakresowi (ang. Scope). Dowiesz się co to zakres, jakie mamy rodzaje zakresów w Javascript, czym zakres leksykalny, różni się od dynamicznego, czy jak zakres powiązany jest z kontekstem wykonania. Zapraszam!
+Witam Cię w trzecim artykule z serii "Opanuj Fundamenty!". Opisuję w niej podstawowe mechanizmy silnika Javascript. Dziś przyjrzymy się jednemu z kluczowych elementów, zakresowi (ang. Scope). Dowiesz się co to zakres, jakie mamy rodzaje zakresów w Javascript, poznasz różnice między zakresem leksykalnym, a dynamicznym. Zapraszam!
 
 ## Zakres zmiennych
 
@@ -40,7 +39,9 @@ console.log(a); // 10
 console.log(b); // Reference Error
 ```
 
-W powyższym przykładzie, możemy zobaczyć, że w linii 9 dostaliśmy błąd. Zasady (zakres) wprowadzone w Javascript nie pozwalają na dostęp do zmiennej `b` z tego miejsca, czy zgodnie z drugą definicją, region w którym wywołaliśmy zmienną `b` nie ma do niej dostępu. Możemy zadać sobie w tym momencie pytanie: Jaki region ma do niej dostęp?
+W powyższym przykładzie w linii 9 występuję błąd.
+
+Zasady (zakres) wprowadzone w Javascript nie pozwalają na dostęp do zmiennej `b` z tego miejsca, czy zgodnie z drugą definicją, region w którym wywołaliśmy zmienną `b` nie ma do niej dostępu. Możemy zadać sobie w tym momencie pytanie: Jaki region ma do niej dostęp?
 
 Jest to funkcja `foo`, a wykorzystano tutaj jeden z możliwych zakresów w Javascript: **zakres lokalny**.
 
@@ -111,7 +112,7 @@ foo();
 
 ## Zagnieżdżanie, łańcuch zakresów i wyszukiwanie zmiennej
 
-Zakresy mogą być w sobie zagnieżdżane, w takim przypadku zmienne z zewnętrznych zakresów są dostępne w zakresach wewnętrznych, ale nie odwrotnie. Przykładem może być poniższy kod, gdzie występują wszystkie 3 wcześniej wymienione zakresy:
+Zakresy mogą być w sobie zagnieżdżane, w takim przypadku zmienne z zewnętrznych zakresów są dostępne w zakresach wewnętrznych, ale nie odwrotnie. Przykładem może być poniższy kod, gdzie występują wszystkie 3 wymienione zakresy:
 
 ```javascript
 var name = "Michał";
@@ -127,7 +128,9 @@ function greet() {
 greet();
 ```
 
-Pojęciem powiązanym z zagnieżdżeniem jest łańcuch zakresów. Wykorzystywany jest on podczas procesu wyszukiwania zmiennej. Kiedy silnik Javascript chcę uzyskać dostęp do zmiennej przeszukuje najpierw bieżący zakres, jeśli to mu się nie uda przechodzi do zakresu zewnętrznego i go przeszukuje. Powtarza się to, aż do znalezienia odpowiedniej wartości, bądź przejścia do zakresu globalnego który jest najbardziej zewnętrznym zakresem. W takim wypadku jeśli w zakresie globalnym nie ma szukanej zmiennej zostanie zwrócony błąd. W powyższym kodzie w celu znalezienia zmiennej `name` dla instrukcji `console.log` w linii 7 wykonywane są następujące kroki:
+![Zagnieżdzenie zakresów: globalny, lokalny, bloku](assets/scopes.png)
+
+Pojęciem powiązanym z zagnieżdżeniem jest łańcuch zakresów. Wykorzystywany jest on podczas procesu wyszukiwania zmiennej. Kiedy silnik Javascript chcę uzyskać dostęp do zmiennej, przeszukuje najpierw bieżący zakres, jeśli nie znajdzie idetyfikatora zmiennej, przechodzi do zakresu zewnętrznego i go przeszukuje. Powtarza się to, aż do znalezienia odpowiedniej wartości, bądź przejścia do zakresu globalnego który jest najbardziej zewnętrznym zakresem. W takim wypadku jeśli w zakresie globalnym nie ma szukanej zmiennej zostanie zwrócony błąd. W powyższym kodzie w celu znalezienia zmiennej `name` dla instrukcji `console.log` w linii 7 wykonywane są następujące kroki:
 
 1. Przeszukanie zakresu bloku. Czy znaleziono zmienną o identyfikatorze `name`?
 
@@ -183,7 +186,7 @@ Zakres zmiennej zależy **od sposobu wywołania funkcji w której zmienna się z
 
 W Javascript istnieje bardzo podobny mechanizm. I tutaj pytanie dla Ciebie, co to za mechanizm? Jakie słowo kluczowe go definiuje? Jeśli nie znasz odpowiedzi, znajdziesz ją na końcu artykułu.
 
-Wróćmy teraz do zakresu stosowanego w Javascript. Powiedzieliśmy już sobie, że nazywany jest on leksykalnym. Jego druga nazwa to zakres statyczny. Żeby lepiej go zrozumieć należy wiedzieć, że leksykalizacja (zwaną też tokenizacją) jest jednym z etapów kompilacji kodu (tak, kod Javascript jest kompilowany!). Oznacza to że zakres dla zmiennych powstaje już w czasie kompilacji kodu, a jest on definiowany przez fizyczne położenie funkcji w kodzie. Dzięki temu mamy możliwość zagnieżdżania zakresów poprzez deklarowanie funkcji w funkcji (fizyczne położenie kodu). Sposób wywołania funkcji w żaden sposób nie wpływa tu na zakres zmiennych.
+Wróćmy teraz do zakresu stosowanego w Javascript. Powiedzieliśmy już sobie, że nazywany jest on leksykalnym. Jego druga nazwa to zakres statyczny. Żeby lepiej go zrozumieć należy wiedzieć, że leksykalizacja (zwaną też tokenizacją) jest jednym z etapów kompilacji kodu (tak, kod Javascript jest kompilowany!). Oznacza to że zakres dla zmiennych powstaje już w czasie kompilacji kodu, a jest on definiowany przez fizyczne położenie definicji funkcji w kodzie. Dzięki temu mamy możliwość zagnieżdżania zakresów poprzez definiowane funkcji w funkcji (fizyczne położenie kodu). Sposób wywołania funkcji w żaden sposób nie wpływa tu na zakres zmiennych.
 
 W ramach podsumowania tabelka obrazująca różnice w zakresach statycznym i dynamicznym:
 
@@ -210,13 +213,13 @@ W ramach podsumowania tabelka obrazująca różnice w zakresach statycznym i dyn
 </tr>
 <tr class="middle-row">
 <td >Od czego zależy zakres zmiennej?</td>
-<td align="center">Od fizycznego położenia funkcji w kodzie</td>
+<td align="center">Od fizycznego położenia definicji funkcji w kodzie</td>
 <td align="right">Od sposobu wywołania funkcji</td>
 </tr>
 <tr>
 <td>Sposób wyszukiwania zmiennej</td>
-<td align="center">Poprzez zagnieżdzanie i łańcuch zakresów. Wyszukianie zaczyna się od przeszukania lokalnej funkcji, a następnie funkcji w której lokalna funkcja została zadeklarowana (decyduje fizyczne położenie)</td>
-<td align="right">W górę stosu wywołań. Czyli najpierw przeszukanie lokalnej funkcji, a następnie tej która lokalną funkcje wywołała (decyduje sposób wywołania)</td>
+<td align="center">Poprzez zagnieżdzanie i łańcuch zakresów. Wyszukiwanie zaczyna się od przeszukania bieżącego zakresu, a następnie najbliższego, zewnętrznego zakresu (decyduje fizyczne położenie w kodzie)</td>
+<td align="right">W górę stosu wywołań, czyli przeszukanie lokalnej funkcji, a następnie tej która lokalną funkcje wywołała (decyduje sposób wywołania)</td>
 </tr>
 </tbody>
 </table>
@@ -255,9 +258,9 @@ Mechanizmem w Javascript podobnym do zakresu dynamicznego jest ten zastosowany d
 
 ## Podsumowanie
 
-W dzisiejszym artykule omówiliśmy zakres zmiennych, jego role w Javascript, rodzaje, proces wyszukiwania zmiennej w oparciu o zagnieżdżone zakresy. Tradycyjnie już jeśli miałbym wskazać najważniejsze elementy do zapamiętania byłby to:
+W dzisiejszym artykule omówiliśmy zakres zmiennych, jego role w Javascript, rodzaje, proces wyszukiwania zmiennej na podstawie zagnieżdżonych zakresów. Tradycyjnie już, jeśli miałbym wskazać najważniejsze elementy do zapamiętania są to:
 
 - Zakres zmiennych jest zbiorem zasad definiujących, które zmienne są dostępne w określonym miejscu w kodzie (fizycznej lokalizacji)
-- Zakres w Javascript jest zakresem leksykalnym, oznacza to że jest tworzony w czasie kompilacji kodu dzięki temu zależy od fizycznego położenia funkcji
+- Zakres w Javascript jest zakresem leksykalnym, oznacza to że jest tworzony w czasie kompilacji kodu, a zależy od fizycznego położenia definicji zmiennych i funkcji
 - Mamy 3 rodzaje zakresów: globalny, lokalny, bloku
 - Zakresy można zagnieżdżać tworząc z nich łańcuchy, są one wykorzystywane podczas wyszukiwania zmiennej przez silnik Javascript (od zakresu lokalnego, poprzez zakresy zewnętrzne aż do globalnego)

@@ -81,6 +81,8 @@ export const HoverCard: React.FC<Post> = ({
                 <h4
                   css={{
                     display: "inline",
+                    fontSize: "18px",
+
                     "&:hover": {
                       color: "#000000",
                     },

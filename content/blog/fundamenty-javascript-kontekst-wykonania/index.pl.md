@@ -1,15 +1,14 @@
 ---
-title: Opanuj Fundamenty! Kontekst wykonania
+title: Tam, gdzie wszystko się zaczyna...kilka słów o kontekście wykonania
 date: 2020-05-30
 author: Michał Paczków
 publish: true
 image: assets/cover.jpg
 imageCredit: "Zdjęcie: [Moren Hsu](https://unsplash.com/@moren)"
-description: "Czy pisząc kod, zastanawiałeś się, jak silnik Javascript go wykonuje? Co dzieje się po wywołaniu funkcji? Jak przechowywane są informacje o zmiennych, których używasz? Dobry programista powinien, wiedzieć jak przetwarzany jest jego kod, dlatego warto poznać fundamenty silnika Javascript. Dziś pierwszy z nich, Kontekst Wykonania."
+description: Czy pisząc kod, zastanawiałeś się, jak on jest wykonywany "pod maską"? Dziś zaczniemy serie, która pomoże odpowiedzieć nam na to pytanie. Zapraszam do pierwszego postu z serii "Opanuj fundamenty!".
 categories:
   - Javascript
-  - Frontend
-  - Backend
+  - Under the hood
 tags:
   - silnik-javascript
   - fundamenty-javascript
@@ -19,9 +18,10 @@ Cześć! Czytasz właśnie pierwszy wpis na blogu miscoded.io. Będę tu opisywa
 
 ## Fundamenty Javascript
 
-Mistrzem gry zostaje ten kto, dobrze poznał jej reguły, dlatego ważne, żebyś znał zasady rządzące światem JSa. Możemy je określić fundamentami języka, a są nimi:
+Mistrzem gry zostaje ten kto, dobrze poznał jej reguły, dlatego ważne, żebyś znał zasady rządzące światem JSa. Możemy je określić fundamentami języka, a są to między innymi:
 
 - kontekst wykonania (ang. Execution Context)
+- windowanie (ang. Hoisting)
 - zakres zmiennych (ang. Scope of variables)
 - domknięcia (ang. Closures)
 - proptypy (ang. Prototype)
@@ -74,7 +74,14 @@ class Toggle extends React.Component {
 
 Zacznijmy od definicji: **kontekst wykonania jest abstrakcyjną koncepcją która zawiera informację o środowisku, w którym wykonywany jest bieżący kod**. Możesz traktować to jak obiekt w którym znajdują się min. identyfikatory zmiennych i funkcji czy wartość `this`.
 
-W momencie pisania artykułu specyfikacja ECMAScript rozróżnia przynajmniej 4 rodzaje kodu. Nazwijmy je kodem globalnym, funkcji, modułu i funkcji `eval`. Każdy z nich wykonywany jest w ramach kontekstu wykonania, którego struktura w zależności od rodzaju kodu jest inna. Dodatkowo mamy np. generatory, dla których struktura kontekstu wykonania będzie inna niż tego wykorzystywanego przez zwykłe funkcje.
+W momencie pisania artykułu specyfikacja ECMAScript rozróżnia przynajmniej 4 rodzaje kodu. Nazwijmy je
+
+- kodem globalnym
+- funkcji
+- modułu
+- funkcji `eval`.
+
+Każdy z nich wykonywany jest w ramach kontekstu wykonania, którego struktura w zależności od rodzaju kodu jest inna. Dodatkowo mamy np. generatory, dla których struktura kontekstu wykonania będzie inna niż tego wykorzystywanego przez zwykłe funkcje.
 
 W tym artykule zajmiemy się dwoma podstawowymi kontekstami: globalnym i funkcji.
 
@@ -82,7 +89,7 @@ Kontekst globalny tworzony jest **przed rozpoczęciem przetwarzania kodu skryptu
 
 ## Dwie fazy kontekstu wykonania
 
-Jak dowiedzieliśmy się z poprzedniego rozdziału, konteksty tworzone są na różnych etapach wykonywania kodu. Należy dodać, że na zbudowanie kontekstu składają się dwie fazy:
+Jak dowiedzieliśmy się z poprzedniego rozdziału, konteksty tworzone są na różnych etapach wykonywania kodu. Należy dodać, że na wykonanie kodu W Javascript, składają się dwie fazy:
 
 - _faza tworzenia_ (ang. Creation Phase)
 - _faza wykonania_ (ang. Execution Phase).
@@ -98,7 +105,7 @@ Dla globalnego kontekstu faza tworzenia, ma miejsce przed przetworzeniem pierwsz
 Na początku nalezałoby zadać sobie pytanie czym jest zakres?
 Możesz myśleć o nim jak o słowniku który mapuje identyfikatory zmiennych na konkretne wartości.
 Utworzeniem zakresu nazywamy określenie, które identyfikatory zmiennych i funkcji są dostępne w ramach bieżącego zakresu
-(jakie identyfikatory należą do tego obiektu)
+(jakie identyfikatory należą do tego obiektu).
 Silnik Javascript skanuje kod, w poszukiwaniu deklaracji zmiennych i funkcji po czym umieszcza ja w pamięci.
 Zmiennym nie przypisuje się w tym momencie wartości.
 

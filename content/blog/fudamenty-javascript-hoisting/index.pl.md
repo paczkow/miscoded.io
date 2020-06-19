@@ -1,15 +1,14 @@
 ---
-title: Opanuj Fundamenty! Hoisting
+title: '"Deklaracje przodem!" - Hoisting'
 date: 2020-06-06
 author: Michał Paczków
 publish: true
 image: assets/cover.jpg
 imageCredit: "Zdjęcie: [Bence Balla-Schottner](https://unsplash.com/@ballaschottner)"
-description: 'Czy w języku Javascript, możemy wywołać funkcję przed jej deklaracją? Czym jest hoisting? Jak jest realizowany i jak wykorzystać go w praktyce? To zagadnienia, które poruszymy w drugiej części serii "Opanuj Fundamenty!".'
+description: Co odpowiada za wywołanie funkcji przed jej deklaracją i dlaczego może to zmylić programistę? Odpowiedź w drugim artykule z serii "Opanuj fundamenty!"
 categories:
   - Javascript
-  - Frontend
-  - Backend
+  - Under the hood
 tags:
   - silnik-javascript
   - fundamenty-javascript
@@ -19,7 +18,7 @@ Witam Cię w drugim artykule z serii "Opanuj Fundamenty". Opisuję w niej dział
 
 ## Hoisting
 
-Po polsku najbardziej odpowiednim słowem jest "wynoszenie" bądź "windowanie". Jeśli jesteśmy już przy nazwie ,należy powiedzieć, że, jest ona nieprecyzyjna i może zmylić programistę. Zanim jednak przejdę do wyjaśnienia, zaczniemy od przykładu:
+Po polsku najbardziej odpowiednim słowem jest "wynoszenie" bądź "windowanie". Jeśli jesteśmy już przy nazwie, należy powiedzieć, że, jest ona nieprecyzyjna i może zmylić programistę. Zanim jednak przejdę do wyjaśnienia, zaczniemy od przykładu:
 
 ```javascript
 console.log(sayHello("World")); // result of calling it?
