@@ -3,7 +3,7 @@ title: Co potrafi zapamiętać funkcja? Omawiamy domknięcia
 date: 2020-06-19
 author: Michał Paczków
 publish: true
-description: W dzisiejszym artykule przyjrzymy się domknięcią. Dowiesz się czym one są, oraz jak silnik Javascript je realizuje, oraz o ich praktycznym zastosowaniu.
+description: W dzisiejszym artykule przyjrzymy się domknięciu. Dowiesz się czym jest ten mechanizm, jak silnik Javascript go realizuje, oraz jakie ma praktyczne zastosowania.
 image: assets/cover.jpeg
 imageCredit: "Zdjęcie: [Israel Palacio](https://unsplash.com/@othentikisra)"
 categories:
