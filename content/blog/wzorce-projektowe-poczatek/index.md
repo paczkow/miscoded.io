@@ -23,15 +23,120 @@ Nieustannie aktualizujemy nasz kod. Dodajemy nowe funkcjonalności, usuwamy zbę
 
 Implementujesz rozwiązanie pewnego problemu. Okazuje się ono tak dobre, że koledzy z pracy zaczynają go używać do podobnych problemów. Wreszcie Twój pomysł wychodzi poza firmę. Jest tak świetny, że staje się szablonem, którego używają programiści na całym świecie. Takie rozwiązanie nazwiemy wzorcem projektowym.
 
-Dodajemy bardziej sformalizowany opis: wzorzec projektowy jest ogólnym rozwiązaniem często występującego problemu w projektowaniu oprogramowania. Nie jest on gotowym projektem lecz szablonem, który można przekształcić bezpośrednio w kod.
+Dodajmy bardziej sformalizowany opis: _wzorzec projektowy jest ogólnym rozwiązaniem często występującego problemu w projektowaniu oprogramowania. Nie jest gotowym projektem lecz szablonem, który można przekształcić bezpośrednio w kod._
 
-Dlaczego nie możemy uznać go za gotowe rozwiązanie? Bo programiści rozwiązują problemy w różnych środowiskach, choćby świat Frontendu i Backendu, stąd rozwiąznia nigdy nie będą się pokrywały.
+Dlaczego nie możemy uznać go za gotowe rozwiązanie? Bo programiści rozwiązują problemy w różnych środowiskach, choćby świat Frontendu i Backendu, stąd rozwiązania nigdy nie będą się pokrywały w 100%.
+
+// o książce
 
 ## Jeden wzorzec, różne implementacje
 
-Spójrzmy na następujący problem. Chcemy rozszerzyć abstrakcję (klasę, bądź funkcję) o dodatkową funkcjonalność. Wiemy, że będzie ona używana w kilku innych miejscach w oryginalnej postaci, dlatego nie możemy modyfikować jej kodu. Dodatkowo, nowa funkcjonalność będzie działać nieco inaczej w zależności od wartości pewnych zmiennych, innymi słowy musimy mieć możliwość utworzenia jej w czasie wykonywania programu (run-time). Jak podszedłbyś to takiego problemu?
+W ramach przykładu posłużmy się wzorcem dekorator. Omówimy jego definicję, po czym przejdziemy do przykładów użycia. Będą dotyczyć one języka Python i popularnej frontendowej biblioteki React. Zdecydowałem się na takie rozwiązanie, żeby pokazać jak w różny sposób można zaimplementować ten wzorzec.
 
-Okazuje się, że jest rozwiązanie! A nazywa się ono dekorator. Programista może wykorzystać ten wzorzec jak szablon i zaimplementować rozwiązanie na nim bazujące. Jednak w zależności od środowiska, będzie się ono nieco rózniło. Tworząc aplikację w React, można użyć High-Order Components, ale implementacja w Pythonie zostanie oparta o składnię używającą `@` np. `@my_decorator`.
+### Dekorator
+
+Jest to wzorzec strukturalny pozwalający na rozszerzenie obiektu o nowe funkcjonalności, bez wprowadzania zmian w jego kodzie. Polega na umieszczeniu rozszerzanego obiektu w specjalnych "opakowaniach" zawierających te funkcjonalności. Zaletami tego wzorca są:
+
+- podzielenie logiki na warstwy
+- dyanmicznie dodanie lub usunięcia funkcjonalności w czasie działania programu
+- dodanie kilku zachowań do jednego obiektu poprzez użycie wielu dekoratorów
+
+### Logowanie wywołań
+
+Założmy, że masz zadanie, które polega na logowaniu wywołań funkcji. Funkcje mają mieć dodawaną tą funkcjonalności dynamicznie, podczas wykonywnia kod (run-time). Jak podszedłbyś to takiego problemu?
+
+Jest rozwiązanie! A nazywa się ono dekorator. Poniżej znajduje ten wzorzec zaimplementowany w Pythonie. Miej na uwadze, że implementacja jest napisana w najprostrzy wręcz prymitywny sposób. Przedstawiam tu tylko koncepcję bez dodatkowych złożności. Dzieli się on na:
+
+- funkcje `say_hello` której zadaniem jest wypisanie `"Hello!"` w konsoli. Została ona otoczona dekoratorem `@my_decorator`
+- dekorator `my_decorator` przyjmuje funkcję jako parametr i zwraca ją wraz z dodatkową funkcjonalnością. W tym przypadku wypisanie informacji przed i po wywołaniu. Możemy to zobaserwować dzięki wywołaniu funkcji zwróconej przez dekorator (linia 17)
+
+```python
+def log_decorator(func):
+    def wrapper():
+        print("Before the function is called.")
+        func()
+        print("After the function is called.")
+    return wrapper
+
+def say_hello():
+    print("Hello!")
+
+say_hello_with_logs = log_decorator(say_hello)
+
+# Console:
+# > Before the function is called
+# > Hello
+# > After the function is called
+say_hello_with_logs()
+```
+
+### Pobieranie danych
+
+Kolejne zdanie, tym razem w React. Potrzebujesz funkcjonalność, która rozszerzy komponent o możliwość pobierania danych.
+
+Dla uproszczenia przyjmijmy, że na kliknięcie pobieramy losowy cytat z serialu "Simpsonowie". Rozwiązanie musi być reaużywalne, pozwalające roszerzyć dowolny komponent.
+
+Jedno z potencjalnych rozwiązań to Higher-Order Components (HOC). Jest to oczywiście implementacja wzorca dekoratora w React.
+
+```tsx
+//quote-containers.jsx
+export const Paragraph = ({ quote, onRequest }) => <div>
+  <p>{quote}</p>
+  <button onClick={this.props.onRequest}>Click for new quote!</button>
+</div>
+
+export const Title = ({ quote, onRequest }) => <div>
+  <h1>{quote}</h1>
+  // ...some super fancy stuff here...
+  <button onClick={this.props.onRequest}>Click for new quote!</button>
+</div>
+
+// withQuote.jsx
+export const withQuote = WrappedComponent => {
+  // return extended component with a possibility of getting quotes
+  class ExtendedComponent extends Component {
+    state = {
+      quote: "",
+    };
+
+    onRequest = () => {
+      fetch("https://thesimpsonsquoteapi.glitch.me/quotes")
+        .then(response => response.json())
+        .then({ quote } => {
+          this.setState({ quote });
+        })
+        .catch(err => err);
+    };
+
+    render() {
+      return (
+        <WrappedComponent
+          {...this.props}
+          quote={this.state.quote}
+          onRequest={this.onRequest}
+        />
+      );
+    }
+  };
+
+  return ExtendedComponent;
+};
+```
+
+// describe
+
+```tsx
+// main.jsx
+const TitleWithQuote = withQuote(Title);
+const ParagraphWithQuote = withQuote(Paragraph);
+
+const Main = () => (
+  <>
+    <TitleWithQuote />
+    <ParagraphWithQuote />
+  </>
+);
+```
 
 ## Niech Twój kod przmówi
 
@@ -54,14 +159,6 @@ Jak narazie powiedzieliśmy sobie tylko o zaletach używania wzorców. Jednak ja
 ## Nie wkuwaj, używaj
 
 Jak podejść do nauki wzorców? Najlepiej wykorzysując je w praktyce. Programując w React, nie użyjesz większości wzorców z programowania obiektowego. Nawet jeśli nauczysz się ich na pamięć, po pewnym czasie nieużywania, zapomnisz o większości. Trochę strata czasu co? Pisząc aplikację w React, sprawdź wzorce związane z tą biblioteką `react design patterns`. Ich poprawne użycie sprawi, że jakość Twojego kodu zwiększy się, a koncepcje za nim stojące staną się dla Ciebie proste i naturalne.
-
-## Przykłady wzorców projektowych w Javascript
-
-### Dekorator (ang. Decorator)
-
-### Obserwator (ang. Observer)
-
-### Moduł (ang. Module)
 
 ## Podsumowanie
 
