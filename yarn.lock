@@ -5449,6 +5449,11 @@ es-to-primitive@^1.2.1:
     is-date-object "^1.0.1"
     is-symbol "^1.0.2"
 
+es6-promise@^4.2.8:
+  version "4.2.8"
+  resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-4.2.8.tgz#4eb21594c972bc40553d276e510539143db53e0a"
+  integrity sha512-HJDGx5daxeIvxdBxvG2cb9g4tEvwIk3i8+nhX0yGrYmZUzbkdg8QbDevheDB8gd0//uPj4c1EQua8Q+MViT0/w==
+
 escape-html@~1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/escape-html/-/escape-html-1.0.3.tgz#0258eae4d3d0c0974de1c169188ef0051d1d1988"
@@ -6111,6 +6116,13 @@ fd-slicer@~1.1.0:
   integrity sha1-JcfInLH5B3+IkbvmHY85Dq4lbx4=
   dependencies:
     pend "~1.2.0"
+
+fetch-retry@^3.1.0:
+  version "3.2.3"
+  resolved "https://registry.yarnpkg.com/fetch-retry/-/fetch-retry-3.2.3.tgz#ed5f8a91d6cb3b25cfa96a8b676c96564df0c7d7"
+  integrity sha512-baMBEv4uZ1X1cUZAvnM+C9XI7tl4CgHgJE0KBHo3JzuXO7atOeWD5HSkDA2oLYpbzLTZNslFckLkIn6T96hlew==
+  dependencies:
+    es6-promise "^4.2.8"
 
 figgy-pudding@^3.5.1:
   version "3.5.2"
@@ -6827,6 +6839,16 @@ gatsby-remark-copy-linked-files@^2.3.3:
     path-is-inside "^1.0.2"
     probe-image-size "^4.1.1"
     unist-util-visit "^1.4.1"
+
+gatsby-remark-embedder@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/gatsby-remark-embedder/-/gatsby-remark-embedder-2.1.1.tgz#a5d11534e4ab1212c760f48f8204c28a7fbadf2a"
+  integrity sha512-UemRq+Bcksugj+lqvDshd/iGLpO3lsyoI6wiBUIZWl2/wKyS13Q0rJCJJrdJd/PcsvlGK0q6xmMSkQz2sGQpDA==
+  dependencies:
+    "@babel/runtime" "^7.9.6"
+    fetch-retry "^3.1.0"
+    node-fetch "^2.6.0"
+    unist-util-visit "^2.0.2"
 
 gatsby-remark-images@^3.1.42:
   version "3.3.2"
