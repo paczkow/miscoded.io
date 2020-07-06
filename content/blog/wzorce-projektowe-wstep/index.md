@@ -58,7 +58,7 @@ Wyobraź sobie, że budujesz system notyfikacji. Wymagania to:
 
 Jest to problem, który łatwo rozwiążemy używając dekoratora.
 
-Podstawowy obiekt, dostarczający powiadomienia poprzez email, możemy rozszerzyć dodając do niego powiadomienia Slack (SlackDecorator) oraz smsy (SMSDecorator), a następnie tak przekształcony obiekt przypisać go do odpowiedniej grupy klientów. Schemat takiego rozwiązania poniżej:
+Podstawowy obiekt, dostarczający powiadomienia poprzez email, możemy dowolnie rozszerzać dodając do niego powiadomienia Slack (SlackDecorator) oraz/lub smsy (SMSDecorator), a następnie tak przekształcony obiekt przypisać do odpowiedniej grupy klientów. Obiektów notyfikacji może być kilka i mogą posiadać różne funkcjonalności w zależności od użytych dekoratorów. Schemat takiego rozwiązania poniżej:
 
 ![System notyfikacji używający dekoratorów](assets/notifications.png)
 
