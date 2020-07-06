@@ -15,7 +15,9 @@ tags:
 
 _Poniedziałek. Szary i ponury. Ten z poniedziałków, które najchętniej przeleżałbyś w łóżku. W drodze do pracy zaskoczył Cię deszcz. Okazało się, że ekspres do kawy nie działa. Zastanawiasz się, czy może być gorzej. Wtedy dostajesz zadanie: musisz dodać nowy formularz w jednym z pierwszych widoków aplikacji. Nogi uginają się pod Tobą, na skroni pojawia się pot, już wiesz, że ten dzień będzie gorszy. Wielokrotnie słyszałeś o tej części projektu. Ten kod...każdy mówi o nim z przerażeniem. Wielu programistów prosiło o jego przepisanie, niestety nie ma czasu i budżetu. Każdy, kto pracował z tym kodem, jest już dawno poza firmą, nie potrafili tego znieść...teraz czas na Ciebie._
 
-W tej podkolorowanej historii znajdziemy prawdę o dwóch rzeczach: zmianach i konieczności utrzymania czystego kodu. Nieustannie aktualizujemy nasz kod. Dodajemy nowe funkcjonalności, usuwamy zbędne rzeczy. Pytanie, co zrobić, aby przy takiej częstotliwości zmian produkować wysokiej jakości kod?
+W tej podkolorowanej historii znajdziemy prawdę o dwóch rzeczach: zmianach i konieczności utrzymania czystego kodu. Nieustannie aktualizujemy nasz kod. Dodajemy nowe funkcjonalności, usuwamy zbędne rzeczy.
+
+Pytanie, co zrobić, aby przy takiej częstotliwości zmian produkować wysokiej jakości kod?
 
 Każdy dobry programista posiada zestaw narzędzi pozwalających na tworzenie takiego kodu, a jedno z nich to wzorce projektowe.
 
@@ -25,19 +27,13 @@ Implementujesz rozwiązanie pewnego problemu. Okazuje się, że koncepcja któr�
 
 Tutaj bardziej formalne tłumaczenie: _wzorzec projektowy jest ogólnym rozwiązaniem często występującego problemu w projektowaniu oprogramowania. Nie jest gotowym projektem lecz szablonem, który można przekształcić bezpośrednio w kod._
 
-Dlaczego nie możemy uznać go za gotowe rozwiązanie? Programiści rozwiązują problemy w różnych środowiskach, choćby świat Frontendu i Backendu. Różnice w środowiskach powodują inne podejście do tworzenia rozwiązań. Warto jednak znać szablony niezależnie od środowiska czy języka.
+Dlaczego nie możemy uznać go za gotowe rozwiązanie?
 
-W 1994 roku zestaw takich rozwiązań został spisany w książce "Design Patterns: Elements of Reusable Object-Oriented Software" przez tzw. Gang Czterech. Ksiązka ta zawiera opis 23 wzorców projektowych dla programowania obiektowego podzielonych na:
-
-- wzorce konstrukcyjne - opisujące proces tworzenia obiektów
-- wzorce strukturalne - pokazujące jak składać obiekty w większe struktury zachowując elastyczność i wydajność
-- wzorce zachowania - opisujące zachowanie i odpowiedzalność współpracujących obiektów
-
-Oprócz tego mamy wzorce specyficzne dla konkretnego rozwiązania jak choćby `Render Props` w React.
+Programiści rozwiązują problemy w różnych środowiskach, choćby świat Frontendu i Backendu. Różnice te powodują inne podejście do implementacji. Warto jednak znać szablony rozwiązań niezależnie od środowiska czy języka.
 
 ## Jeden wzorzec, różne implementacje
 
-W ramach przykładu zaimplementujemy wzorzec dekoratora (ang. Decorator Pattern). Jest to jeden z wzorców strukturalnych wspomniany w książce Gangu Czterech. Omówimy jego definicję, po czym przejdziemy do przykładów użycia.
+W ramach przykładu zaimplementujemy wzorzec dekoratora (ang. Decorator Pattern). Omówimy jego definicję, po czym przejdziemy do przykładów użycia.
 
 Użyjemy języka Python i popularnej javascriptowej biblioteki React. Zdecydowałem się na takie rozwiązanie, żeby pokazać różne sposoby implementacji tego wzorca.
 
@@ -52,6 +48,21 @@ Zaletami tego wzorca są:
 - podzielenie logiki na reużywalne warstwy
 - dynamiczne dodanie lub usunięcie funkcjonalności w czasie działania programu
 - dodanie kilku zachowań do jednego obiektu poprzez użycie wielu dekoratorów
+
+### System notyfikacji
+
+Wyobraź sobie, że budujesz system notyfikacji. Wymagania to:
+
+- każdy z klientów musi dostać powiadomienie na email
+- dodatkowo, można wysłać powiadomienie smsem lub/i na Slack
+
+Jest to problem, który łatwo rozwiążemy używając dekoratora.
+
+Podstawowy obiekt, dostarczający powiadomienia poprzez email, możemy rozszerzyć dodając do niego powiadomienia Slack (SlackDecorator) oraz smsy (SMSDecorator), a następnie tak przekształcony obiekt przypisać go do odpowiedniej grupy klientów. Schemat takiego rozwiązania poniżej:
+
+![System notyfikacji używający dekoratorów](assets/notifications.png)
+
+### Uzbrajamy samchód
 
 Jak użyć dekoratora w prawdziwym świecie? Posłużymy się samochodem. Wyobraź sobie, że chcesz umieścić na swoim samochodzie karabin. No co? W końcu czasy takie niepewne i niezpiecznie...
 
@@ -77,7 +88,8 @@ Kod dzieli się na:
 
 ```python
 def log_decorator(func):
-    def wrapper(): # returned object with extended funcionality
+    # returned object with extended functionality
+    def wrapper():
         print("Before the function is called.")
         func()
         print("After the function is called.")
@@ -125,13 +137,13 @@ export const Title = ({ quote, onRequest }) => (
 );
 ```
 
-Widzimy, że są one bardzo proste i służą jako warstaw prezentacji i interakcji z użytkownikiem (kilknięcie przycisku). Nie mają nic wspólnego z przetworzeniem danych, takich jak pobranie cytatu.
+Widzimy, że są one bardzo proste i służą jako warstwa prezentacji i interakcji z użytkownikiem (kilknięcie przycisku). Nie mają nic wspólnego z przetworzeniem danych, takich jak pobranie cytatu.
 
 Dalej mamy implementację dekoratora. Dostarcza on podstawowemu komponentowi dodatkową funkcjonalność. Jest to cytat, oraz handler, który zostanie wywołany podczas kilknięcia w przycisk.
 
 Plusy zastosowania wzorca? Rozdzielenie logiki. W tym przypadku na:
 
-- wartswę prezentacji
+- warstwę prezentacji
 - warstwę logiki, czyli wysłanie zapytania, pobranie jego wyniku i przekazanie do warstwy prezentacji
 
 Kolejnym zaletą jest brak sztywnych zależności. Komponent `withQuote` interesuje tylko przekazanie cytatu oraz handlera. Nie wie nic o strukturze komponentu który rozszerza, dzięki temu może być w łatwy sposób używany wielkokrotnie.
@@ -142,7 +154,7 @@ import React, { Component } from "react";
 import { getQuote } from "../server/quotes-provider";
 
 export const withQuote = WrappedComponent => {
-  // returned object with extended funcionality
+  // returned object with extended functionality
   class ExtendedComponent extends Component {
     state = {
       quote: "No quote",
@@ -172,7 +184,9 @@ export const withQuote = WrappedComponent => {
 
 https://codesandbox.io/s/dreamy-cerf-2xy8x
 
-Zwróć uwagę na Python'ową funkcję `log_decorator`, oraz component `withQuote`. Dostrzegasz identyczną strukturę rozwiązań? Przesłanie obiektu podstawowego jako argumentu i zwrócenie rozszerzonego obiektu.
+Zwróć uwagę na Python'ową funkcję `log_decorator`, oraz component `withQuote`. Dostrzegasz identyczną strukturę rozwiązań?
+
+Przesłanie obiektu podstawowego jako argumentu i zwrócenie rozszerzonego obiektu.
 
 ## Niech Twój kod przemówi
 
@@ -198,15 +212,18 @@ _Pamiętaj, kod to też narzędzie komunikacji, nie utrudniaj jej, dodając rzec
 
 ## Nie wkuwaj, używaj
 
-Jak podejść do nauki wzorców? Wcześniej wspomniałem o książce "Design Patterns: Elements of Reusable Object-Oriented Software". Jednak jest to pozycja dość ciężka, napisana przez osoby z otoczenia akademickiego.
+Jak podejść do nauki wzorców? Istnieje biblia dotczyąca wzorców programowania obiektowego _"Design Patterns: Elements of Reusable Object-Oriented Software"_. Jednak jest to pozycja dość ciężka, napisana przez osoby z otoczenia akademickiego.
 
 Zdecydowanie lepszą alernatywą jest strona: https://refactoring.guru/design-patterns.
 
-Jednak uważam, że wkuwanie diagramów, definicji i sposóbów użycia nie jest dobre. Najlepiej ucz się wzorców wykorzystując je w praktyce.. Programując w React, nie użyjesz większości wzorców z programowania obiektowego. Nawet jeśli nauczysz się ich na pamięć, po pewnym czasie nieużywania, zapomnisz o większości. Trochę strata czasu co?
+Jednak uważam, że wkuwanie diagramów UML, definicji i sposóbów użycia nie jest dobre. **Najlepiej ucz się wzorców wykorzystując je w praktyce**.
 
-Pisząc aplikację w React, sprawdź wzorce związane z tą biblioteką `react design patterns`. Ich poprawne użycie sprawi, że jakość Twojego kodu zwiększy się, a koncepcje za nim stojące staną się dla Ciebie proste i naturalne. W skrócie: dowiedz się o narzędziach dostosowanych do Twoich problemów, a następnie je wykorzystaj.
+Programując w React, nie użyjesz większości wzorców z programowania obiektowego. Nawet jeśli nauczysz się ich na pamięć, po pewnym czasie nieużywania, zapomnisz o większości. Trochę strata czasu co?
+
+Pisząc aplikację w React, sprawdź wzorce związane z tą biblioteką `react design patterns`. Ich poprawne użycie sprawi, że jakość Twojego kodu zwiększy się, a koncepcje za nim stojące staną się dla Ciebie proste i naturalne.
+
+W skrócie: dowiedz się o narzędziach dostosowanych do Twoich problemów, a następnie je wykorzystaj.
 
 ## Podsumowanie
 
-W dzisiejszym artykule przedstawiłem wzorce projektowe. Jest to jedno z niezbędnych narzędzi programisty.
-Jednak jak w przypadku każdego narzędzia należy rozważyć plus i minusy stojące za jego użyciem. Jeśli dobrze je przeanalizujesz i odpowiednio zastosujesz wzorce, jakość i czytelność tworzonych przez Ciebie rozwiązań zwiększą się diametralnie.
+Wzorce projektowe są jednym z niezbędnych narzędzi programisty. Jednak jak w przypadku każdego narzędzia należy rozważyć plus i minusy stojące za ich użyciem. Jeśli dobrze je przeanalizujesz i odpowiednio zastosujesz wzorce, jakość i czytelność tworzonych przez Ciebie rozwiązań zwiększą się diametralnie.
