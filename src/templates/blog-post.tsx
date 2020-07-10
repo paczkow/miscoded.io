@@ -168,12 +168,6 @@ const BlogPost: React.FC<BlogPostProps> = ({ data, location }) => {
                     align="center"
                     css={{ marginBottom: "16px" }}
                   >
-                    <a
-                      title="Facebook"
-                      href="https://www.facebook.com/miscoded.io"
-                    >
-                      <span css={{ fontWeight: 400 }}>Facebook fanpage</span>
-                    </a>
                     <div
                       css={{
                         display: "flex",
