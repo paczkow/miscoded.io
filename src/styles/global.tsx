@@ -99,6 +99,16 @@ const GlobalStyles: React.FC<{ theme: Theme }> = ({ children }) => (
           overflow: initial;
         }
 
+        .gatsby-highlight-code-line {
+          background-color: #555555;
+          display: block;
+          margin-right: -1em;
+          margin-left: -1em;
+          padding-right: 1em;
+          padding-left: 0.75em;
+          border-left: 0.25em solid #f99;
+        }
+
         div:not(.gatsby-highlight) code {
           font-size: 0.8em;
         }

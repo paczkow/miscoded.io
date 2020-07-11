@@ -1,10 +1,10 @@
 ---
-title: Odwrócenie sterowania, bez wstrzykiwania zależności
+title: Odwrócenie sterowania bez wstrzykiwania zależności?
 date: 2020-07-11
 author: Michał Paczków
 publish: true
-description: Odwrócenie sterowania _(ang. Inversion Of Control)_ jedna z fundamentalnych zasad ułatwiających tworzenie reużywalnego kodu, często utożsamiana ze wstrzykiwaniem zależności. Jednak jej zastosowań jest znacznie więcej...
-image: assets/cover.jpeg
+description: Odwrócenie sterowania jedna z fundamentalnych zasad ułatwiających tworzenie reużywalnego kodu, często utożsamiana ze wstrzykiwaniem zależności. Jednak jej zastosowań jest więcej i dziś im się przyjrzymy.
+image: assets/cover.jpg
 imageCredit: "Zdjęcie: [Samuel Scrimshaw](https://unsplash.com/@samscrim)"
 categories:
   - Javascript
@@ -28,9 +28,9 @@ Paczkomaty są dobrym przykładem odwrócenia sterowania. W domyślnym flow list
 
 Decydujemy się na usługę Paczkomatów i...to my odbieramy paczkę. Nie czekamy aż ona zostanie nam dostarczona tylko sami podejmujemy działanie. Odpowiedzialność z listonosza przenoszona jest na nas. To my decydujemy kiedy i czy chcemy ją odebrać.
 
-Co dzięki temu zyskujemy? Elastyczność i swobodę. Będziemy mogli odebrać paczkę kiedy nam to będzie pasować i będziemy mieć na to czas.
+Co dzięki temu zyskujemy? Elastyczność i swobodę. Odbierzemy paczkę kiedy nam to będzie pasować i będziemy mieć na to czas.
 
-<!-- TODO: zdjęcie paczkomatu -->
+![Przykład odwrócenia sterowania w dostarczaniu przesyłek](assets/paczkomat.jpg)
 
 ## Kto kontroluje kod
 
@@ -38,9 +38,9 @@ Wrócmy do świata programowania. W tradycyjnym podejściu to kod programisty wy
 
 Co jeśli odwrócimy ten proces? Programista przesyła funkcje do struktury, która steruje ich wywołaniem. Odpowiedzialność za to **kiedy** coś zostanie wywołane spada na strukturę, programista dostarcza to **co** będzie wywołane.
 
-Dodam jeszcze oficjalną definicję z Wikipedii: paradygmat (czasami rozważany też jako wzorzec projektowy lub wzorzec architektury) polegający na przeniesieniu funkcji sterowania wykonywaniem programu do używanego frameworku. Framework w odpowiednich momentach wywołuje kod programu stworzony przez programistę w ramach implementacji danej aplikacji.
+Definicja z Wikipedii: paradygmat (czasami rozważany też jako wzorzec projektowy lub wzorzec architektury) polegający na przeniesieniu funkcji sterowania wykonywaniem programu do używanego frameworku. Framework w odpowiednich momentach wywołuje kod programu stworzony przez programistę w ramach implementacji danej aplikacji.
 
-<!-- TODO: schemat Framework - programmer code -->
+![Tradycyjny przepływ kod vs odwrócenie sterowania](assets/traditional-flow-vs-ioc.png)
 
 Co może być takim frameworkiem? To już zależy od kontekstu i problemu. Przy próbie odwórcenia sterowania i znalezieniu odpowiedniego framework'a pomocne okażą się pytania, które już dziś zadaliśmy:
 
@@ -49,7 +49,7 @@ Co może być takim frameworkiem? To już zależy od kontekstu i problemu. Przy 
 
 ## Obsługa zdarzeń
 
-Prosty mechanizm obsługi zdarzeń jest przykładem odwrócenia sterowania. Programista przekazuje funkcję (co zostanie wywołane), która zostanie wywołana w momencie kliknięcia w przycisk (kiedy zostanie wywołane).
+Prosty mechanizm obsługi zdarzeń jest przykładem odwrócenia sterowania. Programista przekazuje funkcję _(co)_, która zostanie wywołana w momencie kliknięcia w przycisk _(kiedy)_.
 
 Co dzięki temu zyskujemy? Przenosimy odpowiedzialność za obsługę zdarzeń do dobrze znanego, powszechnego mechanizmu, nie musimy sami tego implementować.
 
@@ -57,42 +57,44 @@ Co dzięki temu zyskujemy? Przenosimy odpowiedzialność za obsługę zdarzeń d
 <button>Click Me</button>
 
 <script>
-const showAlert = () => {
-	alert("Hi, I'm Alert");
-}
+  const showAlert = () => {
+    alert("Hi, I'm Alert");
+  };
 
-const button = document.querySelector("button");
-button.addEventListener("click", showAlert);
-<script>
+  const button = document.querySelector("button");
+  button.addEventListener("click", showAlert);
+</script>
 ```
 
-## Standardowe wbudowane funkcje: map, find, filter
+## Funkcje: map, find, filter
 
-Standardowe funkcje takie jak `map`, `find` czy `filter` są kolejnym przykładem odwrócenia zależności. Funkcje te jako argument przyjmują wyrażenie zdefinowane przez programistę, które wykonują dla każdego z elementów kolekcji.
+Standardowe funkcje takie jak `map`, `find` czy `filter` są kolejnym przykładem odwrócenia zależności. Funkcje te jako argument przyjmują wyrażenie zdefinowane przez programistę _(co)_, które wykonują dla każdego z elementów kolekcji _(kiedy)_.
 
 Co dzięki temu zyskujemy? Nie musi implementować przechodzenia po elementach kolekcji. Kod jest bardziej opisowy.
 
-Poniżej uproszoczna implementacja funkcji `map`.
+Poniżej uproszoczna implementacja funkcji `map` z jej użyciem.
 
 ```javascript
-Array.prototype.map = (callback) => {
+Array.prototype.map = function(callback) {
   const resultArray = [];
   for (let index = 0; index < this.length; index++) {
+    // when
     resultArray.push(callback(this[index], index, this));
   }
   return resultArray;
 };
 
-const add10To = (element) => {
+const add10To = element => {
+  // what
   return element + 10;
-}
+};
 
-console.log([1,2,3].map(add10To); // 11, 12, 13
+console.log([1, 2, 3].map(add10To)); // 11, 12, 13
 ```
 
 ## Odwrócenia sterowania w React - Render Props
 
-W ramach przykładu odwrócenia sterowania w React, rozważmy poniższy kod. Jest to prosty licznik:
+Zasadę odwrócenia zależności wykorzystują również popularne rozwiazania jak choćby React. W ramach przykładu odwrócenia sterowania w React, zaimplementujmy prosty licznik. Oto kod:
 
 ```jsx
 import React, { useState } from "react";
@@ -102,10 +104,10 @@ const Counter = () => {
 
   return (
     <div>
-      <button onClick={e => setCount(count + 1)}>Increase</>
-      <button onClick={e => setCount(count - 1)}>Decrease</>
-      <p>You clicked {count} times</p>
-    <div/>
+      <button onClick={() => setCount(count + 1)}>Increase</button>
+      <button onClick={() => setCount(count - 1)}>Decrease</button>
+      <p>Result: {count}</p>
+    </div>
   );
 };
 ```
@@ -120,6 +122,8 @@ Okazuje się, że po pewnym czasie trzeba dodać do niego kolejne funkcjonalnoś
 Każda z wspominanych funkcjonalności ma być ona opcjonalna. Modyfikujemy kod:
 
 ```jsx
+import React, { useState } from "react";
+
 const Counter = ({ canReset, description, title, topLine, bottomLine }) => {
   const [count, setCount] = useState(0);
 
@@ -127,37 +131,70 @@ const Counter = ({ canReset, description, title, topLine, bottomLine }) => {
     <div>
       {title ? <h1>{title}</h1> : null}
       {description ? <p>{description}</p> : null}
-      {topLine ? <hr/> : null}
+      {topLine ? <hr /> : null}
       <button onClick={() => setCount(count + 1)}>Increase</button>
       <button onClick={() => setCount(count - 1)}>Decrease</button>
-      {bottomLine ? <hr/> : null}
-      <p>You clicked {count} times</p>
+      {bottomLine ? <hr /> : null}
+      <p>Result: {count}</p>
       {canReset ? <button onClick={() => setCount(0)}>Reset</button> : null}
-    <div/>
+    </div>
   );
 };
 ```
 
-Komponent mimo kilku zmian zaczyna "puchnąć". Jednak obecna implementacja, nie jest wystarczająca. Pojawiają się kolejne elementy oraz potrzeba ustawienia elementów w dowolnej kolejności. Jak podejść do takiego problemu?
+Komponent mimo kilku zmian zaczyna "puchnąć". Jednak obecna implementacja, nie jest wystarczająca. Pojawiają się kolejne elementy.
 
-Dobrym rozwiązaniem byłoby stworzenie struktury, do której przekażemy licznik w dowolnej formie, a struktura zajmie się logiką i wyrenerowaniem komponentu. Zaimplementujmy takie rozwiązanie.
+W końcu pojawia się potrzeba ustawienia elementów w liczniku w dowolnej kolejności. Jak podejść do takiego problemu?
+
+Dobrym rozwiązaniem byłoby stworzenie struktury, do której przekażemy licznik w dowolnej formie, a struktura ta zajmie się logiką i wyrenerowaniem komponentu. Zaimplementujmy takie rozwiązanie.
 
 ```jsx
-const Counter = ({ children }) => {
-  const [count, setCount] = useState(0);
-  return {children(count, setCount)}
-};
+import { useState } from "react";
 
-<Counter>
-  {(count, setCount) => (<div>
-      <button onClick={e => setCount(count + 1)}>Increase</>
-      <button onClick={e => setCount(count - 1)}>Decrease</>
-      <p>You clicked {count} times</p>
-  </div>) }
-</Counter>
+const Counter = ({ render }) => {
+  const [count, setCount] = useState(0);
+
+  // when
+  return render(count, setCount); // highlight-line
+};
+```
+
+```jsx
+const Counters = () => {
+  return (
+    <div>
+      <Counter
+        render={(count, setCount) => (
+        /* what */
+          <div>
+            <h1>Simple Counter</h1>
+            <button onClick={() => setCount(count + 1)}>Increase</button>
+            <p>You clicked {count} times</p>
+          </div>
+        )}
+      />
+
+      <Counter
+        render={(count, setCount) => (
+        /* what */
+          <div style={{ background: "#eaeaea" }}>
+            <h1>Fancy Counter</h1>
+            <p>It's super cool counter with decreasing and resetting</p>
+            <p>You clicked {count} times</p>
+            <button onClick={() => setCount(count + 1)}>Increase</button>
+            <button onClick={() => setCount(count - 1)}>Decrease</button>
+            <button onClick={() => setCount(0)}>Reset</button>
+          </div>
+        )}
+      />
+    </div>
+  );
+};}
 ```
 
 Widzisz co wykorzystaliśmy? Odwróciliśmy sterowanie. To nie my decydujemy o wyrenderowaniu komponentu, a odpowiednia struktura `Counter` której przekazujemy komponent jaki chcemy wyrenderować.
+
+//TODO: describe details
 
 Dzięki takiemu rozwiązaniu zyskujemy na swobodzie, możemy przekazać licznik w dowolnej formie, oraz poprawiamy separację naszych struktur. W tym przypadku:
 

@@ -3,7 +3,7 @@ title: Jak zwiększyć jakość kodu i poprawić komunikację z innymi? Wzorce p
 date: 2020-07-03
 author: Michał Paczków
 publish: true
-description: Dzisiaj omówimy jedno z niezbędnych narzędzi programisty. Przedstawię Wam czym są wzorce projektowe oraz jakie problemy rozwiązują. Oprócz tego praktyczne użycie jednego z wzorców - dekoratora
+description: Dzisiaj omówimy jedno z niezbędnych narzędzi programisty. Przedstawię Wam czym są wzorce projektowe oraz jakie problemy rozwiązują. Oprócz tego praktyczne użycie jednego z wzorców - dekoratora.
 image: assets/cover.jpeg
 imageCredit: "Zdjęcie: [Samuel Scrimshaw](https://unsplash.com/@samscrim)"
 categories:
