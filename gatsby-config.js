@@ -26,6 +26,12 @@ module.exports = {
     "gatsby-plugin-sharp",
     "gatsby-plugin-sitemap",
     {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: process.env.GOOGLE_ANALYTICS_ID,
+      },
+    },
+    {
       resolve: "gatsby-plugin-manifest",
       options: {
         name: "Programming blog by Michał Paczków",
