@@ -117,35 +117,104 @@ Praktyczny przykład to funkcjonalność wykorzystująca zewnętrzne API. W rama
 
 ### Mockowanie API
 
-Rozważmy przykład w którym chcemy przesłać to wartswy prezentacji, listę użytkowników.
+Rozważmy przykład w którym chcemy pobrać listę użytkowników z zewnętrznego serwisu `UserService`, a następnie na podstawie pobranych użytkowników utworzyć elementy listy - tagi `li`.
+
+Zaimplementujmy rozwiązanie bez wstrzykiwania zależności.
 
 ```javascript
-function UserService() {
-  function getUser() {
-    return new Promise(
-     function(resolve){
-      setTimeout(() => resolve([{ name: "Joe"}]), 1000)
-    })
-    );
-  }
+/* view.js */
+import { UserService } from "./user_service";
 
-  return { getUser };
-}
+export function View() {
+  this.userService = UserService(); // concrete service, we lost flexibility here
 
-function View() {
-  this.userService = UserService();
-  this.listElements = [];
+  this.createUserList = async function() {
+    const users = await this.userService.getUser();
 
-  function render(rootElement) {
-    this.userService.getUser().then(users => {
-      this.listElements = `<li>${user.name}</li>`;
+    return users.map(user => {
+      const li = document.createElement("li");
+      li.innerHTML = user.name;
+
+      return li;
     });
-  }
+  };
 }
+
+/* main.js */
+import { View } from "./views";
+
+const list = document.getElementById("list");
+
+const usersView = new View();
+
+usersView.createUserList().then(domElement => {
+  list.appendChild(domElement[0]);
+});
 ```
 
-## Wstrzykiwanie zaleznosci w Javascript [300 slow + kod]
+Widzimy tutaj funkcję `View` która pobiera użytkowników z serwisu, a następnie na ich podstawie buduje elementy listy. W tym momencie implementacja realizuje swoje zadanie, ale występuje problem z brakiem elastyczności rozwiązania. 
 
-Podac kilka roznych sposobow na wstrzykiwanie zaleznosci
+`View` jest zależne `UserService`. Co jeśli chcielibyśmy podmienić ten w momencie działania programu, albo napisać testy?
+
+```javascript
+// view.test.js
+import { View } from "./views";
+
+describe("UserView", function() {
+  test("render list of users as 'li' elements", async () => {
+    const view = new View();
+
+    const usersList = await view.createUserList(); // function uses external service
+
+    // what should be a value of length?
+    // length depends on external UserService
+    expect(usersList.length).toBe(1);
+  });
+});
+```
+
+W tym momencie mamy problem. Funkcja `View` jest zależna od zewnętrznego serwisu którego nie możemy kontrolować. Jak to rozwiązać?
+
+Możemy stworzyć funkcję `View`, które w argumencie przekażemy serwis na którym ma operować. Dzięki temu zyskujemy elastyczność. Z łatwością możemy dodać mockowy serwis dla testów.
+
+```javascript
+// view.js
+export function DIView(userService) {
+  this.userService = userService;
+
+  this.createUserList = async function() {
+    const users = await this.userService.getUser();
+
+    return users.map(user => {
+      const li = document.createElement("li");
+      li.innerHTML = user.name;
+
+      return li;
+    });
+  };
+}
+
+// view.test.js
+import { DIView } from "./views";
+
+  test("render users list for DI View", async () => {
+    const mockUsers = [{ name: "mock-user-1" }, { name: "mock-user-2" }];
+    const MockUserService = {
+      getUser: () =>
+        new Promise(function(resolve) {
+          resolve(mockUsers);
+        })
+    };
+
+    const view = new DIView(MockUserService);
+
+    const usersList = await view.createUserList();
+
+    // we are sure about the result here
+    // it is indepednece of external sources
+    expect(usersList.length).toBe(mockUsers.length);
+  });
+});
+```
 
 ## Podsumowanie [200 slow]
