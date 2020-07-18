@@ -2,7 +2,7 @@
 title: Jak zyskać elastyczność dzięki wstrzykiwaniu zależności?
 date: 2020-07-17
 author: Michał Paczków
-description:
+description: Wstrzykiwanie zależności, najpopularniejsza implementacja odwrócenia sterowania. Jak dzięki niej możemy poprawić elastyczność w naszej aplikacji, czy ułatwić pisanie testów? To pytania, na które odpowiemy w tym artykule.
 image: assets/cover.jpg
 imageCredit: "Zdjęcie: [Abyss](https://unsplash.com/@abyss_)"
 categories:
@@ -13,7 +13,7 @@ tags:
   - inversion-of-control
 ---
 
-Kontynujemy temat [poprzedniego postu](https://miscoded.io/pl/blog/odwrocenie-sterowania/) dotyczący zasady odwrócenia sterowania. Dziś czas na najpopularniejszą implementację tej zasady zwaną wstrzykiwaniem zależności. Pozwala ona na zwiększenie elastyczności struktur w naszej aplikacji. To z kolei pozwala łatwiej wprowadzać modyfikacje i odpowiadać na pojawiające się zmiany wymagań, bardzo częste programowaniu.
+Kontynuujemy temat [poprzedniego postu](https://miscoded.io/pl/blog/odwrocenie-sterowania/) dotyczący zasady odwrócenia sterowania. Dziś czas na jej najpopularniejszą implementację zwaną wstrzykiwaniem zależności. Zwiększa ona elastyczności struktur w naszej aplikacji. To z kolei pozwala łatwiej wprowadzać modyfikacje i odpowiadać szybciej na pojawiające się zmiany wymagań, bardzo częste programowaniu.
 
 Jednak czy problem z zależnościami dotyczy tylko programistów?
 
@@ -21,7 +21,7 @@ Jednak czy problem z zależnościami dotyczy tylko programistów?
 
 Wyobraźmy sobie trenera sportu drużynowego, który ustala skład na turniej. Sukces drużyny zależy od tego w jakiej formie będą zawodnicy i jak będzie wyglądała ich współpraca. Drużyna jako strukura uzależniona jest od poszczególnych elementów - zawodników.
 
-Piłka nożna jest u nas najpopularniejsza dyscypliną, także wyobraźmy sobie trenera Brzęczka przygotowującego się na Euro ~~2020~~ 2021. Jego drużyna musi składać się z:
+Pomyślmy o trenerze Brzęczku przygotowującym się na Euro ~~2020~~ 2021. Jego drużyna musi składać się z:
 
 - bramkarza
 - obronców
@@ -36,11 +36,11 @@ Inaczej w ataku, tam jedno miejsce jest zarezerwowane dla konkretnego piłkarza 
 
 Kiedy to będzie problem? W momencie w którym zakończy on karierę lub dozna kontuzji. Jest go bardzo trudno zastąpić, bo spoczywa na nim **dużo odpowiedzialności**.
 
-Podsumowując, w momencie budowania struktury, nie powinno uzależnianić się jej od konkretnych obiektów. **Ważne, żeby mieć możliwość ich dopasowania i podmiany w zależności od potrzeb i sytuacji.**
+Podsumowując, w momencie budowania struktury, nie powinna być uzależniona od konkretnych obiektów. **Ważne, żeby mieć możliwość ich dopasowania i podmiany w zależności od potrzeb i sytuacji.**
 
-Jak przenieść to w świat programowania?
+Jak przenieść to do świata programowania?
 
-![Drużyna (strukutra) podzielona na pozycje (abstrakcja) z przypisanymi do niej zawodnikami (konkretna implementacja), na przykładzie Arsenalu. Źródło: https://www.buildlineup.com/articles/3/football-formation-4-2-3-1](assets/football_formation.png)
+![Drużyna (struktura) podzielona na pozycje (abstrakcja) z przypisanymi zawodnikami (konkretna implementacja), na przykładzie Arsenalu. Źródło: https://www.buildlineup.com/articles/3/football-formation-4-2-3-1](assets/football_formation.png)
 
 ## Zależność w programowaniu
 
@@ -50,7 +50,7 @@ Mamy klasę `A` oraz `B`.
 
 Klasa `A` do działania wykorzystuje obiekt klasy `B`. Oznacza to, że klasa `A` polega na klasie `B`, innymi słowy klasa `B` jest zależnością klasy `A`.
 
-![Zależność między klasami](assets/dependency.png)
+![Zależność między klasami - A jest zależne od B](assets/dependency.png)
 
 ## Wstrzykiwanie zależności
 
@@ -65,7 +65,7 @@ Polega on na tym, że klasa definiuje jakich zależności potrzebuje. Rozważmy 
 
 W poniższym przykładzie specjalnie operuje na prototypach. Chcę pokazać, że odwrócenie zależności nie jest zarezerowane tylko do klas i interfejsów.
 
-Widzimy tutaj definicję funkcji `Car`, która sama określa jakich zależności potrzebuje. W tym przypadku to obiektu typu `Engine`.
+Poniżej widzimy definicję funkcji `Car`, która sama określa jakich zależności potrzebuje. W tym przypadku to obiekt typu `Engine`.
 
 ```javascript
 function Car() {
@@ -114,7 +114,7 @@ Engine.prototype.start = function() {
   console.log("Engine with " + this.hp + " hp has been started...");
 };
 
-// we build dependency here - outside Car class
+// we build dependency here - outside Car
 // highlight-next-line
 const car = new Car(new Engine(128));
 const fastCar = new Car(new Engine(256));
@@ -122,7 +122,7 @@ const fastCar = new Car(new Engine(256));
 
 Co dzięki temu zyskaliśmy? Swobodę. W tym przykładzie to tworzenie samchodów z silnikami o różnej mocy. Nie jesteśmy już uzależnieni od jednego, konkretnego.
 
-<!-- TODO: Add Image with clubs -->
+![Inny przykład wstrzykiwania zależności - dobranie odpowiedniego kija w zależności od sytuacji na polu. Źródło: https://habiletechnologies.com/blog/top-22-reasons-choose-angularjs/](assets/di.jpg)
 
 ## Odwrócenie zależności i testy - dobrana para
 
@@ -138,7 +138,7 @@ Praktyczny przykład to funkcjonalność wykorzystująca zewnętrzne API. W rama
 
 Rozważmy przykład w którym chcemy pobrać listę użytkowników z zewnętrznego serwisu `UserService`, a następnie na podstawie pobranych użytkowników utworzyć elementy listy - tagi `li`.
 
-Zaimplementujmy rozwiązanie bez wstrzykiwania zależności.
+Zaimplementujmy rozwiązanie bez wstrzykiwania zależności:
 
 <!-- TODO: zmienić na klase -->
 
@@ -146,11 +146,12 @@ Zaimplementujmy rozwiązanie bez wstrzykiwania zależności.
 /* view.js */
 import { UserService } from "./user_service";
 
-export function View() {
-  // concrete service, we lost flexibility here
-  this.userService = UserService();
+export class View {
+  constructor() {
+    this.userService = UserService();
+  }
 
-  this.createUserList = async function() {
+  async createUserList() {
     const users = await this.userService.getUser();
 
     return users.map(user => {
@@ -159,7 +160,7 @@ export function View() {
 
       return li;
     });
-  };
+  }
 }
 
 /* main.js */
@@ -173,7 +174,7 @@ usersView.createUserList().then(domElement => {
 });
 ```
 
-Widzimy tutaj funkcję `View` która pobiera użytkowników z serwisu, a następnie na ich podstawie buduje elementy listy. W tym momencie implementacja realizuje swoje zadanie, ale występuje problem z brakiem elastyczności.
+Widzimy tutaj klasę `View`, która pobiera użytkowników z serwisu, a następnie na ich podstawie buduje elementy listy. W tym momencie implementacja realizuje swoje zadanie, ale występuje problem z brakiem elastyczności.
 
 `View` jest zależne `UserService`. Co jeśli chcielibyśmy podmienić go w momencie działania programu, albo napisać testy?
 
@@ -195,16 +196,20 @@ describe("UserView", function() {
 });
 ```
 
-Mamy problem. Funkcja `View` jest zależna od zewnętrznego serwisu którego nie możemy kontrolować. Tym samym tracimy kontrolę również nad testem i pewność, że nasza funkcjonalność działa. Jak to rozwiązać?
+Mamy problem. Klasa `View` jest zależna od zewnętrznego serwisu którego nie możemy kontrolować. Tym samym tracimy kontrolę również nad testem i pewność, że nasza funkcjonalność działa. Jak to rozwiązać?
 
-Możemy stworzyć funkcję `View`, której w argumencie przekażemy serwis na którym ma operować. Dzięki temu zyskujemy elastyczność. Z łatwością możemy dodać mockowy serwis dla testów.
+Możemy stworzyć klasę `View` której w argumencie przekażemy serwis na którym będzie operować. Dzięki temu zyskujemy elastyczność. Z łatwością możemy dodać mockowy serwis dla testów:
 
 ```javascript
 // view.js
-export function DIView(userService) { // highlight-line
-  this.userService = userService; // highlight-line
+export class DIView {
+  // highlight-start
+  constructor(userService) {
+    this.userService = userService;
+  }
+  // highlight-end
 
-  this.createUserList = async function() {
+  async createUserList() {
     const users = await this.userService.getUser();
 
     return users.map(user => {
@@ -213,7 +218,7 @@ export function DIView(userService) { // highlight-line
 
       return li;
     });
-  };
+  }
 }
 
 // view.test.js
@@ -241,9 +246,13 @@ import { DIView } from "./views";
 });
 ```
 
+Pełen przykład znajdziesz [tutaj](https://codesandbox.io/s/unruffled-williamson-fw079)
+
+https://codesandbox.io/s/unruffled-williamson-fw079
+
 ## Dodatkowy koszt
 
-Wstrzykiwanie zależności ma również swoje koszty. Odwrócenie sterowania naszej aplikacji powoduje wzrost progu wejścia, szczególnie dla nowych programistów w projekcie. Decydując się na zastosowanie wstrzykiwania zalżności, należy policzyć zyski i straty płynące z zastosowania tego podejścia w naszym rozwiązaniu.
+Wstrzykiwanie zależności ma również swój koszt. Odwrócenie sterowania naszej aplikacji powoduje podniesienie progu wejścia, szczególnie dla nowych programistów w projekcie. Decydując się na zastosowanie wstrzykiwania zależności, należy policzyć zyski i straty płynące z zastosowania tego podejścia w naszym rozwiązaniu.
 
 ## Wstrzykiwanie zależności w React
 
@@ -251,9 +260,9 @@ Wstrzykiwanie zależności ma również swoje koszty. Odwrócenie sterowania nas
 
 Popularne rozwiązania implementują wstrzykiwanie zależności w różny sposób. React nie jest tu wyjątkiem. JSX zapewnia wstrzykiwanie zależności bez wprowadzania dodatkowych mechanizmów.
 
-Najprostszym przykładem są react'owe propsy. Dzięki nim do komponentu możemy przesłać różne dane w tym...inne komponenty. Bardzo dobry przykładem może byc artykuł: [One simple trick to optimize React re-renders](https://kentcdodds.com/blog/optimize-react-re-renders).
+Najprostszym przykładem są react'owe propsy. Dzięki nim do komponentu możemy przesłać różne dane w tym...inne komponenty. Bardzo dobry przykładem może być artykuł: [One simple trick to optimize React re-renders](https://kentcdodds.com/blog/optimize-react-re-renders).
 
-To co dla nas jest istotne w kontekście wstrzykiwanie zależności to sposób przekazania konkretnej instancji komponentu `Logger` jak `prop`. Poniżej kod z tego artykułu. W linii 18 możemy zobaczyć przesłanie komponentu.
+To co dla nas jest istotne w kontekście wstrzykiwania zależności to sposób przekazania konkretnej instancji komponentu `Logger` jak `prop`. Poniżej kod z tego artykułu. W linii 18 możemy zobaczyć przesłanie komponentu.
 
 ```jsx
 function Logger(props) {
@@ -282,7 +291,10 @@ ReactDOM.render(
 
 Przy okazji przekazywania zależności warto wspomnieć o `Context API`. Pozwala ono na przesłanie danych do każdego komponentu niezależnie od poziomu zagnieżdzenia.
 
-Jest to szczególne przydatne w sytuacji w której chcielibyśmy przekazać informację z jednego źródła do kilku komponentów w odrębnych miejsach w strukturze aplikacji.
+Jest to szczególne przydatne w sytuacji w której chcielibyśmy przekazać informację z jednego źródła do kilku komponentów w odrębnych miejsach w strukturze aplikacji. Przykłady to:
+
+- wybrany przez użytkownika motyw np. "light/dark"
+- język aplikacji i jej tłumaczenie
 
 ## Podsumowanie
 
