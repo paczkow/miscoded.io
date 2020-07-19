@@ -13,7 +13,7 @@ tags:
   - inversion-of-control
 ---
 
-Kontynuujemy temat [poprzedniego postu](https://miscoded.io/pl/blog/odwrocenie-sterowania/) dotyczący zasady odwrócenia sterowania. Dziś czas na jej najpopularniejszą implementację zwaną wstrzykiwaniem zależności. Zwiększa ona elastyczności struktur w naszej aplikacji. To z kolei pozwala łatwiej wprowadzać modyfikacje i odpowiadać szybciej na pojawiające się zmiany wymagań, bardzo częste programowaniu.
+Kontynuujemy temat [poprzedniego postu](https://miscoded.io/pl/blog/odwrocenie-sterowania/) dotyczący zasady odwrócenia sterowania. Dziś czas na jej najpopularniejszą implementację zwaną wstrzykiwaniem zależności. Zwiększa ona elastyczności struktur w naszej aplikacji. To z kolei pozwala łatwiej wprowadzać modyfikacje i szybciej odpowiadać na pojawiające się zmiany wymagań, bardzo częste programowaniu.
 
 Jednak czy problem z zależnościami dotyczy tylko programistów?
 
@@ -36,11 +36,11 @@ Inaczej w ataku, tam jedno miejsce jest zarezerwowane dla konkretnego piłkarza 
 
 Kiedy to będzie problem? W momencie w którym zakończy on karierę lub dozna kontuzji. Jest go bardzo trudno zastąpić, bo spoczywa na nim **dużo odpowiedzialności**.
 
-Podsumowując, w momencie budowania struktury, nie powinna być uzależniona od konkretnych obiektów. **Ważne, żeby mieć możliwość ich dopasowania i podmiany w zależności od potrzeb i sytuacji.**
+![Drużyna (struktura) podzielona na pozycje (abstrakcja) z przypisanymi zawodnikami (konkretna implementacja), na przykładzie Arsenalu. Źródło: https://www.buildlineup.com/articles/3/football-formation-4-2-3-1](assets/football_formation.png)
+
+Podsumowując, w momencie budowania struktury, nie powinna być uzależniona od konkretnych obiektów. **Ważne, żeby mieć możliwość ich dopasowania i podmiany w zależności od wymagań.**
 
 Jak przenieść to do świata programowania?
-
-![Drużyna (struktura) podzielona na pozycje (abstrakcja) z przypisanymi zawodnikami (konkretna implementacja), na przykładzie Arsenalu. Źródło: https://www.buildlineup.com/articles/3/football-formation-4-2-3-1](assets/football_formation.png)
 
 ## Zależność w programowaniu
 
@@ -84,11 +84,11 @@ function Engine() {
 }
 
 Engine.prototype.start = function() {
-  console.log("Engine with " + this.hp + " hp has been started...");
+  console.log("Engine with " + this.horsepower + " hp has been started...");
 };
 
 const car = new Car();
-car.start(); // "Engine with 64 hp has been started..."
+car.start(); // "Engine with 64 horsepower has been started..."
 ```
 
 Co może spowodować problemy w tym kodzie? Uzależnienie `Car` od `Engine`. To ograniczenie nie pozwala nam zbudować samochodu z mocniejszym/słabszym silnikiem, jego moc jest zawsze taka sama, równa 64. Jak lepiej podejść do tego rozwiązania?
@@ -111,7 +111,7 @@ function Engine(horsepower) {
 }
 
 Engine.prototype.start = function() {
-  console.log("Engine with " + this.hp + " hp has been started...");
+  console.log("Engine with " + this.horsepower + " hp has been started...");
 };
 
 // we build dependency here - outside Car
@@ -252,7 +252,9 @@ https://codesandbox.io/s/unruffled-williamson-fw079
 
 ## Dodatkowy koszt
 
-Wstrzykiwanie zależności ma również swój koszt. Odwrócenie sterowania naszej aplikacji powoduje podniesienie progu wejścia, szczególnie dla nowych programistów w projekcie. Decydując się na zastosowanie wstrzykiwania zależności, należy policzyć zyski i straty płynące z zastosowania tego podejścia w naszym rozwiązaniu.
+Wstrzykiwanie zależności ma również swój koszt. Jest trudniejsze do zrealizowanie niż rozwiązanie w tradycyjnym przepływie. Powoduje podniesienie progu wejścia, szczególnie dla nowych programistów w projekcie. 
+
+Decydując się na zastosowanie wstrzykiwania zależności, należy policzyć zyski i straty płynące z zastosowania tego podejścia w naszym rozwiązaniu.
 
 ## Wstrzykiwanie zależności w React
 
