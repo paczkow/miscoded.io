@@ -19,12 +19,12 @@ Jednak czy problem z zależnościami dotyczy tylko programistów?
 
 ## Sport i problemy z zależnościami
 
-Wyobraźmy sobie trenera sportu drużynowego, który ustala skład na turniej. Sukces drużyny zależy od tego w jakiej formie będą zawodnicy i jak będzie wyglądała ich współpraca. Drużyna jako strukura uzależniona jest od poszczególnych elementów - zawodników.
+Wyobraźmy sobie trenera sportu drużynowego, który ustala skład na turniej. Sukces drużyny zależy od tego, w jakiej formie będą zawodnicy i jak będzie wyglądała ich współpraca. Drużyna jako struktura uzależniona jest od poszczególnych elementów - zawodników.
 
 Pomyślmy o trenerze Brzęczku przygotowującym się na Euro ~~2020~~ 2021. Jego drużyna musi składać się z:
 
 - bramkarza
-- obronców
+- obrońców
 - pomocników
 - napastników
 
@@ -34,7 +34,7 @@ Nie ma u nas problemu z bramkarzem. W zależności od sytuacji może nim być Sz
 
 Inaczej w ataku, tam jedno miejsce jest zarezerwowane dla konkretnego piłkarza - Lewandowskiego - od którego nasza reprezentacja **jest uzależniona**.
 
-Kiedy to będzie problem? W momencie w którym zakończy on karierę lub dozna kontuzji. Jest go bardzo trudno zastąpić, bo spoczywa na nim **dużo odpowiedzialności**.
+Kiedy to będzie problem? W momencie, w którym zakończy on karierę lub dozna kontuzji. Jest go bardzo trudno zastąpić, bo spoczywa na nim **dużo odpowiedzialności**.
 
 ![Drużyna (struktura) podzielona na pozycje (abstrakcja) z przypisanymi zawodnikami (konkretna implementacja), na przykładzie Arsenalu. Źródło: https://www.buildlineup.com/articles/3/football-formation-4-2-3-1](assets/football_formation.png)
 
@@ -44,7 +44,7 @@ Jak przenieść to do świata programowania?
 
 ## Zależność w programowaniu
 
-Zacznijmy od zdefiniownia zależności w programowaniu.
+Zacznijmy od zdefiniowania zależności w programowaniu.
 
 Mamy klasę `A` oraz `B`.
 
@@ -54,16 +54,16 @@ Klasa `A` do działania wykorzystuje obiekt klasy `B`. Oznacza to, że klasa `A`
 
 ## Wstrzykiwanie zależności
 
-Jak wspomniałem wstrzykiwanie zależności jest implementacją odwrócenia sterownia. Kiedy chcemy zastosować odwrócenie sterowania, warto zadać sobie dwa pytania:
+Jak wspomniałem wstrzykiwanie zależności, jest implementacją odwrócenia sterownia. Kiedy chcemy zastosować odwrócenie sterowania, warto zadać sobie dwa pytania:
 
 - Jak wygląda domyślny proces i co można odwrócić?
 - Jakie korzyści przyniesie odwrócenie procesu?
 
-Czym jest domyślny proces jeśli chodzi o tworzenie zależności?
+Czym jest domyślny proces, jeśli chodzi o tworzenie zależności?
 
 Polega on na tym, że klasa definiuje jakich zależności potrzebuje. Rozważmy kod zajmujący się budową samochodu w ramach domyślnego procesu.
 
-W poniższym przykładzie specjalnie operuje na prototypach. Chcę pokazać, że odwrócenie zależności nie jest zarezerowane tylko do klas i interfejsów.
+W poniższym przykładzie specjalnie operuje na prototypach. Chcę pokazać, że odwrócenie zależności nie jest zarezerwowane tylko do klas i interfejsów.
 
 Poniżej widzimy definicję funkcji `Car`, która sama określa jakich zależności potrzebuje. W tym przypadku to obiekt typu `Engine`.
 
@@ -120,27 +120,25 @@ const car = new Car(new Engine(128));
 const fastCar = new Car(new Engine(256));
 ```
 
-Co dzięki temu zyskaliśmy? Swobodę. W tym przykładzie to tworzenie samchodów z silnikami o różnej mocy. Nie jesteśmy już uzależnieni od jednego, konkretnego.
+Co dzięki temu zyskaliśmy? Swobodę. W tym przykładzie to tworzenie samochodów z silnikami o różnej mocy. Nie jesteśmy już uzależnieni od jednego, konkretnego.
 
 ![Inny przykład wstrzykiwania zależności - dobranie odpowiedniego kija w zależności od sytuacji na polu. Źródło: https://habiletechnologies.com/blog/top-22-reasons-choose-angularjs/](assets/di.jpg)
 
 ## Odwrócenie zależności i testy - dobrana para
 
-Bardzo często o wstrzykiwaniu zależności mówi się przy okazji testów. To właśnie dzięki swobodzie jaką zyskujemy wprowadzając wstrzykiwanie, możemy testować komponenty naszej aplikacji izolując je od innych.
+Bardzo często o wstrzykiwaniu zależności mówi się przy okazji testów. To właśnie dzięki swobodzie jaką zyskujemy, wprowadzając wstrzykiwanie, możemy testować komponenty naszej aplikacji, izolując je od innych.
 
 Praktyczny przykład to funkcjonalność wykorzystująca zewnętrzne API. W ramach testów nie chcemy odpytywać zewnętrznego API. Powody to:
 
 - dodatkowe koszty związane z odpytaniem np. używając API w którym płaci się za każdy request
 - wydłuzenie czasu testowania
-- uzależnienie testu od API. Jeśli serwer wystawiający API ulegnie awarii test nie przjedzie, mimo poprawnego kodu z naszej strony
+- uzależnienie testu od API. Jeśli serwer wystawiający API ulegnie awarii test nie przejdzie, mimo poprawnego kodu z naszej strony
 
 ### Mockowanie API
 
-Rozważmy przykład w którym chcemy pobrać listę użytkowników z zewnętrznego serwisu `UserService`, a następnie na podstawie pobranych użytkowników utworzyć elementy listy - tagi `li`.
+Rozważmy przykład, w którym chcemy pobrać listę użytkowników z zewnętrznego serwisu `UserService`, a następnie na podstawie pobranych użytkowników utworzyć elementy listy - tagi `li`.
 
 Zaimplementujmy rozwiązanie bez wstrzykiwania zależności:
-
-<!-- TODO: zmienić na klase -->
 
 ```javascript
 /* view.js */
@@ -176,7 +174,7 @@ usersView.createUserList().then(domElement => {
 
 Widzimy tutaj klasę `View`, która pobiera użytkowników z serwisu, a następnie na ich podstawie buduje elementy listy. W tym momencie implementacja realizuje swoje zadanie, ale występuje problem z brakiem elastyczności.
 
-`View` jest zależne `UserService`. Co jeśli chcielibyśmy podmienić go w momencie działania programu, albo napisać testy?
+`View` jest zależne `UserService`. Co, jeśli chcielibyśmy podmienić go w momencie działania programu albo napisać testy?
 
 ```javascript
 // view.test.js
@@ -196,9 +194,9 @@ describe("UserView", function() {
 });
 ```
 
-Mamy problem. Klasa `View` jest zależna od zewnętrznego serwisu którego nie możemy kontrolować. Tym samym tracimy kontrolę również nad testem i pewność, że nasza funkcjonalność działa. Jak to rozwiązać?
+Mamy problem. Klasa `View` jest zależna od zewnętrznego serwisu, którego nie możemy kontrolować. Tym samym tracimy kontrolę również nad testem i pewność, że nasza funkcjonalność działa. Jak to rozwiązać?
 
-Możemy stworzyć klasę `View` której w argumencie przekażemy serwis na którym będzie operować. Dzięki temu zyskujemy elastyczność. Z łatwością możemy dodać mockowy serwis dla testów:
+Możemy stworzyć klasę `View` której w argumencie przekażemy serwis, na którym będzie operować. Dzięki temu zyskujemy elastyczność. Z łatwością możemy dodać mockowy serwis dla testów:
 
 ```javascript
 // view.js
@@ -252,7 +250,7 @@ https://codesandbox.io/s/unruffled-williamson-fw079
 
 ## Dodatkowy koszt
 
-Wstrzykiwanie zależności ma również swój koszt. Jest trudniejsze do zrealizowanie niż rozwiązanie w tradycyjnym przepływie. Powoduje podniesienie progu wejścia, szczególnie dla nowych programistów w projekcie. 
+Wstrzykiwanie zależności ma również swój koszt. Jest trudniejsze do zrealizowania niż rozwiązanie w tradycyjnym przepływie. Powoduje podniesienie progu wejścia, szczególnie dla nowych programistów w projekcie.
 
 Decydując się na zastosowanie wstrzykiwania zależności, należy policzyć zyski i straty płynące z zastosowania tego podejścia w naszym rozwiązaniu.
 

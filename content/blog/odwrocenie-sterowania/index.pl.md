@@ -217,7 +217,7 @@ Widzisz co wykorzystaliśmy? Odwróciliśmy sterowanie. O wyrenderowaniu licznik
 
 Dzięki takiemu rozwiązaniu zyskujemy na swobodzie, możemy przekazać licznik w dowolnej formie. Poprawiliśmy separację naszych struktur. W tym przypadku:
 
-- warstwa logiki - komopnent `Counter`
+- warstwa logiki - komponent `Counter`
 - warstwa prezentacji - dowolny komponent przekazany do `Counter`
 
 [Tutaj działająca wersja tego przykładu.](hhttps://codesandbox.io/s/fervent-tharp-pf3ne)
