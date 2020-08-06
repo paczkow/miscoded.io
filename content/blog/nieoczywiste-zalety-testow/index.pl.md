@@ -90,10 +90,7 @@ const UsersList = () => {
 
   return (
     <>
-      <input 
-        data-testid="filter" 
-        onChange={e => setFilter(e.target.value)} 
-      />
+      <input data-testid="filter" onChange={e => setFilter(e.target.value)} />
       <ul data-testid="list">
         {users.map(user => (
           <li key={user}>{user}</li>
@@ -171,6 +168,9 @@ W powyższym kodzie przypadkie testowe zostały podzielone na:
 Zaimplementujmy przypadki testowe:
 
 ```javascript
+import { renderHook, act } from "@testing-library/react-hooks";
+import { render, screen } from "@testing-library/react";
+
 describe("useUsers", () => {
   it("returns list of users, when component is mounted", () => {
     const mockGetUsers = () => ["Joe", "Foe", "Foo"];
@@ -221,6 +221,8 @@ Tak samo dla listy, dzięki wstrzyknięciu danych testowych łatwo możemy stwie
 Następnie implementujemy komponenty tak, żeby testy były zielone:
 
 ```jsx
+import React, { useState, useEffect } from "react";
+
 const useUsers = (query = getUsers) => {
   const [users, setUsers] = useState([]);
   const [filter, setFilter] = useState("");
