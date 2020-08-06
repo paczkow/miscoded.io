@@ -3,7 +3,7 @@ title: (Nie)oczywiste zalety testów
 date: 2020-07-24
 author: Michał Paczków
 publish: true
-description: Pewność, że zmiany które dodaliśmy nie zepsuły aplikacji, a rozwiązanie działa zgodnie z założeniami. Dziś jednak zajmiemy się innymi zaletami testów - ich wpływem na kod produkcyjny i tworzenie dokumentacji.
+description: Zyskanie pewności, że zmiany które wprowadziliśmy nie zepsuły aplikacji, a rozwiązanie działa zgodnie z założeniami jest największym plusem testów. Dziś jednak zajmiemy się innymi zaletami testów - ich wpływem na kod produkcyjny i tworzenie dokumentacji.
 image: assets/cover.jpg
 imageCredit: "Zdjęcie: [Bill Oxford](https://unsplash.com/@bill_oxford)"
 categories:
@@ -222,6 +222,8 @@ Następnie implementujemy komponenty tak, żeby testy były zielone:
 
 ```jsx
 import React, { useState, useEffect } from "react";
+
+import { getUsers } from "./repos/Users";
 
 const useUsers = (query = getUsers) => {
   const [users, setUsers] = useState([]);
