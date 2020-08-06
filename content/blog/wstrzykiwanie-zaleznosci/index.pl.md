@@ -7,13 +7,15 @@ image: assets/cover.jpg
 imageCredit: "Zdjęcie: [Abyss](https://unsplash.com/@abyss_)"
 categories:
   - Javascript
-  - Wzorce Projektowe
+  - Wzorce projektowe
 tags:
   - react
   - inversion-of-control
 ---
 
-Kontynuujemy temat [poprzedniego postu](https://miscoded.io/pl/blog/odwrocenie-sterowania/) dotyczący zasady odwrócenia sterowania. Dziś czas na jej najpopularniejszą implementację zwaną wstrzykiwaniem zależności. Zwiększa ona elastyczności struktur w naszej aplikacji. To z kolei pozwala łatwiej wprowadzać modyfikacje i szybciej odpowiadać na pojawiające się zmiany wymagań, bardzo częste programowaniu.
+Kontynuujemy temat [poprzedniego postu](https://miscoded.io/pl/blog/odwrocenie-sterowania/) dotyczący zasady odwrócenia sterowania. Dziś czas na jej najpopularniejszą implementację zwaną wstrzykiwaniem zależności.
+
+Zwiększa ona elastyczności struktur w naszej aplikacji. To z kolei pozwala łatwiej wprowadzać modyfikacje i szybciej odpowiadać na pojawiające się zmiany wymagań, bardzo częste programowaniu.
 
 Jednak czy problem z zależnościami dotyczy tylko programistów?
 
@@ -63,7 +65,7 @@ Czym jest domyślny proces, jeśli chodzi o tworzenie zależności?
 
 Polega on na tym, że klasa definiuje jakich zależności potrzebuje. Rozważmy kod zajmujący się budową samochodu w ramach domyślnego procesu.
 
-W poniższym przykładzie specjalnie operuje na prototypach. Chcę pokazać, że odwrócenie zależności nie jest zarezerwowane tylko do klas i interfejsów.
+> W poniższym przykładzie świadomie operuje na prototypach, nie klasach. Javascript oparty jest na prototypach, a klasy to tzw. _syntactic sugar_ - ukłon w stronę języków obiektowych. Przykład ten pokazuje, że wstrzykiwanie zależności może być użyte bez konstrukcji `class`.
 
 Poniżej widzimy definicję funkcji `Car`, która sama określa jakich zależności potrzebuje. W tym przypadku to obiekt typu `Engine`.
 
@@ -91,14 +93,15 @@ const car = new Car();
 car.start(); // "Engine with 64 horsepower has been started..."
 ```
 
-Co może spowodować problemy w tym kodzie? Uzależnienie `Car` od `Engine`. To ograniczenie nie pozwala nam zbudować samochodu z mocniejszym/słabszym silnikiem, jego moc jest zawsze taka sama, równa 64. Jak lepiej podejść do tego rozwiązania?
+Co powoduje problemy w tym kodzie? Uzależnienie `Car` od `Engine`. To ograniczenie nie pozwala nam zbudować samochodu z mocniejszym/słabszym silnikiem, jego moc jest zawsze taka sama, równa 64. Jak lepiej podejść do tego rozwiązania?
 
 Odwrócić sterowanie! Jeśli domyślnym procesem było zdefiniowanie konkretnej zależności wewnątrz funkcji, odwracamy to i dostarczamy do funkcji potrzebną zależność z zewnątrz:
 
 ```javascript
 function Car(engine) {
-   // highlight-next-line
-  this.engine =  enigne; // general object, passed from outside
+  // highlight-next-line
+  this.engine = enigne; // general object, passed from outside
+}
 
 Car.prototype.start = function() {
   if (this.engine) {
@@ -106,21 +109,89 @@ Car.prototype.start = function() {
   }
 };
 
-function Engine(horsepower) {
-  this.horsepower = horsepower;
+function Engine() {
+  this.horsepower = 64;
+}
+
+function FastEngine() {
+  this.horsepower = 128;
+}
+
+// we build dependency here - outside Car
+const car = new Car(new Engine());
+const fastCar = new Car(new FastEngine());
+```
+
+Co dzięki temu zyskaliśmy? Swobodę. W tym przykładzie to tworzenie samochodów z silnikami o różnej mocy. Nie jesteśmy już uzależnieni od jednego, konkretnego.
+
+Jednak wciąż nie jest to rozwiązanie idealne. Musimy pamiętać o prawidłowej kolejności wywołań `Engine` lub `FastEngine` przed `Car`. Jak rozwiązać to w sposób jeszcze bardziej elastyczny, tak żeby nie martwić się o kolejność?
+
+Zacznijmy od zasady odwrócenia zależności, która jest następująca:
+
+> _Moduły wysokopoziomowe nie powinny zależeć od modułów niskopoziomowych. Zależności między nimi powinny wynikać z abstrakcji._
+
+Czym są te poziomy wysokopoziome i niskopoziomowe?
+
+Moduły wysokopoziomowe to takie która mają mało szczegółów i służą do komunikacji z innymi częściami systemu. W języku czysto obiektowym np. C# to interfejsy zwierające tylko zbiór potrzebnych metod bez ich implementacji.
+
+Moduły niskopoziomowe to konkretne klasy zawierające szczegóły implementacji.
+
+Hmm, ale jak stworzyć takie wysokopoziomowy moduł w języku Javascript kiedy nie możemy używać interfejsów?
+
+Wykorzystajmy w tym celu wstrzyknięcie zależności używając do tego tzw. kontenera DI (dependncy injection) - biblioteki `injector.js`. Dzięki niej możemy wprowadzić podział na wysoko i nisko poziomowe moduły. Jak to działa w praktyce?
+
+Programista definuje wysokopoziomowy moduł `IEngine` jak zależność `Car`, następnie "informuje" kontenter, że za każdym razem, gdy ktoś poprosi o moduł `IEngine` przekaż mu konkretną implementację (moduł niskopoziomowy) np. `FastEngine`.
+
+W tym celu należy połączyć wysokopoziomowy - `IEngine` z niskopoziomowym - `FastEngine`. Robimy to przez tzw. rejestrację. Przykładowy kod z opisem działania poniżej.
+
+```javascript
+import Injector from "js.injector";
+
+const DIContainer = new Injector();
+
+export function Engine() {
+  this.horsepower = 64;
 }
 
 Engine.prototype.start = function() {
   console.log("Engine with " + this.horsepower + " hp has been started...");
 };
 
-// we build dependency here - outside Car
-// highlight-next-line
-const car = new Car(new Engine(128));
-const fastCar = new Car(new Engine(256));
+export function FastEngine() {
+  this.horsepower = 128;
+}
+
+FastEngine.prototype.start = function() {
+  console.log("Engine with " + this.horsepower + " hp has been started...");
+};
+
+// highlight-start
+DIContainer.register({
+  IEngine: Engine,
+});
+// highlight-end
+
+export function Car(IEngine) {
+  // highlight-start
+  const injected = DIContainer.inject(this.constructor);
+  this.engine = injected.IEngine;
+  // highlight-end
+}
+
+Car.prototype.start = function() {
+  if (this.engine) {
+    this.engine.start();
+  }
+};
+
+const car = new Car(); // highlight-line
+car.start(); // Engine with 64 hp has been started..."
 ```
 
-Co dzięki temu zyskaliśmy? Swobodę. W tym przykładzie to tworzenie samochodów z silnikami o różnej mocy. Nie jesteśmy już uzależnieni od jednego, konkretnego.
+W powyższym przykładzie widzimy powiązanie wysokopoziomowego modułu `IEngine`, z niskopoziomową implementacją `Engine` w liniach 21-23.
+Następnie w linii 25-26, mamy wykorzystanie tego wysokopoziomowego modułu jako zależność dla `Car`. W tym przypadku prosząc o `IEngine` dostaniemy obiekt `Engine`.
+
+Zwróć uwagę na linię 35, mimo, że `Car` wymaga od nas dostarczenia zależności w konstrukutrze, tworzymy obiekt z pusta listą argumentów, kontener DI zatroszczył się o zapewnienie odpowiedniej implementacji dla zależności `Car`.
 
 ![Inny przykład wstrzykiwania zależności - dobranie odpowiedniego kija w zależności od sytuacji na polu. Źródło: https://habiletechnologies.com/blog/top-22-reasons-choose-angularjs/](assets/di.jpg)
 
