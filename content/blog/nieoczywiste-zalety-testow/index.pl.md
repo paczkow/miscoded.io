@@ -73,7 +73,7 @@ W [poprzednim poście](https://miscoded.io/pl/blog/wstrzykiwanie-zaleznosci/) po
 
 Jeśli chcesz zweryfikować elastyczność Twojego rozwiązania, sprawdź czy łatwo możesz skonfigurować je pod testy.
 
-Popatrzmy na poniższy przykład. Jest to reactowy komponent wyświetalający listę użytkowników. Dodatkowo mamy możliwość filtrowania.
+Popatrzmy na poniższy przykład. Jest to reactowy komponent wyświetalający listę użytkowników. Dodatkowo mamy możliwość filtrowania:
 
 ```jsx
 import React, { useState, useEffect } from "react";
@@ -109,6 +109,7 @@ Doświadczeni programiści zauważą możliwość wydzielenia logiki do oddzieln
 ```javascript
 import React from "react";
 import { render, screen, fireEvent, wait } from "@testing-library/react";
+
 import { UsersList } from "./App";
 
 describe("UsersList", () => {
@@ -117,7 +118,7 @@ describe("UsersList", () => {
     const usersList = screen.getAllByTestId("list");
 
     // how should be the correct value?
-    // we can test only by length - it's a low level of confidence
+    // we can only verify by length - it's a low level of confidence
     // can we mock service in some way?
     expect(usersList.length).toEqual(1);
   });
@@ -135,16 +136,16 @@ describe("UsersList", () => {
 
     wait(() => {
       // how should be the correct value?
-      // we check only by length - it's a low level of confidence
+      // we can only verify by length - it's a low level of confidence
       expect(screen.getAllByTestId("list").length).toEqual(0);
     });
   });
 });
 ```
 
-Widzimy, że testowanie jest problematyczne. Nie możemy łatwo kontrolować użytkowników, co powoduje, że test daje nam niską pewność. Jednym z możliwoych rozwiązań jest zamockować cały import `getUsers`, jednak istnieje łatwiejsze rozwiązanie.
+Widzimy, że testowanie jest problematyczne. Nie możemy łatwo kontrolować użytkowników, co powoduje, że test daje nam niską pewność. Jednym z możliwych rozwiązań jest zamockować cały import `getUsers`, jednak istnieje łatwiejsze rozwiązanie.
 
-Dodatkowo testujemy różne odpowiedzialność w jednym komponencie, co wskazuję, że jest on za duży.
+Dodatkowo testujemy kompletnie różne odpowiedzialność w jednym komponencie, co wskazuję, że warto go rozbić.
 
 Jak można lepiej podejść do rozwiązania? Zacznijmy podziału odpowiedzialności w testach:
 
@@ -217,7 +218,7 @@ W testach dotyczących logiki związanej z użytkownikami mamy teraz możliwoś�
 
 Tak samo dla listy, dzięki wstrzyknięciu danych testowych łatwo możemy stwierdzić czy dane są odpowiednio wyrenderowane.
 
-Na podstawie testów implementujemy komponenty:
+Następnie implementujemy komponenty tak, żeby testy były zielone:
 
 ```jsx
 const useUsers = (query = getUsers) => {
@@ -247,7 +248,7 @@ const List = ({ items }) => {
 };
 ```
 
-Podzielenie testów i zwiększenie ich pewności, wymusiło na nas rozdzielenie kodu produkcyjnego. Dzięki temu utworzyliśmy mniejsze, reużywalne komponent.
+Podzielenie testów (zwiększenie ich pewności), wymusiło na nas rozdzielenie kodu produkcyjnego. Dzięki temu utworzyliśmy mniejsze, reużywalne komponent.
 
 Teraz łatwo możemy połączyć listę z hook'iem `useUsers` do wyrenderowania listy użytkowników, ale równie łatwo stworzymy tabelę wyświetlającą użytkowników lub listę z danymi innymi niż użytkownicy.
 
