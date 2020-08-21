@@ -8,7 +8,6 @@ imageCredit: "Zdjęcie: [Bence Balla-Schottner](https://unsplash.com/@ballaschot
 description: Co odpowiada za wywołanie funkcji przed jej deklaracją i dlaczego może to zmylić programistę? Odpowiedź w drugim artykule z serii "Opanuj fundamenty!"
 categories:
   - Javascript
-  - Under the hood
 tags:
   - silnik-javascript
   - fundamenty-javascript

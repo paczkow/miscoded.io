@@ -8,7 +8,6 @@ image: assets/cover.jpeg
 imageCredit: "Zdjęcie: [Samuel Scrimshaw](https://unsplash.com/@samscrim)"
 categories:
   - Javascript
-  - Under the hood
 tags:
   - silnik-javascript
   - fundamenty-javascript

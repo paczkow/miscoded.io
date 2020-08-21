@@ -10,9 +10,9 @@ categories:
   - Javascript
   - Testowanie
 tags:
+  - odwrocenie-sterowania
   - react
   - jest
-  - inversion-of-control
 ---
 
 W czasie mojej programistycznej drogi kilkukrotnie prowadziłem rozmowy rekrutacyjne. Kiedy rozmowa schodziła na temat testów i ich zalet niemal zawsze pojawiały się podobne odpowiedzi:

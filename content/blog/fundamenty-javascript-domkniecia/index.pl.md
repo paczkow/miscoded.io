@@ -8,7 +8,6 @@ image: assets/cover.jpeg
 imageCredit: "Zdjęcie: [Israel Palacio](https://unsplash.com/@othentikisra)"
 categories:
   - Javascript
-  - Under the hood
 tags:
   - silnik-javascript
   - fundamenty-javascript

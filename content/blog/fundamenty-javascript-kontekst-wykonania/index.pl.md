@@ -8,7 +8,6 @@ imageCredit: "Zdjęcie: [Moren Hsu](https://unsplash.com/@moren)"
 description: Czy pisząc kod, zastanawiałeś się, jak on jest wykonywany "pod maską"? Dziś zaczniemy serie, która pomoże odpowiedzieć nam na to pytanie. Zapraszam do pierwszego postu z serii "Opanuj fundamenty!".
 categories:
   - Javascript
-  - Under the hood
 tags:
   - silnik-javascript
   - fundamenty-javascript

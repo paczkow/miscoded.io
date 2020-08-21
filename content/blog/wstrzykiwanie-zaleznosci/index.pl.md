@@ -9,8 +9,10 @@ categories:
   - Javascript
   - Wzorce projektowe
 tags:
+  - odwrocenie-sterowania
+  - refactoring
   - react
-  - inversion-of-control
+  - jest
 ---
 
 Kontynuujemy temat [poprzedniego postu](https://miscoded.io/pl/blog/odwrocenie-sterowania/) dotyczący zasady odwrócenia sterowania. Dziś czas na jej najpopularniejszą implementację zwaną wstrzykiwaniem zależności.

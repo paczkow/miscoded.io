@@ -10,8 +10,9 @@ categories:
   - Javascript
   - Wzorce projektowe
 tags:
+  - odwrocenie-sterowania 
+  - refactoring
   - react
-  - inversion-of-control
 ---
 
 "Odwrócenie sterowania _(ang. Inversion Of Control)_ jedna z fundamentalnych zasad ułatwiających tworzenie reużywalnego kodu i zarządzanie zależnościami w projekcie."
