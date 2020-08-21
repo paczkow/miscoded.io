@@ -1,5 +1,5 @@
 ---
-title: Subtelne powtórzenia i jak je zwalczać (1/2). Polimorfizm w Javascript
+title: Subtelne powtórzenia i jak je zwalczać (1/2). Polimorfizm
 date: 2020-08-21
 author: Michał Paczków
 publish: true
@@ -40,7 +40,10 @@ Na potrzeby tego postu uprościłem proces, który składa się z:
 
 Oczywiście każdy z wymienionych kroków będzie różnił się w zależności o typu kawy. W końcu do espresso nie potrzebujemy mleka, ale do cappuccino już tak.
 
-Kluczowym elementem mojej implementacji jest klasa `CoffeeMaker` odpowiedzialna za poszczególne kroki związane z przygotowaniem napoju.
+Rozwiązanie tego problemu składa się z dwóch klas:
+
+- `CoffeMaker` odpowiedzialna za poszczególne kroki związane z przygotowaniem napoju
+- `Barista` odpowiedzialna za przygotowanie kawy i dobranie odpowiedniego naczynia
 
 ```javascript
 export class CoffeeMaker {
@@ -87,13 +90,38 @@ export class CoffeeMaker {
     // highlight-end
   }
 }
+
+export class Barrista {
+  constructor(coffeeMaker) {
+    this.coffeeMaker = coffeeMaker;
+  }
+
+  prepareCoffee(type) {
+    const cup = this.prepareCupForCoffee(type);
+    const coffee = this.coffeeMaker.makeCoffee(type);
+
+    console.log(`${coffee} in ${cup} is ready!`);
+  }
+
+  prepareCupForCoffee(type) {
+    // #4
+    // highlight-start
+    switch (type) {
+      case "espresso":
+        return "espresso cup";
+      default:
+        return "cup";
+    }
+    // highlight-end
+  }
+}
 ```
 
 W powyższym kodzie widzimy instrukcje warunkowe `if-else` oraz `switch-case`. W każdej z nich mamy ten sam zestaw warunków. Opierają się one o typ kawy. W tym przykładzie to _espresso_ i _cappuccino_.
 
 Implementacja rozwiązuje postawiony problem, jednak takie rozwiązanie będzie problematyczne w utrzymaniu.
 
-Wyobraź sobie, że chcesz dodać kolejny typ kawy. **Oznacza to zmianę we wszystkich instrukcjch warunkowych powiązanych z typem kawy.** Tutaj są to tylko 3 miejsca, ale w skomplikowanej aplikacji byłoby ich zdecydowanie więcej. Do tego dochodzi wiele typów kawy...i mamy wspomniany koszmar. Pytanie jak to zrobić lepiej?
+Wyobraź sobie, że chcesz dodać kolejny typ kawy. **Oznacza to zmianę we wszystkich instrukcjch warunkowych powiązanych z typem kawy.** Tutaj są to tylko 4 miejsca, ale w skomplikowanej aplikacji byłoby ich zdecydowanie więcej. Do tego dochodzi wiele typów kawy...i mamy wspomniany koszmar. Pytanie jak to zrobić lepiej?
 
 Zmniejszyć liczbę miejsc które trzeba edytować. W tym celu powinniśmy zastąpić każdą powtarzającą się instrukcję warunkową odpowiednią funkcją, która wykonałaby konkretny krok.
 
@@ -121,13 +149,17 @@ Jednak kawa może mieć _różne formy_ cappuccino, latte, espresso, americano. 
 
 Kiedy komuś powiesz, żeby zrobił Ci kawę (bez podania konkretnego rodzaju) możesz otrzymać cappuccino czy latte. **"Kawa" zostanie podmieniona na konkretny typ** w zależności od sytuacji np. możliwości ekspresu.
 
-Ten przykład obrazuje polimorfizm. Mam jeden byt (kawę), która może wystąpić pod wieloma różnymi postaciami.
+Ten przykład obrazuje polimorfizm. Mamy jeden byt (kawę), która może wystąpić pod wieloma różnymi postaciami.
 
 ![Różne postacie, ale wciąż ten sam byt - kawa](assets/coffees.jpg)
 
 Jednak jak to ma się do programowania? Polimorfizm jest jednym z fundamentów programowania obiektowego i oznaczna możliwość zaprojektowania ogólnego interfejsu (kawa) dla grupy pewnych powiązanych obiektów (latte, espresso, cappuciono).
 
-Do komunikacji z innymi elementami systemu wykorzystujemy właśnie ten ogólny interfejs. Nie posiada on żadnych szczegołów implementacyjnych, tylko zbiór funkcji, których może użyć inna część systemu. **Chcemy, aby inne części wiedziały jak najmniej, dzięki temu zmniejszamy liczbę miejsc w których trzeba będzie modyfikować kod**. Interfejs ten jest następnie podmieniany na konkretną implementację w czasie działania programu.
+Do komunikacji z innymi elementami systemu wykorzystujemy właśnie ten ogólny interfejs. Zawiera on zbiór wspólnych funkcji dla grupy obiektów, w naszym przypadku jest to np. `prepareWater`. Inne części systemu wywołują tylko te funkcje, a wszystkie szczegóły zamykamy w powiązanych obiektach np. `Cappucino`.
+
+**Chcemy, aby inne części posiadały jak najmniej szczegółów, dzięki temu zmniejszamy liczbę miejsc w których trzeba będzie modyfikować kod**.
+
+Interfejs ten jest następnie podmieniany na konkretną implementację (klasę) w czasie działania programu, dzięki temu wywoływana jest odpowiednia funkcja w zależności od typu.
 
 > Należy pamiętać, że Javascript nie jest w pełni obiektowym językiem, nie występują tu interfejsy, a klasy to tak naprawdę syntactic sugar - ukłon w stronę programowania obiektowego. "Pod maską" kryje się wykorzystanie prototypów. Więcej dowiesz się [tutaj](https://medium.com/siliconwat/how-javascript-classes-work-80b0cf483b1d)
 
@@ -147,7 +179,7 @@ class Coffee {
 
   prepareMilk() {}
 
-  prepareGlassForCoffee() {}
+  prepareCupForCoffee() {}
 }
 ```
 
@@ -171,8 +203,8 @@ export class Espresso extends Coffee {
     console.log(`don't suggar for ${this.getType()}`);
   }
 
-  prepareGlassForCoffee() {
-    return "espresso cup";
+  prepareCupForCoffee() {
+    return "cup";
   }
 }
 
@@ -193,23 +225,15 @@ export class Cappucino extends Coffee {
     console.log(`add suggar for ${this.getType()}`);
   }
 
-  prepareGlassForCoffee() {
-    return "cup";
+  prepareCupForCoffee() {
+    return "small cup";
   }
 }
 ```
 
-W powyższym kodzie widzimy inną implementację metod w zależności od typu kawy. Dzięki temu będziemy mogli usunąć powtarzające się instrukcje warunkowe.
+W powyższym kodzie widzimy inną implementację metod w zależności od typu kawy. Dzięki temu będziemy mogli usunąć powtarzające się instrukcje warunkowe w innych częściach aplikacji.
 
 ```javascript
-/* index.js */
-import { CoffeeMaker, Espresso } from "./coffee";
-
-const coffeMaker = new CoffeeMaker();
-const coffee = coffeeMaker.makeCoffee(new Espresso());
-
-console.log(`${coffee} is ready`);
-
 /* coffee.js */
 export class CoffeeMaker {
   makeCoffee(coffee) {
@@ -220,13 +244,24 @@ export class CoffeeMaker {
     return coffee.getType();
   }
 }
+
+export class Barrista {
+  constructor(coffeeMaker) {
+    this.coffeeMaker = coffeeMaker;
+  }
+
+  prepareCoffee(coffee) {
+    const preapredCoffee = this.coffeeMaker.makeCoffee(coffee);
+    const glass = coffee.prepareGlassForCoffee(coffee);
+
+    console.log(`${preapredCoffee} in ${glass} is ready!`);
+  }
+}
 ```
 
-Spójrzmy na zmodyfikowaną klasę `CoffeeMaker`. Nie występują tu już szczegóły związane z konkretnym typem kawy. Dzięki temu kod znaczenie się uprościł, a powtórzenia zostały usunięte.
+Spójrzmy na zmodyfikowaną klasy `CoffeeMaker` i `Barrista`. Nie występują tu już szczegóły związane z konkretnym typem kawy. Dzięki temu kod znaczenie się uprościł, a powtórzenia zostały usunięte.
 
-Teraz chcąc dodać nowy typ kawy, należy zmodyfikować tylko jedno miejsce, tworząc nowy typ który będzie dziedziczył po `Coffee`.
-
-[Tutaj omawiany przykład](https://codesandbox.io/s/coffee-32inm). Dodałem w nim jeszcze klasę `Barrista`, żeby pokazać wykorzystanie polimorfizmu w różnych miejscach w kodzie.
+[Tutaj omawiany przykład.](https://codesandbox.io/s/coffee-32inm)
 
 https://codesandbox.io/s/coffee-32inm
 
