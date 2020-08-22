@@ -265,6 +265,17 @@ Spójrzmy na zmodyfikowaną klasy `CoffeeMaker` i `Barrista`. Nie występują tu
 
 https://codesandbox.io/s/coffee-32inm
 
-## Podusmowanie
+## Kalkulacja i refaktoryzacja, nie odwrotnie
 
-Powtórzenia to nie tylko fragementy identycznego kodu. Często kryją się pod instrukacjami `if-else` i `switch-case` rozsianymi po całej aplikacji. Jeśli zawuażysz, występowanie takich instrukcji z indetycznymi warunkami to prawodobnie kod można poprawić, usuwając instrukcje warunkowe. Nie bój się wtedy wykorzystać polimorfizmu, skomplikowanie brzmi tylko z nazwy.
+Pamiętaj, że najważniejszą rzeczą w programowaniu jest **dostarczanie wartości**. Im szybciej jesteśmy w stanie ją dostarczyć, tym lepiej. I z tego powinno wynikać ewentualna potrzeba refaktoryzacji.
+
+Jeśli widzisz, że masz zbyt dużo podobnych instrukcji warunkowych, przez co trudno i długo modyfikuje się kod (przypadek ze wstępu artykułu) wtedy warto rozważyć ich zastąpienie.
+
+Jednak nie należy myśleć o refaktoryzacji za każdym razem, gdy widzimy instrukcje warunkowe. Zastanów się czy ich zastąpienie pozwoli szybciej dostarczać wartość i rozwiązywać problemy. W przeciwnym wypadku możesz sztucznie wydłużyć proces dostarczania wartości.
+
+## Podsumowanie
+
+Powtórzenia to nie tylko fragementy identycznego kodu. Często kryją się pod instrukacjami `if-else` i `switch-case` rozsianymi po całej aplikacji.
+
+Jeśli zawuażysz, występowanie takich instrukcji z indetycznymi warunkami zastanów się czy warto to zmienić. Przenalizuj czy pozbycie się ich ułatwi i przyspieszy modyfikację rozwiązania w przyszłości.
+Jeśli tak, nie bój się wtedy wykorzystać polimorfizmu, skomplikowanie brzmi tylko z nazwy.
