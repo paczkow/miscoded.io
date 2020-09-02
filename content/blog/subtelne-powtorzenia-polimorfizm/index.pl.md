@@ -3,9 +3,9 @@ title: Subtelne powtórzenia i jak je zwalczać (1/2). Polimorfizm
 date: 2020-08-21
 author: Michał Paczków
 publish: true
-description: Czym są subtelne powtórzenia oraz jak wykorzystać polimorfizm, żeby się ich pozbyć i sprawić by nasz kod był łatwy do utrzymania
+description: Czym są subtelne powtórzenia oraz jak wykorzystać polimorfizm, żeby się ich pozbyć i sprawić by nasz kod był łatwy do utrzymania.
 image: assets/cover.jpg
-imageCredit: "Zdjęcie: [Cyril Saulnier](https://unsplash.com/@c_reel)"
+imageCredit: "Zdjęcie: [Felix Mittermeier](https://unsplash.com/@felix_mittermeier)"
 categories:
   - Javascript
   - Wzorce projektowe

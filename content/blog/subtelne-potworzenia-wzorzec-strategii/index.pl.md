@@ -1,9 +1,9 @@
 ---
 title: Subtelne powtórzenia i jak je zwalczać (2/2). Wzorzec strategii
-date: 2020-08-31
+date: 2020-09-02
 author: Michał Paczków
 publish: true
-description: ""
+description: "Kontynujemy temat usuwania powtórzeń, dziś wzorzec strategii. Czy wiesz jak go zaimplementować i dzięki niemu uniknąć powtórzeń w kodzie?"
 image: assets/cover.jpg
 imageCredit: "Zdjęcie: [Cyril Saulnier](https://unsplash.com/@c_reel)"
 categories:
@@ -20,13 +20,13 @@ Przypomnijmy, że subtelnymi powtórzeniami są:
 - łańcuchy instrukcji `switch-case` lub `if-else`, które występują wielokrotnie w różnych miejscach w kodzie, zawsze z tym samym zbiorem warunków
 - moduły, które mają podobne algorytmy, ale nie mają podobnego kodu - inaczej mówiąc moduł zawiera pewną listę kroków, jednak w zależności od typu implementacja kroków jest inna
 
-W ramach dzisiejszego postu stworzyłem mała aplikację w React, która pozwala na stworzenie konfiguracji z pól formularza (imię, nazwisko, wiek).
+W ramach dzisiejszego postu przygotowałem prostą aplikację w React, która pozwala na stworzenie konfiguracji z pól formularza (imię, nazwisko, wiek).
 
 Konfiguracja taka, może występować w 2 formatach: _json_ i _csv_.
 
 Sama aplikacja składa się z następujących komponentów:
 
-- formularza do wypełnienia danych konfiguracji `Config`
+- formularz do wypełnienia danych konfiguracji `Config`
 - wyboru formatu `Format`
 - komponentów, które pozwalają podejrzeć `Preview` i wyeksportować `Export` konfigurację w konkretnym formacie
 
@@ -95,15 +95,11 @@ export const Export = ({ format, data }) => {
     }
     // highlight-end
   };
-  return (
-    <div>
-      <button onClick={() => exportData()}>Export configuration</button>
-    </div>
-  );
+  return <button onClick={() => exportData()}>Export configuration</button>;
 };
 ```
 
-W każdym z nich widzimy ten sam zbiór warunków, opierający się na typie formatu. Jeśli czytałeś poprzedni post wiesz, że takie rozwiązanie będzie problematyczne w utrzymaniu.
+W każdym z nich widzimy instrukcję `switch` mającą ten sam zbiór warunków, opierający się o typ formatu. Jeśli czytałeś poprzedni post wiesz, że takie rozwiązanie będzie problematyczne w utrzymaniu.
 
 Z każdym nowym formatem będziemy musieli zmieniać każda powiązaną instrukcję `switch`. Tutaj są to tylko 2 miejsca, ale w zaawansownej aplikacji byłoby ich zdecydowanie więcej. Jak rozwiązać to lepiej?
 
@@ -113,50 +109,56 @@ Moglibyśmy zastąpić każdą z instrukcji `switch` odpowiednią funkcją reali
 
 Skąd jednak funkcję mają wiedzieć, kiedy wygenerować konfigurację w _csv_, a kiedy w _json_?
 
-Umieścilibyśmy je w odpowiednich klasach odpowiadających formatom np. `FormatCsv` czy `FormatJson` i w nich zaimplementowali szczegóły dotczyącego każdego formatu.
+Umieścilibyśmy je w odpowiednich klasach odpowiadających formatom np. `FormatCsv` czy `FormatJson` i w nich zaimplementowali szczegóły dla każdego formatu.
 
 Jednak gdzie będzie znajdować się logika, która połączy wybranie odpowiedniego formatu z wykorzystaniem konkretnej klasy?
 
-Potrzebujemy do tego jeszcze jedną klasę, która będzie zarządzać formatami. Nazwijmy ją `FormatContext`. To z nią będa się komunikować inne części systemu i dzięki niej wybierzemy i podmienimy używany format w czasie działania programu. To co właśnie przedstawiłem to wzorzec strategii.
+Potrzebujemy do tego jeszcze jedną klasę, która będzie zarządzać formatami. Nazwijmy ją `FormatContext`. To z nią będa się komunikować inne części systemu i dzięki niej wybierzemy i podmienimy używany format w czasie działania programu.
+
+To co właśnie przedstawiłem to wzorzec strategii.
 
 ![Schemat wzorca strategii na przykładzie formatów](assets/strategy-pattern.png)
 
-Na powyższym schemacie widzisz dodatkowo interfejs `Format`. Jest on niezbędny w językach statycznie typowanych do określenia zbioru wspólnych funkcji. W Javascript, gdzie możemy przesłać dowolny obiekt bez sprawdzania typu nie ma takiej potrzeby.
+Na powyższym schemacie widzimy interfejs `Format`. Jest on niezbędny w językach statycznie typowanych do określenia zbioru wspólnych typów jakich można używać. W Javascript, gdzie możemy przesłać dowolny obiekt bez sprawdzania typu, nie ma takiej potrzeby.
 
 ## Wzorzec strategii, czyli "jak grać panie trenerze?"
 
-Czym jest jednak ten wzorzec?
+Przedstawy sobie jeszcze jego definicję.
 
-_Wzorzec strategi to wzorzec behawioralny opisujący pewne zachowania. Umożliwia on wybór algorytmu w czasie wykonywania programu. Kluczową ideą jest tworzenie obiektów reprezentujących konkretne strategie. Obiekty te tworzą zbiór strategii spośród których obiekt kontekstu może wybierać i odpowiednio zmieniać swoje zachowanie zgodnie z zastosowaną strategią._
+_Wzorzec strategi to wzorzec behawioralny opisujący pewne zachowania. Umożliwia on wybór algorytmu w czasie wykonywania programu. Kluczową ideą jest tworzenie obiektów reprezentujących konkretne strategie (implementacje algorytmu). Obiekty te tworzą zbiór strategii spośród których obiekt kontekstu może wybierać i odpowiednio zmieniać swoje zachowanie zgodnie z zastosowaną strategią._
 
-Zanim jednak przejdziemy do kodu krótka analogia do piłki nożnej. W tej dyscyplinie występuje wiele różnych taktyk:
+Zanim jednak przejdziemy do kodu krótka analogia do piłki nożnej. W tej dyscyplinie występuje wiele różnych ustawień:
 
 - 4-4-2
 - 4-3-3
 - 4-1-2-3-1
 
-Dla drużyny (_obiekt kontekstu_) dobierana jest odpowiednia taktyka (_alogrytm_), która potem jest realizowana w większym czy mniejszym skutkiem. Ważne jest, że taktyka może ulec zmianie w czasie meczu np. w zależności od wyniku.
+Każda drużyna (_obiekt kontekstu_) gra z określonym ustawieniem (_strategia_). Jednak w zależności do sytuacji na boisku może ono ulec zmienie np. kiedy drużyna wygrywa może skupić się na bardziej defensywnej grze.
+
+Na tym prostym przykładzie możemy zobaczyć jak istotna jest możliwość zmiany rozwiązania.
 
 <figure style="width: 100%; margin-left: 0;">
   <a href="assets/formations.gif">  
     <img style="width: 100%" src="assets/formations.gif"/>
   </a>
-  <figcaption>Rożne strategie gry zespołu</figcaption>
+  <figcaption>Rożne strategie gry zespołu (źródło: https://tactical-board.com/uk/big-football)</figcaption>
 </figure>
 
-## Wzorzec strategii, a uniknięcie powtórzeń
+## Wzorzec strategii, a powtórzenia
 
 Wracając do naszego przykładu, przypomnijmy, że chcemy stworzyć zbiór strategii bazujących na formatach. W zależności od przyjętej strategii inaczej zostanie zrealizowany podgląd oraz eksport.
 
-Wybrana strategia będzie realizowana poprzez obiekt konteksu.
-
-Zdefinujmy zbiór strategi, oraz obiekt kontekstu:
+Zdefinujmy zbiór strategii, oraz obiekt kontekstu:
 
 ```javascript
 export class FormatJson {
   type = "json";
 
   export(data) {
+    // ...here do some additional steps to export JSON...
+  }
+
+  preview(data) {
     // ...here do some additional steps to export JSON...
   }
 
@@ -172,6 +174,10 @@ export class FormatCSV {
     // ...here do some additional steps to export CSV...
   }
 
+  preview(data) {
+    // ...here do some additional steps to preview CSV...
+  }
+
   generate(data) {
     // ...here logic to generate CSV...
   }
@@ -184,8 +190,7 @@ export class FormatContext {
   }
 
   preview(data) {
-    const { type, generate } = this.format;
-    return <pre className={type}>{generate(data)}</pre>;
+    this.format.preview(data);
   }
 
   export(data) {
@@ -194,15 +199,17 @@ export class FormatContext {
 }
 ```
 
-Mamy tu implementację różnych strategii dotyczących formatów. W każdej z klas związanej z konkretnym formatem mamy funkcję implementujące eksport i podgląd. Dzięki temu możemy ukryć szczegóły przed innymi częściami systemu, co zmniejszy liczbę miejsc które trzeba będzie modyfikować np. dodając nowy format.
+Mamy tu implementację różnych strategii dotyczących formatów. W każdej z klas mamy funkcję implementujące generowanie konfiguracji w określonym formacie, eksport oraz podgląd.
 
-Oprócz tego mamy obiekt kontekstu do którego można przesłać jedną ze strategii, a następnie zostanie ona zrealizowana poprzez ten obiekt (funkcje `preview` i `export`).
+Powoduje to ukrycie szczegółów przed innymi częściami systemu, co zmniejszy liczbę miejsc, które trzeba będzie modyfikować np. dodając nowy format.
+
+Oprócz tego mamy obiekt kontekstu. Dzięki niemu możemy wykonać jedną ze wspomniany strategii jak również podmienić ją w czasie działania programu.
 
 `FormatContext` przekazujemy zarówno do komponentu `Export` jak i `Preview`.
 
 ```jsx
 /* export.jsx */
-export const Export = ({ contextFormat, data }) => {
+export const Export = ({ formatContext, data }) => {
   const exportData = () => {
     contextFormat.export(data);
   };
@@ -215,7 +222,7 @@ export const Export = ({ contextFormat, data }) => {
 };
 
 /* preview.jsx */
-export const Preview = ({ contextFormat, data }) => {
+export const Preview = ({ formatContext, data }) => {
   return <div>{contextFormat.preview(data)}</div>;
 };
 ```
@@ -223,53 +230,55 @@ export const Preview = ({ contextFormat, data }) => {
 Szczegóły dotyczące formatów zostały ukryte dzięki czemu komponenty bardzo się zmniejszyły. Pozostaje nam już tylko stworzyć obiekt kontekstu i przekazać go do komponentów:
 
 ```jsx
-/* configuration strategies  */
+/* strategies  */
 const formats = {
   json: new FormatJson(),
   html: new FormatHTML(),
   csv: new FormatCSV(),
 };
 
-/* configurations context */
-const context = new ContextFormat();
+/* format context */
+const context = new FormatContext();
 
 export default function App() {
-  const [values, setValues] = useState({ name: "", surname: "", role: "" });
-  const [type, setType] = useState("json");
+  const [values, setValues] = useState({ name: "", surname: "", age: "" });
+  const [format, setFormat] = useState("json");
 
-  /* set specific strategy - configuration */
-  context.setFormat(formats[type]);
+  /* set specific strategy - format */
+  context.setFormat(formats[format]);
 
   return (
     <div className="App">
       <div>
         <Config values={values} setValues={setValues} />
-        <Format selectedType={type} setType={setType} />
+        <Format value={format} setFormat={setFormat} />
       </div>
       <div>
-        <Preview format={context} data={values} />
+        <Preview formatContext={context} data={values} />
         <br />
-        <Export format={context} data={values} />
+        <Export formatContext={context} data={values} />
       </div>
     </div>
   );
 }
 ```
 
-Z racji, że to aplikacja napisana w React, zamiast tworzyć obiekt `ContextFormat`, możemy wykorzystać `createContext`. Zapraszam tutaj do sprawdzenia przykładu wykorzystującego `React.context`.
+Z racji, że to aplikacja napisana w React, zamiast tworzyć obiekt `FormatContext`, możemy wykorzystać `createContext`. [Zapraszam tutaj do sprawdzenia przykładu wykorzystującego `React.context`.](https://codesandbox.io/s/configurator-uupb4)
 
-Główną zaletą tej refaktoryzacji jest ukrycie logiki powiązanej z formatami, węwnątrz odpowiednich klas. Teraz, chcąc dodać kolejnym format nie będziemy musieli edytować naszego kodu w wielu miejscach wystarczy dodać nową klasę - strategię np. `HTMLFormat` i rozszerzyć obiekt `formats` o nowy typ.
+https://codesandbox.io/s/configurator-uupb4
+
+Główną zaletą tej refaktoryzacji jest ukrycie logiki powiązanej z formatami, węwnątrz odpowiednich klas. Teraz, chcąc dodać kolejny format nie będziemy musieli edytować naszego kodu w wielu miejscach, wystarczy dodać nową klasę (_strategię_) np. `HTMLFormat` i rozszerzyć obiekt `formats` o nowy typ.
 
 ## Kalkulacja i refaktorzyacja, nie odwrotnie
 
-Wzorce projektowe (strategi nie jest tu wyjątkiem) są tylko pewnymi narzędziami do rozwiązywania problemów. Przed użyciem należy rozważyć zastosowanie tego narzędzia. Czy jego użycię będzie miało więcej plusów niż minusów?
+Wzorce projektowe (strategia nie jest tu wyjątkiem) są tylko pewnymi narzędziami do rozwiązywania problemów. Zanim go użyjemy należy rozważyć czy przyniesie to więcej plusów niż minusów.
 
-Minusami takiego rozwiązania jest większa złożoność należy dodać choćby klasę pośredniczącą `Context`, dodatkowo inne osoby w zespole powinny znać ten wzorzec, żeby rozumieć co dzieje się w kodzie.
+Minusami takiego rozwiązania jest większa złożoność należy dodać choćby klasę pośredniczącą `Context`, dodatkowo inne osoby w zespole muszą znać ten wzorzec, żeby rozumieć co dzieje się w kodzie.
 
 ## Podsumowanie
 
 Jak pisałem w poprzednim poście tej mini serii "Powtórzenia to nie tylko fragementy identycznego kodu. Często kryją się pod instrukacjami `if-else` i `switch-case` rozsianymi po całej aplikacji." Dziś poznaliśmy wzorzec strategii, które pomoże w usunięciu tego rodzaju powtórzeń.
 
-Jest on szczególnie przydatny w przypadku kiedy mamy kilka modułów składających się z tych samych kroków, ale kroki powinny być zaimplmentowane w inny sposób w każdym z modułów.
+Jest on szczególnie przydatny w przypadku kiedy mamy kilka modułów składających się z tych samych kroków, ale szczegóły kroków powinny być zaimplmentowane w inny sposób w każdym z modułów.
 
-Pamiętaj, że nie jest to złoty środek, przed zastosowaniem jakiegkolwiek wzorca należy rozważyć plus i minusy jego użycia. Tylko wtedy będzie w stanie podnieść jakość naszego kodu.
+Pamiętaj, że nie jest to złoty środek, przed zastosowaniem jakiegokolwiek wzorca należy rozważyć plus i minusy jego użycia. Tylko wtedy będziesz w stanie podnieść jakość swojego kodu.
