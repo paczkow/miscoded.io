@@ -1,11 +1,11 @@
 ---
 title: Subtelne powtórzenia i jak je zwalczać (2/2). Wzorzec strategii
-date: 2020-09-02
+date: 2020-09-03
 author: Michał Paczków
 publish: true
 description: "Kontynujemy temat usuwania powtórzeń, dziś wzorzec strategii. Czy wiesz jak go zaimplementować i dzięki niemu uniknąć powtórzeń w kodzie?"
 image: assets/cover.jpg
-imageCredit: "Zdjęcie: [Cyril Saulnier](https://unsplash.com/@c_reel)"
+imageCredit: "Zdjęcie: [Felix Mittermeier](https://unsplash.com/@felix_mittermeier)"
 categories:
   - Javascript
   - Wzorce projektowe
@@ -24,7 +24,7 @@ W ramach dzisiejszego postu przygotowałem prostą aplikację w React, która po
 
 Konfiguracja taka, może występować w 2 formatach: _json_ i _csv_.
 
-Sama aplikacja składa się z następujących komponentów:
+Aplikacja składa się z następujących komponentów:
 
 - formularz do wypełnienia danych konfiguracji `Config`
 - wyboru formatu `Format`
@@ -101,7 +101,7 @@ export const Export = ({ format, data }) => {
 
 W każdym z nich widzimy instrukcję `switch` mającą ten sam zbiór warunków, opierający się o typ formatu. Jeśli czytałeś poprzedni post wiesz, że takie rozwiązanie będzie problematyczne w utrzymaniu.
 
-Z każdym nowym formatem będziemy musieli zmieniać każda powiązaną instrukcję `switch`. Tutaj są to tylko 2 miejsca, ale w zaawansownej aplikacji byłoby ich zdecydowanie więcej. Jak rozwiązać to lepiej?
+Z każdym nowym formatem będziemy musieli zmieniać każdą powiązaną instrukcję `switch`. Tutaj są to tylko 2 miejsca, ale w zaawansownej aplikacji byłoby ich zdecydowanie więcej. Jak rozwiązać to lepiej?
 
 Widzimy, że w zależności od typu formatu generowana jest odpowiednia konfiguracja np. `generateCsv`, a następnie wykonywane jakieś dodatkowe kroki.
 
@@ -113,7 +113,7 @@ Umieścilibyśmy je w odpowiednich klasach odpowiadających formatom np. `Format
 
 Jednak gdzie będzie znajdować się logika, która połączy wybranie odpowiedniego formatu z wykorzystaniem konkretnej klasy?
 
-Potrzebujemy do tego jeszcze jedną klasę, która będzie zarządzać formatami. Nazwijmy ją `FormatContext`. To z nią będa się komunikować inne części systemu i dzięki niej wybierzemy i podmienimy używany format w czasie działania programu.
+Potrzebujemy do tego jeszcze jedną klasę, która będzie zarządzać formatami. Nazwijmy ją `FormatContext`. To z nią będa się komunikować inne części systemu i dzięki niej podmienimy używany format w czasie działania programu.
 
 To co właśnie przedstawiłem to wzorzec strategii.
 
@@ -125,7 +125,7 @@ Na powyższym schemacie widzimy interfejs `Format`. Jest on niezbędny w języka
 
 Przedstawy sobie jeszcze jego definicję.
 
-_Wzorzec strategi to wzorzec behawioralny opisujący pewne zachowania. Umożliwia on wybór algorytmu w czasie wykonywania programu. Kluczową ideą jest tworzenie obiektów reprezentujących konkretne strategie (implementacje algorytmu). Obiekty te tworzą zbiór strategii spośród których obiekt kontekstu może wybierać i odpowiednio zmieniać swoje zachowanie zgodnie z zastosowaną strategią._
+_Wzorzec strategii to wzorzec behawioralny opisujący pewne zachowania. Umożliwia on wybór algorytmu w czasie wykonywania programu. Kluczową ideą jest tworzenie obiektów reprezentujących konkretne strategie (implementacje algorytmu). Obiekty te tworzą zbiór strategii spośród których obiekt kontekstu może wybierać i odpowiednio zmieniać swoje zachowanie zgodnie z zastosowaną strategią._
 
 Zanim jednak przejdziemy do kodu krótka analogia do piłki nożnej. W tej dyscyplinie występuje wiele różnych ustawień:
 
@@ -154,7 +154,7 @@ Zdefinujmy zbiór strategii, oraz obiekt kontekstu:
 export class FormatJson {
   type = "json";
 
-  export(data) {
+  exportData(data) {
     // ...here do some additional steps to export JSON...
   }
 
@@ -170,7 +170,7 @@ export class FormatJson {
 export class FormatCSV {
   type = "csv";
 
-  export(data) {
+  exportData(data) {
     // ...here do some additional steps to export CSV...
   }
 
@@ -193,25 +193,25 @@ export class FormatContext {
     this.format.preview(data);
   }
 
-  export(data) {
-    this.format.export(data);
+  exportData(data) {
+    this.format.exportData(data);
   }
 }
 ```
 
 Mamy tu implementację różnych strategii dotyczących formatów. W każdej z klas mamy funkcję implementujące generowanie konfiguracji w określonym formacie, eksport oraz podgląd.
 
-Powoduje to ukrycie szczegółów przed innymi częściami systemu, co zmniejszy liczbę miejsc, które trzeba będzie modyfikować np. dodając nowy format.
+**Powoduje to ukrycie szczegółów przed innymi częściami systemu, co zmniejszy liczbę miejsc, które trzeba będzie modyfikować np. dodając nowy format.**
 
 Oprócz tego mamy obiekt kontekstu. Dzięki niemu możemy wykonać jedną ze wspomniany strategii jak również podmienić ją w czasie działania programu.
 
-`FormatContext` przekazujemy zarówno do komponentu `Export` jak i `Preview`.
+`FormatContext` będzie parametrem zarówno dla komponentu `Export` jak i `Preview`.
 
 ```jsx
 /* export.jsx */
 export const Export = ({ formatContext, data }) => {
   const exportData = () => {
-    contextFormat.export(data);
+    contextFormat.exportData(data);
   };
 
   return (

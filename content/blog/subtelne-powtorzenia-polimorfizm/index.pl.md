@@ -5,7 +5,7 @@ author: Michał Paczków
 publish: true
 description: Czym są subtelne powtórzenia oraz jak wykorzystać polimorfizm, żeby się ich pozbyć i sprawić by nasz kod był łatwy do utrzymania.
 image: assets/cover.jpg
-imageCredit: "Zdjęcie: [Felix Mittermeier](https://unsplash.com/@felix_mittermeier)"
+imageCredit: "Zdjęcie: [Cyril Saulnier](https://unsplash.com/@c_reel)"
 categories:
   - Javascript
   - Wzorce projektowe
