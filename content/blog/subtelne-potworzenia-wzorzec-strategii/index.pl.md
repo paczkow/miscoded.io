@@ -148,7 +148,7 @@ Na tym prostym przykładzie możemy zobaczyć jak istotna jest możliwość zmia
 
 Wracając do naszego przykładu, przypomnijmy, że chcemy stworzyć zbiór strategii bazujących na formatach. W zależności od przyjętej strategii inaczej zostanie zrealizowany podgląd oraz eksport.
 
-Zdefinujmy zbiór strategii, oraz obiekt kontekstu:
+Zdefinujmy zbiór strategii:
 
 ```javascript
 export class FormatJson {
@@ -182,92 +182,80 @@ export class FormatCSV {
     // ...here logic to generate CSV...
   }
 }
-
-export class FormatContext {
-  setFormat(format) {
-    console.log(format);
-    this.format = format;
-  }
-
-  preview(data) {
-    this.format.preview(data);
-  }
-
-  exportData(data) {
-    this.format.exportData(data);
-  }
-}
 ```
 
-Mamy tu implementację różnych strategii dotyczących formatów. W każdej z klas mamy funkcję implementujące generowanie konfiguracji w określonym formacie, eksport oraz podgląd.
+W każdej z klas mamy funkcje implementujące generowanie konfiguracji w określonym formacie, eksport oraz podgląd.
 
 **Powoduje to ukrycie szczegółów przed innymi częściami systemu, co zmniejszy liczbę miejsc, które trzeba będzie modyfikować np. dodając nowy format.**
 
-Oprócz tego mamy obiekt kontekstu. Dzięki niemu możemy wykonać jedną ze wspomniany strategii jak również podmienić ją w czasie działania programu.
+Zdefiniujemy sobie teraz nasz `FormatContext`, z racji użycia React'a będzie on nietypowy. Nie będzie to klasa, a react hook.
 
-`FormatContext` będzie parametrem zarówno dla komponentu `Export` jak i `Preview`.
+```js
+const formats = {
+  csv: new FormatCSV(),
+  json: new FormatJson(),
+};
+
+export function useFormat(intialValue) {
+  const [type, setType] = useState(intialValue);
+
+  return {
+    type,
+    setType,
+    format: formats[type],
+  };
+}
+```
+
+W tej krótkiej funkcji zawarliśmy całą logikę odpowiedzialną za wybór odpowiedniej strategii (formatu). Teraz zwracany format należy przekazać do odpowiednich komponentów, w których wcześniej były instrukcje `switch`
 
 ```jsx
 /* export.jsx */
-export const Export = ({ formatContext, data }) => {
-  const exportData = () => {
-    contextFormat.exportData(data);
-  };
-
+export const Export = ({ format, data }) => {
   return (
     <div>
-      <button onClick={() => exportData()}>Export configuration</button>
+      <button onClick={() => format.exportData(data)}>
+        Export configuration
+      </button>
     </div>
   );
 };
 
 /* preview.jsx */
-export const Preview = ({ formatContext, data }) => {
-  return <div>{contextFormat.preview(data)}</div>;
+export const Preview = ({ format, data }) => {
+  return <div>{format.preview(data)}</div>;
 };
 ```
 
-Szczegóły dotyczące formatów zostały ukryte dzięki czemu komponenty bardzo się zmniejszyły. Pozostaje nam już tylko stworzyć obiekt kontekstu i przekazać go do komponentów:
+Szczegóły dotyczące formatów zostały ukryte, dzięki temu komponenty stały się bardzo małe. Pozostaje nam już tylko użyć hook'a w głównym komponencie
 
 ```jsx
-/* strategies  */
-const formats = {
-  json: new FormatJson(),
-  html: new FormatHTML(),
-  csv: new FormatCSV(),
-};
-
-/* format context */
-const context = new FormatContext();
-
 export default function App() {
   const [values, setValues] = useState({ name: "", surname: "", age: "" });
-  const [format, setFormat] = useState("json");
-
-  /* set specific strategy - format */
-  context.setFormat(formats[format]);
+  const { type, setType, format } = useFormat("json");
 
   return (
-    <div className="App">
+    <div className="App Grey">
+      <h3>Strategy pattern solution</h3>
       <div>
         <Config values={values} setValues={setValues} />
-        <Format value={format} setFormat={setFormat} />
+        <Format value={type} setType={setType} />
       </div>
       <div>
-        <Preview formatContext={context} data={values} />
+        <Preview format={format} data={values} />
         <br />
-        <Export formatContext={context} data={values} />
+        <Export format={format} data={values} />
       </div>
     </div>
   );
 }
 ```
 
-Z racji, że to aplikacja napisana w React, zamiast tworzyć obiekt `FormatContext`, możemy wykorzystać `createContext`. [Zapraszam tutaj do sprawdzenia przykładu wykorzystującego `React.context`.](https://codesandbox.io/s/configurator-uupb4)
+[Tutaj znajdziesz cały omówiony kod.](https://codesandbox.io/s/configurator-uupb4)
 
 https://codesandbox.io/s/configurator-uupb4
 
-Główną zaletą tej refaktoryzacji jest ukrycie logiki powiązanej z formatami, węwnątrz odpowiednich klas. Teraz, chcąc dodać kolejny format nie będziemy musieli edytować naszego kodu w wielu miejscach, wystarczy dodać nową klasę (_strategię_) np. `HTMLFormat` i rozszerzyć obiekt `formats` o nowy typ.
+Główną zaletą tej refaktoryzacji jest ukrycie logiki powiązanej z formatami, węwnątrz odpowiednich klas. Teraz, chcąc dodać kolejny format nie będziemy musieli edytować naszego kodu w wielu miejscach, wystarczy dodać nową klasę (_strategię_) np. `HTMLFormat` i rozszerzyć obiekt `formats` (z którego korzysta `useFormat`) o nowy typ.
 
 ## Kalkulacja i refaktorzyacja, nie odwrotnie
 
