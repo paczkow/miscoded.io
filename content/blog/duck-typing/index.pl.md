@@ -1,11 +1,11 @@
 ---
-title: Duck Typing - wszystko co powinnineś wiedzieć
+title: Duck Typing - wszystko co musisz wiedzieć
 date: 2020-09-11
 author: Michał Paczków
 publish: true
-description: "Co to duck typing i czym się charakteryzuje? Gdzie ma zastosowanie? Czy ma coś wspólnego z polimorfizmem? Jak stosując ten mechanizm zwiększyć jakość kodu? "
+description: "Co to duck typing i czym się charakteryzuje? Gdzie ma zastosowanie? Czy ma coś wspólnego z polimorfizmem? Jak stosując ten mechanizm zwiększyć jakość kodu?"
 image: assets/cover.jpg
-imageCredit: ""
+imageCredit: "Zdjęcie: [JOSHUA COLEMAN](https://unsplash.com/@joshstyle)"
 categories:
   - Javascript
   - Wzorce projektowe
@@ -13,13 +13,13 @@ tags:
   - refactoring
 ---
 
-*"Czy jeśli coś chodzi jak kaczka i kwacze jak kaczka, to czy jest to kaczka?"* 
+*"Czy jeśli coś chodzi jak kaczka i kwacze jak kaczka, to czy jest kaczką?"* 
 
-Początkowo to pytanie, może wydać się dziwne, jednak w dzisiejszym poście będziemy próbowali sobie na nie odpowiedzieć. Właściwie to taka odpowiedź dostarczą nam systemy typowania stosowane w językach programowania.
+Początkowo to pytanie, może wydać się dziwne, jednak w dzisiejszym poście będziemy próbowali sobie na nie odpowiedzieć. Właściwie to taką odpowiedź dostarczą nam systemy typowania stosowane w językach programowania.
 
 ## Różne systemy typów
 
-Każdy z języków programowania posiada określony system typów. Jest to zestaw reguł, które pozwalają na przypisanie właściwości zwanej typem do odpowiedniej struktury takiej jak zmienna czy funkcja. Następnie w zależności od reguł oczekujemy innego zachowania związanego typami.
+Każdy z języków programowania posiada określony system typów. Jest to zestaw reguł, które pozwalają na przypisanie właściwości zwanej typem do odpowiedniej struktury takiej jak zmienna czy funkcja. Następnie w zależności od reguł typy są dopasowywane do siebie i weryfikowane. Jeśli struktury łamią reguły, jest to uznane za błąd.
 
 Systemy typowania możemy podzielić na wiele różnych kategorii, nas będą interesować:
 
@@ -41,7 +41,7 @@ class Bar {
 let foo: Foo = new Bar(); // Error!
 ```
 
-Mamy tu próbę przypisania obiektu o typie `Bar` do zmiennej o typie `Foo`. Deklaracje typów są różne co oznacza błąd w typowaniu nominalnym. Następne to typowanie strukturalne.
+Mamy tu próbę przypisania obiektu o typie `Bar` do zmiennej o typie `Foo`. Deklaracje typów są różne, co oznacza błąd w typowaniu nominalnym. Następne to typowanie strukturalne.
 
 ```javascript
 class Foo {
@@ -62,7 +62,7 @@ let boo: Foo = new Boo(); // Error!
 
 Widzimy tutaj jak w pierwszym przypadku mimo różnych nazw typów, zmienna została zaincjalizowana. Dzięki identycznej strukturze klas `Foo` oraz `Bar` jest to możliwe.
 
-W drugim przypadku dla klasy `Boo` funkcja `method` zwraca inny typ co powoduje niezgodność struktur i zwrócenie błędu. Ostatni przykład odnosi się do duck typing.
+W drugim przypadku dla klasy `Boo` funkcja `method` zwraca typ `boolean`, co powoduje niezgodność struktur i zwrócenie błędu. Ostatni przykład odnosi się do duck typing.
 
 ```javascript
 class Bar {
@@ -106,7 +106,7 @@ W tym rodzaju typowania nie mają znaczenia nazwy typów (klasa `Bar`, `Foo`, cz
 
 Wróćmy do definicji duck typing: *"określa zgodność typu na podstawie części struktury, do której uzyskiwany jest dostęp w czasie wykonywania programu"*. W naszym przykładzie wspomniana "część struktury" to właśnie `method`. Kiedy ona nie istnieje, albo nie jest funkcją, otrzymujemy błąd.
 
-Możemy teraz stwierdzić jak poszczególne systemy typowania odpowiedzą na pytanie zadane na początku - _"Czy jeśli coś chodzi jak kaczka i kwacze jak kaczka, to czy jest to kaczka?"_
+Możemy teraz stwierdzić jak poszczególne systemy typowania odpowiedzą na pytanie zadane na początku - _"Czy jeśli coś chodzi jak kaczka i kwacze jak kaczka, to czy jest kaczką?"_
 
 - typowanie nominalne - _"Nie, tylko coś o typie kaczka nią jest, nie interesuje mnie zachowanie!"_
 - typowanie strukturalne - _"To zależy. Tak, jeśli chodzi jak kaczka, kwacze jak kaczka i nie robić nic innego. W przeciwnym wypadku to nie jest kaczka"_
@@ -123,9 +123,9 @@ Możemy teraz stwierdzić jak poszczególne systemy typowania odpowiedzą na pyt
 
 ## Duck Typing, a podniesienie jakości kodu
 
-Poznaliśmy już teorię stojącą za duck typing, oraz różnicę będzie różnymi systemami typów. Jak możemy ją wykorzystać w praktyce?
+Poznaliśmy już teorię stojącą za duck typing, oraz różnice między systemami typów. Jak możemy to wykorzystać w praktyce?
 
-Duck typing podobnie jak [polimorfizm](https://miscoded.io/pl/blog/subtelne-powtorzenia-polimorfizm/), czy [wzorzec strategii](https://miscoded.io/pl/blog/subtelne-potworzenia-wzorzec-strategii/) pomoże nam w usunięciu powtórzeń w naszym kodzie. I znów będzie to związane z powtarzającymi się instrukcjami `switch`, lub `if-else` mającymi identyczny warunków.
+Duck typing podobnie jak [polimorfizm](https://miscoded.io/pl/blog/subtelne-powtorzenia-polimorfizm/), czy [wzorzec strategii](https://miscoded.io/pl/blog/subtelne-potworzenia-wzorzec-strategii/) pomoże nam w usunięciu powtórzeń w naszym kodzie. I znów będzie to związane z powtarzającymi się instrukcjami `switch`, lub `if-else` mającymi identyczny zestaw warunków.
 
 Omówimy teraz problem z którym ostatnio zetknąłem się w pracy.
 
@@ -171,9 +171,9 @@ function runTest(type) {
 }
 ```
 
-Implementacja ta jest jednak ciężka do modyfikacji. Kiedy testy zostaną rozszerzone o kolejne typy, oraz nowe fazy, spowoduje to, że dla każdego nowego typu testów będziemy musieli wprowadzać poprawki w wielu miejscach. Z czasem stanie się to trudne i uciążliwe.
+Implementacja ta jest ciężka do modyfikacji. Kiedy testy zostaną rozszerzone o kolejne typy, oraz nowe fazy, spowoduje to, że dla każdego nowego typu testów będziemy musieli wprowadzać poprawki w wielu miejscach. Z czasem stanie się to trudne i uciążliwe.
 
-Lepszym rozwiązaniem jest stworzyć klasę dla każdego testu i w niej zawrzeć szczegóły dotyczące logiki związanej z każdą fazą. Następnie wykorzystując duck typing (konieczność posiada funkcji `setup` i `run`) skonfigurować testy i je uruchomić. Utrzymanie tej wersji będzie mniej problematyczne. W przypadku nowego rodzaju testu wystarczy stworzyć dodatkową klasę.
+Lepszym rozwiązaniem jest stworzyć klasę dla każdego testu i w niej zawrzeć szczegóły dotyczące logiki związanej z każdą fazą. Następnie wykorzystując duck typing (konieczność posiadania funkcji `setup` i `run`) skonfigurować testy i je uruchomić. Utrzymanie tej wersji będzie mniej problematyczne. W przypadku nowego rodzaju testu wystarczy stworzyć dodatkową klasę.
 
 ```javascript
 /* main.js */
@@ -239,8 +239,7 @@ Jak już dziś wspomnieliśmy duck typing opiera się o strukturę, a właścwie
 
 ## Kontrola typów, pomaga czy przeszkadza
 
-Duck typing daje dużo swobody ze względu na swoją dynamikę. Jednak z czasem może doprowadzić to do błędów trudnych do zanlezieiona i zwiększeniu czasu potrzebnego na zrozumienie działania kodu przed jego modyfikacją.
-Rozwiązaniem na to jest kontrola struktury i flow naszego programu.
+Duck typing daje dużo swobody ze względu na swoją dynamikę. Jednak z czasem może doprowadzić to do błędów trudnych do znalezienia i zwiększeniu czasu potrzebnego na zrozumienie działania kodu.
 
 ```javascript
 /* main.js */
@@ -263,18 +262,16 @@ class Human {
 
 class PerfQueryTest {
   run() {
-    return { data: "test data" };
     // ...some logic here
+    return { data: "test data" };
   }
 }
 ```
 
-Wyżej widzimy konsekwencje braku odpowiedniej kontroli typów. Dopasowanie struktur powoduje, że wszystko działa, ale czy jest to poprawne?
+Wyżej widzimy konsekwencje braku odpowiedniej kontroli typów. Dopasowanie struktur powoduje, że wszystko działa, ale czy jest to poprawne? Spoiler: nie jest!
 
-Przy większych projektach z bardziej skomplikowanymi strukturami danych, warto wykorzystać choćby Typescript. Da nam to więcej informacji na temat struktur poszczególnych abstrakcji. Dzięki temu łatwiej będzie nam modyfikować kod po dłuższym czasie, czy wejść nowym programistą do projektu.
-
-[Co może się przytrafić, przy braku kontroli typów...](./assets/duck-typing-pig.jpeg)
+Rozwiązaniem na to jest kontrola typów, struktur i flow naszego programu. Przy większych projektach warto wykorzystać Typescript. Da nam to więcej informacji na temat struktur poszczególnych abstrakcji. Dzięki temu łatwiej będzie nam modyfikować kod po dłuższym czasie, czy wejść nowym programistą do projektu.
 
 ## Podsumowanie
 
-Duck Typing to koncepcja, którą powinnien znać każdy programista Javascript. Dzięki niej możemy uniknąć powtórzeń w naszym kodzie i zwiększyć elastyczność naszego rozwiązania. Jednak podobnie jak każdego narzędzia, również tego trzeba używać z rozsądkiem kontrolując struktury jakie mamy w naszym kodzie i ich odpowiedni przepływ. Tylko to pozwoli nam zwiększyć jakość naszego kodu i zmniejszyć czas poświęcony na jego utrzymanie.
+Duck Typing to koncepcja, którą powinnien znać każdy programista Javascript. Dzięki niej możemy uniknąć powtórzeń w kodzie i zwiększyć elastyczność rozwiązania. Jednak podobnie jak każdego narzędzia, również tego trzeba używać z rozsądkiem, kontrolując struktury jakie mamy w naszym kodzie i ich odpowiedni przepływ. Tylko to pozwoli nam zwiększyć jakość naszego kodu i zmniejszyć czas poświęcony na jego utrzymanie.
