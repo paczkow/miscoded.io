@@ -23,9 +23,9 @@ Każdy z języków programowania posiada określony system typów. Jest to zesta
 
 Systemy typowania możemy podzielić na wiele różnych kategorii, nas będą interesować:
 
-- typowanie nominalne - zgodność typów określa się na podstawie jawnych deklaracji i/lub nazwy typów. Przykłady języków z tym rodzjem typowania to np. C# czy Java
-- typowanie strukturalne - zgodność typów określana jest na podstawie struktury (zestaw pól i metod zawartych w abstrakcji). Występuje ono np. w Typescript
-- duck typing - najbardziej dynamiczny rodzaj typowania z wymienionych. Określa zgodność typu na podstawie części struktury, do której uzyskiwany jest dostęp w czasie wykonywania programu. Taki rodzaj typowania występuje min. w Javascript
+- **typowanie nominalne** - zgodność typów określa się na podstawie jawnych deklaracji i/lub nazwy typów. Przykłady języków z tym rodzjem typowania to np. C# czy Java
+- **typowanie strukturalne** - zgodność typów określana jest na podstawie struktury (zestaw pól i metod zawartych w abstrakcji). Występuje ono np. w Typescript
+- **duck typing** - najbardziej dynamiczny rodzaj typowania z wymienionych. Określa zgodność typu na podstawie **części struktury, do której uzyskiwany jest dostęp w czasie wykonywania programu**. Taki rodzaj typowania występuje min. w Javascript
 
 Definicje te brzmią nieco skomplikowanie, dlatego wytłumaczmy to sobie na przykładach. Pierwszy z nich dotyczy typowania nominalnego.
 
@@ -270,7 +270,9 @@ class PerfQueryTest {
 
 Wyżej widzimy konsekwencje braku odpowiedniej kontroli typów. Dopasowanie struktur powoduje, że wszystko działa, ale czy jest to poprawne? Spoiler: nie jest!
 
-Rozwiązaniem na to jest kontrola typów, struktur i flow naszego programu. Przy większych projektach warto wykorzystać Typescript. Da nam to więcej informacji na temat struktur poszczególnych abstrakcji. Dzięki temu łatwiej będzie nam modyfikować kod po dłuższym czasie, czy wejść nowym programistą do projektu.
+![Do czego może prowadzić brak kontroli typów i struktur...](assets/duck-typing-pig.png)
+
+Rozwiązaniem na to jest kontrola typów, struktur i flow naszego programu. Możemy wykorzystać JsDoc, czy Typescript. Zalecam to szczególnie przy większych projektach z dużą liczbą skomplikowanych abstrakcji. Da nam to więcej informacji na temat struktur i dzięki temu łatwiej będzie nam modyfikować kod po dłuższym czasie, czy wejść nowym programistą do projektu.
 
 ## Podsumowanie
 
