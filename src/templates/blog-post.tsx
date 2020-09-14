@@ -34,12 +34,11 @@ const BlogPost: React.FC<BlogPostProps> = ({ data, location }) => {
   const disqusConfig = {
     shortname: process.env.GATSBY_DISQUS_NAME!,
     config: {
+      url: `https://miscoded.io/${slug}`,
       identifier: slug,
       title,
     },
   };
-
-  console.log(disqusConfig);
 
   return (
     <Layout>
