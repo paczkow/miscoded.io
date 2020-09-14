@@ -13,7 +13,7 @@ tags:
   - refactoring
 ---
 
-*"Czy jeśli coś chodzi jak kaczka i kwacze jak kaczka, to czy jest kaczką?"* 
+_"Czy jeśli coś chodzi jak kaczka i kwacze jak kaczka, to czy jest kaczką?"_
 
 Początkowo to pytanie, może wydać się dziwne, jednak w dzisiejszym poście będziemy próbowali sobie na nie odpowiedzieć. Właściwie to taką odpowiedź dostarczą nam systemy typowania stosowane w językach programowania.
 
@@ -104,7 +104,7 @@ const boo = new Boo();
 
 W tym rodzaju typowania nie mają znaczenia nazwy typów (klasa `Bar`, `Foo`, czy `Boo`), ani różnice w strukturze każdej z klas. Błąd dostajemy tylko w jednym przypadku, kiedy w klasie nie została zdefiniowana funkcja potrzebna do wykonania kodu.
 
-Wróćmy do definicji duck typing: *"określa zgodność typu na podstawie części struktury, do której uzyskiwany jest dostęp w czasie wykonywania programu"*. W naszym przykładzie wspomniana "część struktury" to właśnie `method`. Kiedy ona nie istnieje, albo nie jest funkcją, otrzymujemy błąd.
+Wróćmy do definicji duck typing: _"określa zgodność typu na podstawie części struktury, do której uzyskiwany jest dostęp w czasie wykonywania programu"_. W naszym przykładzie wspomniana "część struktury" to właśnie `method`. Kiedy ona nie istnieje, albo nie jest funkcją, otrzymujemy błąd.
 
 Możemy teraz stwierdzić jak poszczególne systemy typowania odpowiedzą na pytanie zadane na początku - _"Czy jeśli coś chodzi jak kaczka i kwacze jak kaczka, to czy jest kaczką?"_
 
@@ -206,11 +206,11 @@ class PerfEditTest {
   }
 
   run() {
+    // ...some logic here
     return {
       time,
       editedItemId,
     };
-    // ...some logic here
   }
 }
 
@@ -220,11 +220,11 @@ class PerfQueryTest {
   }
 
   run() {
+    // ...some logic here
     return {
       time,
       numerOfItems,
     };
-    // ...some logic here
   }
 }
 ```
