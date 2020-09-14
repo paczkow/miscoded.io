@@ -1,7 +1,6 @@
 import React from "react";
 import { WindowLocation } from "@reach/router";
 import { graphql, Link } from "gatsby";
-import { DiscussionEmbed } from "disqus-react";
 import Markdown from "react-markdown";
 
 import { Box, Stack, Inline } from "../components/foundations";
@@ -179,7 +178,6 @@ const BlogPost: React.FC<BlogPostProps> = ({ data, location }) => {
                     </div>
                   </Stack>
                 </Stack>
-                <DiscussionEmbed {...disqusConfig} />
               </footer>
             </Stack>
           </Stack>
