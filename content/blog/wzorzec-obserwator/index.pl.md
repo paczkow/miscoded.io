@@ -2,7 +2,7 @@
 title: Kiedy warto obserwować innych? Wzorzec obserwatora
 date: 2020-10-15
 author: Michał Paczków
-description: "Jednym z najczęściej używanych wzorców w programowaniu jest obserwator. Stosują go popularne rozwiązania jak RxJS czy react-redux. W tym poście dowiesz sie czym on jest oraz jak pomoże Ci pomóc w zarządzaniu zależnościami jeden do wielu."
+description: "Jednym z najczęściej używanych wzorców w programowaniu jest obserwator. Stosują go popularne rozwiązania jak RxJS czy react-redux. Jest to must-have jeśli chodzi o naukę wzorców. W tym poście dowiesz sie czym on jest oraz jak pomoże Ci pomóc w zarządzaniu zależnościami jeden do wielu."
 image: assets/cover.jpg
 imageCredit: "Zdjęcie: [Alessandro Vallainc](https://unsplash.com/@sandronize)"
 categories:
