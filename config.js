@@ -14,6 +14,6 @@ module.exports = {
   rss: "/rss.xml",
 
   // settings
-  postsPerPage: 12,
+  postsPerPage: 16,
   googleAnalyticsID: "",
 };
