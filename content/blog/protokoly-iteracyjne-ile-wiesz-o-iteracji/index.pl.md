@@ -16,9 +16,16 @@ tags:
 
 Kolekcje to fundament programowania i codzienność programistów. Nawet tak banalne zadania jak TODO listy opierają się o nie. Najpowszechniejszą operacją związaną z kolekcjami jest iteracja. Pewnie wykonywałeś już ją milion razy, ale czy wiesz o niej wszystko?
 
-Zastanawiałeś się kiedyś, dlaczego możemy użyć `for...of` lub `spread` dla tablicy, a obiektu już nie? Czy wiesz, co powoduje rożnicę w "zachowaniu" tych struktur?
+Zastanawiałeś się kiedyś, dlaczego możemy otrzymać wartość każdego elementu tablicy wykorzystując `for...of` lub `spread`, a w momencie użycia ich na obiekcie <sup style="font-weight: bold;">\*</sup> dostaniemy błąd?
 
-Przyjrzyjmy się wspomnianym przykładom:
+> <sup style="font-weight: bold;">\*</sup> Wyjątkiem jest sytuacja, gdy używamy wyrażenia obiektowego (ang. object expression), tworząc nowy obiekt. Wykorzystując `spread`, możemy rozłożyć właściwości obiektu na listę parametrów, która zostanie przekazana do nowego obiektu. Jest to popularna metoda tworzenia kopii.
+
+```javascript
+let obj = { a: 1, b: 2, c: 3 };
+let objCopy = { ...obj }; // spread the object into a list of parameters
+```
+
+Co powoduje rożnicę w "zachowaniu" tych struktur? Przyjrzyjmy się wspomnianym przykładom:
 
 ```javascript
 const array = [1, 2, 3];
