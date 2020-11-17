@@ -124,7 +124,7 @@ for (var i = 0; i < 3; i++) {
 }
 ```
 
-Wyniki, jaki zobaczymy w konsoli to `3 3 3` zamiast często spodziewanego `1 2 3`.
+Wyniki, jaki zobaczymy w konsoli to `3 3 3` zamiast często spodziewanego `0 1 2`.
 
 Warto wiedzieć, że funkcja przekazana jako callback, wykorzystuje domknięcie. W powyższym przypadku funkcje anonimowe (linia 2) w ramach zakresu w którym zostają zdefiniowane, zapamiętują **referencję** do zmiennej `i`. Dzięki temu w momencie wywołania mają dostęp **do jej aktualnej wartości** (mogącej zmienić się w czasie wykonywania programu).
 
