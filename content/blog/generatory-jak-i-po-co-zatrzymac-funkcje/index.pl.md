@@ -3,7 +3,7 @@ title: Generatory - jak (i po co) zatrzymać funkcje?
 date: 2020-11-30
 author: Michał Paczków
 publish: true
-description: Funkcja, podstawa bez której ciężko byłoby budować jakiekolwiek rozwiązania w programistycznym świecie. Każdy z nas wie, że przyjmuje ona listę argumentów, przetwarza pewną, wydzieloną logikę i zwraca (lub nie) wartość. Jednak czy wiesz, że da się kontrolować przebieg funkcji? Można ja zatrzymać, wznowić a nawet zwrócić z niej kilka wartości. Jak to zrobić? Odpowiedź to generatory.
+description: Funkcja, podstawa bez której ciężko byłoby budować jakiekolwiek rozwiązania w programistycznym świecie. Każdy z nas wie, że przyjmuje ona listę argumentów, przetwarza pewną, wydzieloną logikę i zwraca (lub nie) wartość. Jednak czy wiesz, że da się kontrolować przebieg funkcji? Można ja zatrzymać, wznowić a nawet zwrócić z niej kilka wartości. Jak to zrobić?
 image: assets/cover.jpg
 imageCredit: "Zdjęcie: [John Matychuk](https://unsplash.com/@john_matychuk)"
 categories:
@@ -12,7 +12,6 @@ tags:
   - iterator
   - iterable
   - generator
-  - react
 ---
 
 Funkcje są jednym z podstawowych "klocków" których programista używa do tworzenia rozwiązań. Bez nich nie bylibyśmy w stanie tworzyć choćby reużywalnej logiki, co znacznie utrudniłoby proces tworzenia oprogramowania.
