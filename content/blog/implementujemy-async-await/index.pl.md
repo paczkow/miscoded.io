@@ -15,28 +15,31 @@ tags:
   - rekurencja
 ---
 
-Tematy jakie ostatnio poruszyliśmy na blogu dotyczyły generatorów, oraz promise (przy okazji asynchroniczności). Dziś przyszedł czas na podsumowanie tych zagadnień. Wiedzę najlepiej weryfikuje praktyka także dziś zaimplementujemy własną wersję `async/await`.
+Tematy jakie ostatnio poruszyliśmy na blogu dotyczyły generatorów, oraz promise (przy okazji asynchroniczności). Przyszedł czas na podsumowanie tych zagadnień. Wiedzę najlepiej weryfikuje praktyka także dziś zaimplementujemy własną wersję `async/await`.
 
 W ramach przypomnienia słowa kluczowe `async/await` pozwalają na uproszczenie asynchronicznego kodu. Dzięki nim kod asynchroniczny wygląda jak synchroniczny, co znacznie ułatwia jego poźniejsze analizowanie i utrzymanie. Z racji, że większość rzeczy w sieci odbywa się w sposób asynchroniczny, jest to istotny element języka Javascript.
 
-Przykładem może być wykorzystanie `Fetch API`. Pozwala ono na wysłanie zapytania i otrzymanie danych z serwisu, wszystko działa oczywiście w sposób asynchroniczny:
+Przykładem, mogą być dwa asynchroniczne zadania. Drugie z nich wymaga danych z pierwszego, więc należy je zsynchronizować:
 
 ```javascript
-fetch(`http://some-api-here`)
-  .then(response => response.json())
-  .then(data => fetch("http://another-api"))
-  .then(anotherResponse => anotherResponse.json());
+const asyncTask = () =>
+  new Promise(resolve => setTimeout(() => resolve(1000), 1000));
+const anotherAsyncTask = val =>
+  new Promise(resolve => setTimeout(() => resolve(val * 2), 500));
 
-function async fetchData() {
-  const response = await fetch(`http://some-api-here`);
-  const data = await response.json();
+asyncTask()
+  .then(value => anotherAsyncTask(value))
+  .then(result => console.log(result));
 
-  const anotherResponse = await fetch("http://another-api");
-  const anotherData = await response.json();
+async function fetchData() {
+  const data = await asyncTask();
+  const result = await anotherAsyncTask(data);
+
+  console.log(result);
 }
 ```
 
-Dla mnie funkcja `fetchData` jest zdecydowanie bardziej czytelna. Mamy w niej rozdzielenie poszczególnych kroków zupełnie jak w kodzie synchronicznym, pozwala to w łatwy pobrać dane z jednego źródła i użyć ich w kolejnym zapytaniu.
+Dla mnie funkcja `fetchData` jest bardziej czytelna. Mamy w niej rozdzielenie poszczególnych kroków zupełnie jak w kodzie synchronicznym, pozwala to w łatwy pobrać dane z jednego źródła i użyć ich w kolejnym.
 
 > Po więcej informacji na temat asynchroniczności i async/await zapraszam do [tego postu](https://miscoded.io/pl/blog/asynchronicznosc-w-javascript/)
 
@@ -89,9 +92,11 @@ Funkcję wznawaimy jeszcze raz, tym razem nie ma już zadnych kroków do wykonan
 Chcąc naśladować funkcjonalność `async/await` musimy dodać obsługę zadań asynchronicznych. Mogłoby to wyglądać następująco:
 
 ```javascript
+const asyncTask = () =>
+  new Promise(resolve => setTimeout(() => resolve(1000), 1000));
+
 function* fetchData() {
-  const response = yield fetch(`http://some-api-here`);
-  const data = yield response.json();
+  const data = yield asyncTask();
   console.log(data);
 }
 ```
@@ -105,7 +110,7 @@ Rozwiązanie z uwzględnienim powyższych funkcjonalności będzie opierało si�
 
 ### Rekurencja
 
-Rekurencja to najkrócej opsiując wywoływanie funkcji przez samą siebie (trochę jak w Incepcji zasypianie we śnie). Jest to mocno abstrakcyjne pojęcie, dlatego rozważmy to na przykadzie spoza świata programistycznego - prezentów.
+Rekurencja to najkrócej mówiąc wywoływanie funkcji przez samą siebie (trochę jak w Incepcji zasypianie we śnie). Jest to mocno abstrakcyjne pojęcie, dlatego rozważmy to na przykadzie spoza świata programistycznego - prezentów.
 
 Wyobraź sobie, że dostajesz prezent na urodziny, jednak jest on zapakowany w pudełko, które jest zapakowane w większe pudełko itd.
 
@@ -116,7 +121,7 @@ Chcąc dostać się do prezentu, otwierasz największe pudło i jeśli:
 
 Widzimy tutaj dwa przypadki:
 
-- kiedy w pudełko nie ma prezentu - jest to przypadek rekurencyjny, powtarzający się. Kiedy jest on prawdziwy musisz ponownie otworzyć pudełko i sprawdzić czy jest prezent (czyli powtarzasz tę samą operację),
+- kiedy w pudełku nie ma prezentu - jest to przypadek rekurencyjny, powtarzający się. Kiedy jest on prawdziwy, musisz ponownie otworzyć pudełko i sprawdzić, czy jest prezent (czyli powtarzasz tę samą operację)
 - kiedy w pudełku jest prezent - to przypadek stopu/podstawowym, w którym nie wykonujesz kolejnego wywołania (kończysz wykonywanie funkcji rekurencyjnej), unikając w ten sposób pętli nieskończonych wywołań
 
 Kod dla powyższego przykładu:
@@ -139,10 +144,8 @@ Pamiętaj, że każde rozwiązanie rekurencyjne, można zaimplementować za pom
 
 <figure style="display: flex; flex-direction: column;">
   <iframe src="https://gifer.com/embed/g2PD" width="100%" style="min-height: 300px;" frameBorder="0" allowFullScreen></iframe>
-  <figcaption>Przykład rekurencji przy otwieraniu pudełek (via GIFER)</figcaption>
+  <figcaption>Przykład rekurencji (bez przypadku stopu)(via GIFER)</figcaption>
 </figure>
-
-<!-- <div style="padding-top:75.000%;position:relative;"><iframe src="https://gifer.com/embed/g2PD" width="100%" height="100%" style='position:absolute;top:0;left:0;' frameBorder="0" allowFullScreen></iframe></div><p><a href="https://gifer.com">Przykład rekurencji przy otwieraniu pudełek (via GIFER)</a></p> -->
 
 ### Uruchomienie generatora i pętla zwrotna
 
@@ -153,13 +156,13 @@ function runner(genFunction) {
   const generator = genFunction(); // #1 - create a generator
 
   function nextStep(value) {
-    const step = generator.next(value); // #2 start or resume function until the closest yield
+    const step = generator.next(value); // #2 start or resume function until next yield
 
     if (step.done) {
       return; // #3 - stop recursive callings
     } else {
       if (typeof step.value.then === "function") {
-        // if result is Promise, wait to resolve and go to next step
+        // if step.value is Promise, wait to resolve and go to next step
         const promise = step.value;
         promise.then(data => {
           nextStep(data); // #4 - resolve promise and pass data to the next step
@@ -178,10 +181,12 @@ Funkcja ta jako argument przyjmuje funkcje generatora, z której tworzy generato
 
 W momencie napotkania `yield` funkcja generatora zwraca wykonywanie kodu do `nextStep`.
 
-Na początku sprawdza ona czy był to ostani krok funkcji `step.done`, jeśli tak wykonywanie funkcji kończy się (jest to krok podstawowy dla rekurencji) [#3], w przeciwnym wypadku
+Na początku sprawdzane jest, czy był to ostani krok funkcji `step.done`.
+
+Jeśli tak wykonywanie funkcji kończy się (jest to krok podstawowy dla rekurencji) [#3], w przeciwnym wypadku:
 
 - jeśli wartość aktualnego kroku to promise (warunek: `typeof step.value.then === "function"`), czekamy, aż nastąpi rozwiązanie tego promise'a, następnie wywołujemy rekurecyjnie funkcję `nextStep` [#4], żeby przejść do następnego kroku
-- jesli to nie promise, od razu następuje wywołanie rekurencyjne (nie musimy na nic czekać) [#5]
+- jeśli to nie promise, od razu następuje wywołanie rekurencyjne (nie musimy na nic czekać) [#5]
 
 Funkcja `runner` jest brakującym elementem, ktory odpala funkcję generatora, a po napotkaniu `yield` funkcja `runner` jest odpowiedzialna za przetworzenie wartości zwróconej z funkcji generatora (jeśli to `promise` to odczekanie, aż do rozwiązania) i wznowieniu funkcji generatora przekazując wartość z ostaniego kroku:
 
@@ -211,9 +216,13 @@ Oznacza to, że wykonaliśmy nasze założenia:
 - zatrzymanie wykonywania funkcji po napotkaniu słowa kluczowego `yield`
 - wznowienie, przesyłając jednocześnie dane do generatora (przypisanie do zmiennej znajdującej sie lewej stronie `yield`)
 
+Pełną wersję znajdziesz [tutaj](https://codesandbox.io/s/async-await-37vuq)
+
+https://codesandbox.io/s/async-await-37vuq
+
 Oczywiście jest to uboga wersja funkcji zaimplementowanej np. przez Babel'a, nie zwracamy tutaj nic w ostatnim kroku przez co funkcja nie może być użyta jako `promise` w innym miejscu w kodzie.
 
-To już jednak Twoje zadanie domowe. Jeśli jesteś ciekawy jak wygląda odpowiedni funkcji `runner` w Babel sprawdź ją tutaj.
+To już jednak Twoje zadanie domowe. Jeśli jesteś ciekawy jak wygląda odpowiedni funkcji `runner` w Babel sprawdź ją [tutaj](https://babeljs.io/en/repl#?browsers=&build=&builtIns=false&spec=false&loose=false&code_lz=MYewdgzgLgBAhhAnmYAVBBrGBeGYCmA7jAAoBOIAtgJYT4AU9Z-EIANgG74CUOAfDDpRU1SvhABXKI17YBzVpwYBGAAyruAGgCs67twDcAKCMJkwGADMJKKNXBWQIerwDeRgJChIsODniEcNS-SCjoEBguxgC-RkA&debug=false&forceAllTransforms=false&shippedProposals=false&circleciRepo=&evaluate=false&fileSize=false&timeTravel=false&sourceType=module&lineWrap=true&presets=es2017&prettier=true&targets=&version=7.12.9&externalPlugins=).
 
 ## Podsumowanie
 
